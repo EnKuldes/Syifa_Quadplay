@@ -17,4 +17,16 @@ class _call_status_detail extends Model
     {
     	return $this->belongsTo('App\_call_status', 'id_call_status');
     }
+
+    # Relasi antara Tabel _call_status dengan _dapros_statistics || One To Many Relationship
+    public function dapros_statistics()
+    {
+        return $this->hasMany('App\_dapros_statistics', 'call_status_detail_id', 'id');
+    }
+    
+    # Relasi antara Tabel _call_status dengan _call || One To Many Relationship
+    public function call()
+    {
+        return $this->hasMany('App\_call', 'call_status_detail_id', 'id');
+    }
 }

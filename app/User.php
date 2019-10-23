@@ -36,4 +36,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Relasi antara Tabel User dengan tabel lainnya || One To Many Relationship
+    public function dapros_statistics_calls($value='')
+    {
+        return $this->hasMany('App\_dapros_statistics', 'call_agent_username', 'username');
+    }
+    public function dapros_statistics_tappings($value='')
+    {
+        return $this->hasMany('App\_dapros_statistics', 'tapping_agent_username', 'username');
+    }
+    public function calls($value='')
+    {
+        return $this->hasMany('App\_call', 'call_agent_username', 'username');
+    }
+    public function tappings($value='')
+    {
+        return $this->hasMany('App\_tapping', 'tapping_agent_username', 'username');
+    }
+
 }
