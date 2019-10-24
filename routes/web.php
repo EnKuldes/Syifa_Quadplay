@@ -11,10 +11,25 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
-Auth::routes();
+Route::get('/', 'HomeController@index')->name('home');
+
+// Auth Routes dimatikan
+// Auth::routes();
+Auth::routes([
+  'register' => false, // Registration Routes...
+  'reset' => false, // Password Reset Routes...
+  'verify' => false, // Email Verification Routes...
+  'confirm' => false, // Password Routes...
+]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Bikin Route tapi dari Resources
+//Route::resource('agents', 'AgentController');
+Route::get('/agent', 'AgentController@index')->name('workspace');
+Route::get('/agent/workspace', 'AgentController@index')->name('workspace');
+Route::post('/agent/data', 'AgentController@getData');

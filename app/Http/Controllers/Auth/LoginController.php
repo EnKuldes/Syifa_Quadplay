@@ -36,4 +36,10 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // Overriding Func Username dari yang tadinya required nya Email menjadi Username
+    public function username()
+    {
+        return 'username';
+    }
 }
