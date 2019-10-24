@@ -9,13 +9,11 @@
 
         <title>{{ config('app.name') }}</title>
 
-
         {{-- Fonts --}}
-        <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+        <link href="{{ asset('css/css-nunito.css') }}" rel="stylesheet">
+        <link href='{{ asset('css/css-family-ubuntu.css') }}' rel='stylesheet' type='text/css'>
 
         {{-- Styles --}}
-        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('plugins/pace-master/themes/blue/pace-theme-flash.css') }}" rel="stylesheet">
         <link href="{{ asset('plugins/uniform/css/uniform.default.min.css') }}" rel="stylesheet">
