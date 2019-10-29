@@ -24,14 +24,19 @@
         <link href="{{ asset('plugins/switchery/switchery.min.css') }}" rel="stylesheet">
         <link href="{{ asset('plugins/3d-bold-navigation/css/style.css') }}" rel="stylesheet">
         <link href="{{ asset('plugins/slidepushmenus/css/component.css') }}" rel="stylesheet">
+        <link href="{{ asset('plugins/toastr/toastr.min.css')}}" rel="stylesheet"/>
+        {{-- Application Styles --}}
+        <link href="{{ asset('plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('plugins/bootstrap-datepicker/css/datepicker3.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css"/>
 
         {{-- Theme Styles --}}
         <link href="{{ asset('css/modern.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
         {{-- Scripts --}}
-        <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('plugins/jquery/jquery-2.1.4.min.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}" defer></script>
         <script src="{{ asset('plugins/jquery-blockui/jquery.blockui.js') }}" defer></script>
         <script src="{{ asset('plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}" defer></script>
@@ -44,6 +49,7 @@
         <script src="{{ asset('plugins/waves/waves.min.js') }}" defer></script>
         <script src="{{ asset('plugins/3d-bold-navigation/js/main.js') }}" defer></script>
         <script src="{{ asset('js/modern.min.js') }}" defer></script>
+
     </head>
     <body class="page-header-fixed compact-menu page-horizontal-bar">
         <div class="overlay"></div>
@@ -97,11 +103,6 @@
                                 <li><a href="#">{{ ucwords($record) }}</a></li>
                             @endforeach
                         </ol>
-                    </div>
-                    <div class="page-title">
-                        <div class="container">
-                            <h3>{{ ucwords(request()->segment(count(request()->segments()))) }}</h3>
-                        </div>
                     </div>
                 @endauth
                 

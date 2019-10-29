@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class _call extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'dapros_id' , 'call_status_id', 'call_status_detail_id' , 'call_status_detail_reason_id' , 'call_am_datetime' , 'call_fu_datetime' , 'call_information' , 'call_agent_username' 
+    ];
     // Relasi antara Tabel _call_status dengan _call || One To Many Relationship Inverse 
     public function call_status()
     {

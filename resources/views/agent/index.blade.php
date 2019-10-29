@@ -1,101 +1,245 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row">
-    <div class="row">
-    	<div class="col-md-4">
-    		<div class="panel panel-white">
-	            <div class="panel-body">
-	                <form id="get-data-form">
-	                	@csrf
-                    	<button type="submit" class="btn btn-primary">Sampling Data dulu</button>
-                    </form>
-	            </div>
-	        </div>
-    	</div>
-    	<div class="col-md-8">
-    		<div class="panel panel-white">
-	            <div class="panel-body">
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="brand" class="col-sm-2">Brand</label>
-	            		<input type="text" name="brand" id="brand" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">ROW_NUM</label>
-	            		<input type="text" name="row_num" id="row_num" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">MSISDN_MASK</label>
-	            		<input type="text" name="msisdn_mask" id="msisdn_mask" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">MSISDN</label>
-	            		<input type="text" name="msisdn" id="msisdn" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">NAME_MASK</label>
-	            		<input type="text" name="name_mask" id="name_mask" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">CUSTOMER_SUBTYPE</label>
-	            		<input type="text" name="customer_subtype" id="customer_subtype" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">TOT_BILL_AMOUNT</label>
-	            		<input type="text" name="tot_bill_amount" id="tot_bill_amount" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">TOTAL_REVENUE</label>
-	            		<input type="text" name="total_revenue" id="total_revenue" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">DEVICE_TYPE</label>
-	            		<input type="text" name="device_type" id="device_type" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">VOL_BROADBAND</label>
-	            		<input type="text" name="vol_broadband" id="vol_broadband" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">VOL_BROADBAND_PACKAGE</label>
-	            		<input type="text" name="vol_broadband_package" id="vol_broadband_package" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">CI</label>
-	            		<input type="text" name="ci" id="ci" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">KABUPATEN</label>
-	            		<input type="text" name="kabupaten" id="kabupaten" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">LONGITUDE</label>
-	            		<input type="text" name="longitude" id="longitude" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">LATITUDE</label>
-	            		<input type="text" name="latitude" id="latitude" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">ODP1</label>
-	            		<input type="text" name="odp1" id="odp1" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">ODP2</label>
-	            		<input type="text" name="odp2" id="odp2" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-	            		<label for="row_num" class="col-sm-2">ODP3</label>
-	            		<input type="text" name="odp3" id="odp3" class="form-control" value="" readonly="readonly" pattern="" title="">
-	            	</div>
-	            </div>
-	        </div>
-    	</div>
+<div class="row m-t-md">
+    <div class="col-md-12">
+        <div class="row mailbox-header">
+            <div class="col-md-2">
+                <form id="get-data-form">
+		        	@csrf
+		        	<button type="submit" class="btn btn-success btn-block" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing Order"><i class="fa fa-random"></i> Fetch Data</button>
+		        </form>
+            </div>
+            <div class="col-md-6">
+                <h2>Data Call</h2>
+            </div>
+            <div class="col-md-4">
+                <form action="#" method="POST">
+                    <div class="input-group text-right">
+                    	<span class="input-group-btn">
+                            <button type="button" form="formCall" class="btn btn-default" id="resetBtn" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Reset <i class="fa fa-refresh"></i></button>
+                        	<button type="submit" form="formCall" class="btn btn-default" id="saveBtn" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Save <i class="fa fa-save"></i></button>
+                        </span>
+                    </div><!-- Input Group -->
+                </form>
+           </div>
+        </div>
     </div>
-</div>
+    <div class="col-md-2">
+        <ul class="list-unstyled mailbox-nav">
+            <li><a href="inbox.html"><i class="fa fa-inbox"></i>Consumed <span class="badge badge-success pull-right">4</span></a></li>
+            <li><a href="#"><i class="fa fa-sign-out"></i>Agree <span class="badge badge-success pull-right">4</span></a></li>
+            <li><a href="#"><i class="fa fa-file-text-o"></i>Follow Up <span class="badge badge-success pull-right">4</span></a></li>
+            <li><a href="#"><i class="fa fa-exclamation-circle"></i>Decline <span class="badge badge-success pull-right">4</span></a></li>
+            <li><a href="#"><i class="fa fa-trash"></i>Not Contacted <span class="badge badge-success pull-right">4</span></a></li>
+            <li><a href="#"><i class="fa fa-trash"></i>Return <span class="badge badge-success pull-right">4</span></a></li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <div class="panel panel-white">
+        	<div class="panel-heading clearfix">
+        		<div class="col-md-8">
+        			<h4 class="panel-title">Customer Information</h4>
+        		</div>
+        		<div class="col-md-4">
+        			<h4 class="panel-title">Form Call</h4>
+        		</div>
+            </div>
+            <div class="panel-body mailbox-content">
+		    	<div class="col-md-8">
+		    		<div class="col-sm-12 col-md-12">
+		        		<div class="row">
+		        			<div class="col-sm-4">BRAND</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="brand"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">ROW_NUM</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="row_num"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">MSISDN_MASK</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="msisdn_mask"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">MSISDN</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="msisdn"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">NAME_MASK</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="name_mask"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">CUSTOMER_SUBTYPE</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="customer_subtype"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">TOT_BILL_AMOUNT</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="tot_bill_amount"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">TOTAL_REVENUE</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="total_revenue"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">DEVICE_TYPE</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="device_type"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">VOL_BROADBAND</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="vol_broadband"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">VOL_BROADBAND_PACKAGE</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="vol_broadband_package"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">CI</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="ci"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">KABUPATEN</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="kabupaten"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">LONGITUDE</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="longitude"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">LATITUDE</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="latitude"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">ODP1</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="odp1"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">ODP2</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="odp2"></div>
+		    			</div>
+		    			<div class="row">
+		        			<div class="col-sm-4">ODP3</div>
+		        			<div class="col-sm-1"> : </div>
+		        			<div class="" id="odp3"></div>
+		    			</div>
+		        	</div>
+		    	</div>
+		    	<div class="col-md-4">
+		    		<form class="form-horizontal" id="formCall" method="POST" action="/agent/save">
+		    			@csrf
+		    			<input type="hidden" class="@error('dapros_id') is-invalid @enderror" name="dapros_id" id="dapros_id">
+		    			@error('dapros_id')
+                        	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ 'Please fetch data first!' }}</p>
+                        @enderror
+                        <div class="form-group">
+                        	<label for="status_call" class="col-sm-3 control-label">Status Call</label>
+                            <div class="col-sm-9">
+                                <select class="form-control @error('status_call') is-invalid @enderror" name="status_call" id="status_call" tabindex="-1" required="required">
+	                            </select>
+
+	                            @error('status_call')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+                            </div>   	
+                        </div>
+                        <div class="form-group">
+                        	<label for="status_detail" class="col-sm-3 control-label">Status Detail</label>
+                            <div class="col-sm-9">
+                                <select class="form-control  @error('status_detail') is-invalid @enderror" name="status_detail" id="status_detail" tabindex="-1" required="required">
+	                            </select>
+                                
+	                            @error('status_detail')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+                            </div>   	
+                        </div>
+                        <div class="form-group">
+                        	<label for="status_detail_reason" class="col-sm-3 control-label">Detail Reason</label>
+                            <div class="col-sm-9">
+                                <select class="form-control  @error('status_detail_reason') is-invalid @enderror" name="status_detail_reason" id="status_detail_reason" tabindex="-1" required="required">
+	                            </select>
+                                
+	                            @error('status_detail_reason')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+                            </div>   	
+                        </div>
+                        <div class="form-group">
+                        	<label for="" class="col-sm-3 control-label">Appointment Management</label>
+                        	<div class="col-sm-9">
+	                            <div class="input-group m-b-sm">
+	                            	<span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+	                            	<input type="text" class="form-control date-picker  @error('am_date') is-invalid @enderror" name="am_date" id="am_date">
+	                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
+	                                <input type="text" class="form-control time-picker  @error('am_time') is-invalid @enderror" name="am_time" id="am_time" >
+	                            </div>
+	                            
+	                            @error('am_date')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+                                @error('am_time')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+	                        </div>   	
+                        </div>
+                        <div class="form-group">
+                        	<label for="" class="col-sm-3 control-label">Follow Up Call</label>
+                        	<div class="col-sm-9">
+	                            <div class="input-group m-b-sm">
+	                            	<span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+	                            	<input type="text" class="form-control date-picker  @error('fu_date') is-invalid @enderror" name="fu_date" id="fu_date">
+	                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
+	                                <input type="text" class="form-control time-picker  @error('fu_time') is-invalid @enderror" name="fu_time" id="fu_time" >
+	                            </div>
+	                            
+	                            @error('fu_date')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+                                @error('fu_time')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+	                        </div>   	
+                        </div>
+                        <div class="form-group">
+                        	<label for="information" class="col-sm-3 control-label">Information</label>
+                        	<div class="col-sm-9">
+                        		<textarea class="form-control  @error('information') is-invalid @enderror" name="information" id="information" rows="3" style="resize: none;" required="required"></textarea>
+                        		
+	                            @error('information')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+	                        </div>   	
+                        </div>
+                    </form>
+		    	</div>
+            </div>
+        </div>
+    </div>
+</div><!-- Row -->
+<script src="{{ asset('plugins/select2/js/select2.min.js') }}" defer></script>
+<script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" defer></script>
+<script src="{{ asset('plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" defer></script>
+<script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
 <script type="text/javascript" defer>
 	$('#get-data-form').on('submit', function(e){
         e.preventDefault();
+        $('#get-data-form .btn').button('loading');
         $.ajaxSetup({
 		    headers: {
 		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -106,15 +250,206 @@
 	       url:'/agent/data',
 	       //data: $( this ).serialize(),
 	       success: function(data){
-	        console.log(data);
+	       	var valueTitles = ['BRAND','ROW_NUM','MSISDN_MASK','MSISDN','NAME_MASK','CUSTOMER_SUBTYPE','TOT_BILL_AMOUNT','TOTAL_REVENUE','DEVICE_TYPE','VOL_BROADBAND','VOL_BROADBAND_PACKAGE','CI','KABUPATEN','LONGITUDE','LATITUDE','ODP1','ODP2','ODP3'];
+	       	var labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
+	        for (var i = 0; i < labelTitles.length; i++) {
+	          $("#" + labelTitles[i]).html(data[0][valueTitles[i]]);
+	        }
+	        $("#dapros_id").val(data[0]['id']);
+	        console.log($("#dapros_id").val())
+	        $('#get-data-form .btn').button('reset');
+	        notificationScript("success", "Success", "Success fetching Data");
+
 	       },
 	        error : function(data) {
-	        console.log(data);
+	         $('#get-data-form .btn').button('reset');
+	         notificationScript("error", "Error", "Error while trying fetching data.");
 	        }
-	     }).done(function(){
-	     	console.log('done')
+	     }).done(function(data){
+	     	//
 	     });
 
     });
+    $('#formCall').on('submit', function(e){
+        e.preventDefault();
+        $('#saveBtn').button('loading');
+        $.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});
+        $.ajax({
+	       type:"post",
+	       url:'/agent/save',
+	       data: $( this ).serialize(),
+	       success: function(data){
+	       	/*var valueTitles = ['BRAND','ROW_NUM','MSISDN_MASK','MSISDN','NAME_MASK','CUSTOMER_SUBTYPE','TOT_BILL_AMOUNT','TOTAL_REVENUE','DEVICE_TYPE','VOL_BROADBAND','VOL_BROADBAND_PACKAGE','CI','KABUPATEN','LONGITUDE','LATITUDE','ODP1','ODP2','ODP3'];
+	       	var labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
+	        for (var i = 0; i < labelTitles.length; i++) {
+	          $("#" + labelTitles[i]).html(data[0][valueTitles[i]]);
+	        }
+	        $("#dapros_id").val(data[0]['id']);
+	        console.log($("#dapros_id").val())
+	        $('#get-data-form .btn').button('reset');
+	        $('.navbar').html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Well done! You successfully Get Data.</div>');*/
+	        console.log(data)
+	        $('#saveBtn').button('reset');
+	       },
+	        error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
+	        	$('#saveBtn').button('reset');
+	            var errors = jqXhr.responseJSON;
+	            var errorsHtml = '<div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom: 0;"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Error ' + jqXhr.status + ': ' + errorThrown + '</div>';
+	            notificationScript("error", "Error " + jqXhr.status, errorThrown);
+	            $.each(errors['errors'], function (index, value) {
+	                errorsHtml += '<div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom: 0;><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + value + '</div>';
+	                notificationScript("error", "Error Field", value);
+	            });
+	            
+	        }
+	     }).done(function(){
+	     	
+	     });
+
+    });
+
+    // Func Chaining
+	function chain1() {
+		$.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});
+		$.ajax({
+	       type:"post",
+	       url:'/agent/status_call',
+	       //data: {},
+	       success: function(data){
+	       	
+	       	var ahtml = '<option></option>';
+	       	for (var i = 0; i < data.length; i++) {
+	       		ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['value_call_status']+"</option>"
+	       	}
+	        $('#status_call').html(ahtml);
+	       },
+	        error : function(data) {
+	        
+	        console.log("error");
+	        }
+	     }).done(function(){
+
+	     });
+	}
+	function chain2(id) {
+		$.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});
+		$.ajax({
+	       type:"post",
+	       url:'/agent/status_detail_call',
+	       data: {'id':id},
+	       success: function(data){
+	       	var ahtml = '<option></option>';
+	       	for (var i = 0; i < data.length; i++) {
+	       		ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['value_call_status_detail']+"</option>"
+	       	}
+	        $('#status_detail').html(ahtml);
+	        
+	       },
+	        error : function(data) {
+	        
+	        console.log("error");
+	        }
+	     }).done(function(){
+
+	     });
+	}
+	function chain3(id) {
+		$.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});
+		$.ajax({
+	       type:"post",
+	       url:'/agent/status_detail_reason_call',
+	       data: {'id':id},
+	       success: function(data){
+	       	var ahtml = '<option></option>';
+	       	for (var i = 0; i < data.length; i++) {
+	       		ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['value_call_status_detail_reason']+"</option>"
+	       	}
+	        $('#status_detail_reason').html(ahtml);
+	        
+	       },
+	        error : function(data) {
+	        
+	        console.log("error");
+	        }
+	     }).done(function(){
+
+	     });
+	}
+
+	// Func Notification
+	function notificationScript(type, title, message) {
+		console.log('Notification will start')
+		toastr.options = {
+		  "closeButton": false,
+		  "debug": false,
+		  "newestOnTop": false,
+		  "progressBar": false,
+		  "positionClass": "toast-top-center",
+		  "preventDuplicates": false,
+		  "onclick": null,
+		  "showDuration": "300",
+		  "hideDuration": "1000",
+		  "timeOut": "5000",
+		  "extendedTimeOut": "1000",
+		  "showEasing": "swing",
+		  "hideEasing": "linear",
+		  "showMethod": "fadeIn",
+		  "hideMethod": "fadeOut"
+		}
+		toastr[type](title, message)
+	}
+	    
+	// Document Ready
+	$(document).ready(function() {
+	    $("select").select2({
+			placeholder: "Please select option"
+		});
+	    $('.date-picker').datepicker({
+	        orientation: "top auto",
+	        autoclose: true,
+	        format: 'yyyy-m-d'
+	    });
+	    $('.time-picker').timepicker({
+	    	showMeridian: false
+	    });
+	    chain1();
+	});
+	// On Change Events
+	$("#status_call").change(function() {
+	    var id = $(this).val();
+	    if (id != "")
+	    {
+	      chain2(id);
+	    }
+	  });
+	$("#status_detail").change(function() {
+	    var id = $(this).val();
+	    if (id != "")
+	    {
+	      chain3(id);
+	    }
+	  });
+	// Button On Click
+	$('#resetBtn').click(function(){
+	    $("#formCall").trigger("reset");
+	    $("select").val('').trigger('change');
+	});
+
 </script>
 @endsection

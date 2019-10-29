@@ -6,6 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class _dapros_statistics extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'dapros_id', 'call_status_id' , 'call_status_detail_id' , 'call_status_detail_reason_id' , 'call_am_datetime' , 'call_fu_datetime' , 'call_information' , 'call_agent_username' //, 'tapping_status_id' , 'tapping_information' , 'tapping_agent_username', 'tapping_consume_datetime' 
+        , 'call_consume_datetime', 'call_attempts'
+    ];
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        # Empty
+    ];
+
     // Relasi antara Tabel _call_status dengan _dapros_statistics || One To Many Relationship Inverse 
     public function call_status()
     {
@@ -32,7 +50,7 @@ class _dapros_statistics extends Model
     }
 
     // Relasi antara tabel _tapping_status dengan _dapros_statistics || One To Many Relationship Inverse 
-    public function call_status_detail_reason()
+    public function tapping_status()
     {
     	return $this->belongsTo('App\_tapping_status', 'tapping_status_id');
     }

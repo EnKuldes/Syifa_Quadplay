@@ -23,9 +23,9 @@ class CreateCallsTable extends Migration
             $table->dateTime('call_am_datetime'); // appointment management / Manajemen Janji
             $table->dateTime('call_fu_datetime'); // Follow Up
             $table->longText('call_information'); // Keterangan
-            $table->tinyInteger('call_attempts');
+            //$table->tinyInteger('call_attempts');
             $table->string('call_agent_username');
-            $table->dateTime('call_consume_datetime');
+            $table->dateTime('call_consume_datetime')->useCurrent = true;
             // Call END
             $table->timestamps();
         });
