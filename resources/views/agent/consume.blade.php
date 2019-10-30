@@ -31,21 +31,28 @@
                 			<tr>
                 				@php
                 					$customer_information = $data->dapros;
-                					$call_status = $data->call_status;
                 					$call_status_detail = $data->call_status_detail;
-                					$call_status_detail_reason = $data->call_status_detail_reason;
+                					if ($call_status_detail->value_call_status_detail == 1 OR $call_status_detail->value_call_status_detail == 3) {
+                						$label_color = "success";
+                					}
+                					elseif ($call_status_detail->value_call_status_detail == 2 ) {
+                						$label_color = "warning";
+                					}
+                					else{
+                						$label_color = "danger";
+                					}
                 					$user = $data->call_agent;
                 				@endphp
 		                        <th scope="row">1</th>
 		                        <td>{{ $customer_information->MSISDN_MASK }}</td>
 		                        <td>{{ $customer_information->NAME_MASK }}</td>
-		                        <td>CALL STATUS</td>
+		                        <td><span class="label label-{{ $label_color }}">{{ $call_status_detail->value_call_status_detail }}</span> </td>
 		                        <td>{{ $data->call_am_datetime }}</td>
 		                        <td>{{ $data->call_fu_datetime }}</td>
 		                        <td>{{ $data->call_information }}</td>
 		                        <td>{{ $data->call_attempts }}</td>
 		                        <td>{{ $data->call_consume_datetime }}</td>
-		                        <td>{{ $user }}</td>
+		                        <td>{{ $user->name }}</td>
 		                        <td>ACTIONS</td>
 		                    </tr>
                 		@endforeach

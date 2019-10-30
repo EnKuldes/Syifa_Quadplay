@@ -41,13 +41,14 @@ class _dapros_statistics extends Model
     // Relasi antara tabel Users dengan _dapros_statistics || One To Many Relationship Inverse  || Call Agent Username
     public function call_agent()
     {
-    	return $this->belongsTo('App\User', 'call_agent_username');
+    	return $this->belongsTo('App\User', 'call_agent_username', 'username');
     }
+
     // Relasi antara tabel Users dengan _dapros_statistics || One To Many Relationship Inverse  || Tapping Agent Username
     public function tapping_agent()
     {
-    	return $this->belongsTo('App\User', 'tapping_agent_username');
-    }
+    	return $this->belongsTo('App\User', 'tapping_agent_username', 'username');
+    }//
 
     // Relasi antara tabel _tapping_status dengan _dapros_statistics || One To Many Relationship Inverse 
     public function tapping_status()

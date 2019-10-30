@@ -38,19 +38,20 @@ class User extends Authenticatable
     ];
 
     // Relasi antara Tabel User dengan tabel lainnya || One To Many Relationship
-    public function dapros_statistics_calls($value='')
+    //public function dapros_statistics_calls()
+    public function users()
     {
         return $this->hasMany('App\_dapros_statistics', 'call_agent_username', 'username');
     }
-    public function dapros_statistics_tappings($value='')
+    /*public function dapros_statistics_tappings()
     {
         return $this->hasMany('App\_dapros_statistics', 'tapping_agent_username', 'username');
-    }
-    public function calls($value='')
+    }*/
+    public function calls()
     {
         return $this->hasMany('App\_call', 'call_agent_username', 'username');
     }
-    public function tappings($value='')
+    public function tappings()
     {
         return $this->hasMany('App\_tapping', 'tapping_agent_username', 'username');
     }
