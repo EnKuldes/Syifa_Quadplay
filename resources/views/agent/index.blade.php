@@ -150,7 +150,7 @@
                         <div class="form-group">
                         	<label for="status_call" class="col-sm-3 control-label">Status Call</label>
                             <div class="col-sm-9">
-                                <select class="form-control @error('status_call') is-invalid @enderror" name="status_call" id="status_call" tabindex="-1" required="required">
+                                <select class="form-control @error('status_call') is-invalid @enderror" name="status_call" id="status_call" tabindex="-1" required="required" style="width:100%;">
 	                            </select>
 
 	                            @error('status_call')
@@ -161,7 +161,7 @@
                         <div class="form-group">
                         	<label for="status_detail" class="col-sm-3 control-label">Status Detail</label>
                             <div class="col-sm-9">
-                                <select class="form-control  @error('status_detail') is-invalid @enderror" name="status_detail" id="status_detail" tabindex="-1" required="required">
+                                <select class="form-control  @error('status_detail') is-invalid @enderror" name="status_detail" id="status_detail" tabindex="-1" required="required" style="width:100%;">
 	                            </select>
 
 	                            @error('status_detail')
@@ -172,7 +172,7 @@
                         <div class="form-group">
                         	<label for="status_detail_reason" class="col-sm-3 control-label">Detail Reason</label>
                             <div class="col-sm-9">
-                                <select class="form-control  @error('status_detail_reason') is-invalid @enderror" name="status_detail_reason" id="status_detail_reason" tabindex="-1" required="required">
+                                <select class="form-control  @error('status_detail_reason') is-invalid @enderror" name="status_detail_reason" id="status_detail_reason" tabindex="-1" required="required" style="width:100%;">
 	                            </select>
 
 	                            @error('status_detail_reason')
@@ -238,7 +238,7 @@
 <script type="text/javascript" defer>
 	$('#get-data-form').on('submit', function(e){
         e.preventDefault();
-        
+
         if ( $("#dapros_id").val() != '' ) {
         	notificationScript("warning", "Warning", "You still have data to call first!");
         }
@@ -446,7 +446,7 @@
 	          $("#" + labelTitles[i]).html('');
 	        }
 	        $("#dapros_id").removeAttr('value');*/
-	        
+
 	        var spanTitles = ['consumed_daily', 'agree_daily', 'fu_daily', 'decline_daily', 'nc_daily', 'return_daily'];
 	        var valueTitles = ['consumed_daily', 'agree_daily', 'fu_daily', 'decline_daily', 'nc_daily', 'return_daily'];
 	        for (var i = 0; i < spanTitles.length; i++) {
