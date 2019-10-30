@@ -57,8 +57,35 @@ class AgentController extends Controller
      */
     public function consume($param)
     {
-    	
-    	return response()->json($data, 200);
+    	switch ($param) {
+    		case 'all':
+    			$qWhere = "`call_status_id` > 0";
+    			break;
+    		case 'agree':
+    			$qWhere = "`call_status_detail_id` = 1";
+    			break;
+    		case 'follow_up':
+    			$qWhere = "`call_status_detail_id` = 2";
+    			break;
+    		case 'decline':
+    			$qWhere = "`call_status_detail_id` = 3";
+    			break;
+    		case 'not_contacted':
+    			$qWhere = "`call_status_id` = 2";
+    			break;
+    		case 'return':
+    			$qWhere = "`tapping_status_id` = 2";
+    			break;
+    		
+    		default:
+    			# code...
+    			break;
+    	}
+    	$datas = _dapros_statistics::whereRaw($qWhere)
+               ->orderBy('call_consume_datetime', 'desc')
+               ->paginate(10);
+    	//return response()->json($datas, 200);
+       	return view('agent.consume')->with('datas',$datas);
     }
 
     /**

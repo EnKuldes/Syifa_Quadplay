@@ -54,4 +54,10 @@ class _dapros_statistics extends Model
     {
     	return $this->belongsTo('App\_tapping_status', 'tapping_status_id');
     }
+
+    // Relasi antara Tabel _dapros dengan _dapros_statistics || One To One Relationship Inverse 
+    public function dapros()
+    {
+        return $this->belongsTo('App\_dapros', 'dapros_id');
+    }
 }
