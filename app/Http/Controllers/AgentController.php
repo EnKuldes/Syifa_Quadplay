@@ -51,6 +51,17 @@ class AgentController extends Controller
     }
 
     /**
+     * Menampilkan tabel consume agent berdasarkan parameter.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function consume($param)
+    {
+    	
+    	return response()->json($data, 200);
+    }
+
+    /**
      * Mencari data
      */
     public function getData()
