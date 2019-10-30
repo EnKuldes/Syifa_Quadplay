@@ -28,11 +28,11 @@
     <div class="col-md-2">
         <ul class="list-unstyled mailbox-nav">
             <li><a href="inbox.html"><i class="fa fa-inbox"></i>Consumed <span class="badge badge-success pull-right">4</span></a></li>
-            <li><a href="#"><i class="fa fa-sign-out"></i>Agree <span class="badge badge-success pull-right">4</span></a></li>
-            <li><a href="#"><i class="fa fa-file-text-o"></i>Follow Up <span class="badge badge-success pull-right">4</span></a></li>
-            <li><a href="#"><i class="fa fa-exclamation-circle"></i>Decline <span class="badge badge-success pull-right">4</span></a></li>
-            <li><a href="#"><i class="fa fa-trash"></i>Not Contacted <span class="badge badge-success pull-right">4</span></a></li>
-            <li><a href="#"><i class="fa fa-trash"></i>Return <span class="badge badge-success pull-right">4</span></a></li>
+            <li><a href="#"><i class="fa fa-check"></i>Agree <span class="badge badge-success pull-right">4</span></a></li>
+            <li><a href="#"><i class="fa fa-refresh"></i>Follow Up <span class="badge badge-success pull-right">4</span></a></li>
+            <li><a href="#"><i class="fa fa-user-times"></i>Decline <span class="badge badge-success pull-right">4</span></a></li>
+            <li><a href="#"><i class="fa fa-exclamation-circle"></i>Not Contacted <span class="badge badge-success pull-right">4</span></a></li>
+            <li><a href="#"><i class="fa fa-sign-in"></i>Return <span class="badge badge-success pull-right">4</span></a></li>
         </ul>
     </div>
     <div class="col-md-10">
@@ -156,29 +156,29 @@
 	                            @error('status_call')
                                 	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
                                 @enderror
-                            </div>   	
+                            </div>
                         </div>
                         <div class="form-group">
                         	<label for="status_detail" class="col-sm-3 control-label">Status Detail</label>
                             <div class="col-sm-9">
                                 <select class="form-control  @error('status_detail') is-invalid @enderror" name="status_detail" id="status_detail" tabindex="-1" required="required">
 	                            </select>
-                                
+
 	                            @error('status_detail')
                                 	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
                                 @enderror
-                            </div>   	
+                            </div>
                         </div>
                         <div class="form-group">
                         	<label for="status_detail_reason" class="col-sm-3 control-label">Detail Reason</label>
                             <div class="col-sm-9">
                                 <select class="form-control  @error('status_detail_reason') is-invalid @enderror" name="status_detail_reason" id="status_detail_reason" tabindex="-1" required="required">
 	                            </select>
-                                
+
 	                            @error('status_detail_reason')
                                 	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
                                 @enderror
-                            </div>   	
+                            </div>
                         </div>
                         <div class="form-group">
                         	<label for="" class="col-sm-3 control-label">Appointment Management</label>
@@ -189,14 +189,14 @@
 	                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
 	                                <input type="text" class="form-control time-picker  @error('am_time') is-invalid @enderror" name="am_time" id="am_time" autocomplete="off">
 	                            </div>
-	                            
+
 	                            @error('am_date')
                                 	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
                                 @enderror
                                 @error('am_time')
                                 	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
                                 @enderror
-	                        </div>   	
+	                        </div>
                         </div>
                         <div class="form-group">
                         	<label for="" class="col-sm-3 control-label">Follow Up Call</label>
@@ -207,24 +207,29 @@
 	                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
 	                                <input type="text" class="form-control time-picker  @error('fu_time') is-invalid @enderror" name="fu_time" id="fu_time" autocomplete="off">
 	                            </div>
-	                            
+
 	                            @error('fu_date')
                                 	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
                                 @enderror
                                 @error('fu_time')
                                 	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
                                 @enderror
-	                        </div>   	
+	                        </div>
                         </div>
                         <div class="form-group">
                         	<label for="information" class="col-sm-3 control-label">Information</label>
                         	<div class="col-sm-9">
+<<<<<<< HEAD
                         		<textarea class="form-control  @error('information') is-invalid @enderror" name="information" id="information" rows="3" style="resize: none;" required="required" autocomplete="off"></textarea>
                         		
+=======
+                        		<textarea class="form-control  @error('information') is-invalid @enderror" name="information" id="information" rows="3" style="resize: none;" required="required"></textarea>
+
+>>>>>>> 30dddec9594af2e9b9e3d4539a64c541b9c2882e
 	                            @error('information')
                                 	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
                                 @enderror
-	                        </div>   	
+	                        </div>
                         </div>
                     </form>
 		    	</div>
@@ -304,7 +309,7 @@
 	        }
 	        $("#dapros_id").removeAttr('value');
 	       },
-	        error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
+	        error: function(jqXhr, json, errorThrown){// this are default for ajax errors
 	        	$('#saveBtn').button('reset');
 	            var errors = jqXhr.responseJSON;
 	            var errorsHtml = '<div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom: 0;"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Error ' + jqXhr.status + ': ' + errorThrown + '</div>';
@@ -313,10 +318,10 @@
 	                errorsHtml += '<div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom: 0;><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + value + '</div>';
 	                notificationScript("error", "Error Field", value);
 	            });
-	            
+
 	        }
 	     }).done(function(){
-	     	
+
 	     });
 
     });
@@ -333,7 +338,7 @@
 	       url:'/agent/status_call',
 	       //data: {},
 	       success: function(data){
-	       	
+
 	       	var ahtml = '<option></option>';
 	       	for (var i = 0; i < data.length; i++) {
 	       		ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['value_call_status']+"</option>"
@@ -341,8 +346,13 @@
 	        $('#status_call').html(ahtml);
 	       },
 	        error : function(data) {
+<<<<<<< HEAD
 	        
 	        console.log("error chain1");
+=======
+
+	        console.log("error");
+>>>>>>> 30dddec9594af2e9b9e3d4539a64c541b9c2882e
 	        }
 	     }).done(function(){
 
@@ -364,11 +374,16 @@
 	       		ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['value_call_status_detail']+"</option>"
 	       	}
 	        $('#status_detail').html(ahtml);
-	        
+
 	       },
 	        error : function(data) {
+<<<<<<< HEAD
 	        
 	        console.log("error chain2");
+=======
+
+	        console.log("error");
+>>>>>>> 30dddec9594af2e9b9e3d4539a64c541b9c2882e
 	        }
 	     }).done(function(){
 
@@ -390,11 +405,16 @@
 	       		ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['value_call_status_detail_reason']+"</option>"
 	       	}
 	        $('#status_detail_reason').html(ahtml);
-	        
+
 	       },
 	        error : function(data) {
+<<<<<<< HEAD
 	        
 	        console.log("error chain3");
+=======
+
+	        console.log("error");
+>>>>>>> 30dddec9594af2e9b9e3d4539a64c541b9c2882e
 	        }
 	     }).done(function(){
 
@@ -423,7 +443,7 @@
 		}
 		toastr[type](title, message)
 	}
-	    
+
 	// Document Ready
 	$(document).ready(function() {
 	    $("select").select2({
