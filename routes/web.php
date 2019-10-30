@@ -17,7 +17,7 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 
-// Auth Routes dimatikan
+# Auth Routes dimatikan
 // Auth::routes();
 Auth::routes([
   'register' => false, // Registration Routes...
@@ -28,13 +28,15 @@ Auth::routes([
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// Bikin Route tapi dari Resources
+# Bikin Route tapi dari Resources
 //Route::resource('agents', 'AgentController');
 Route::get('/agent', 'AgentController@index')->name('workspace');
 Route::get('/agent/workspace', 'AgentController@index')->name('workspace');
 Route::post('/agent/data', 'AgentController@getData');
 Route::post('/agent/save', 'AgentController@saveDataCall');
-// Chaining Select 1
+# Chaining Select 1
 Route::post('/agent/status_call', 'AgentController@chain_status_call')->name('chain');;
 Route::post('/agent/status_detail_call', 'AgentController@chain_status_detail_call')->name('chain');;
 Route::post('/agent/status_detail_reason_call', 'AgentController@chain_status_detail_reason_call')->name('chain');;
+# Coiunting Agent Call
+Route::post('/agent/activity', 'AgentController@countActivityAgent')->name('activity');;

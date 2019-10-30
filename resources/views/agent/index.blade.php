@@ -17,8 +17,8 @@
                 <form action="#" method="POST">
                     <div class="input-group text-right">
                     	<span class="input-group-btn">
-                            <button type="button" form="formCall" class="btn btn-default" id="resetBtn" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Reset <i class="fa fa-refresh"></i></button>
-                        	<button type="submit" form="formCall" class="btn btn-default" id="saveBtn" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Save <i class="fa fa-save"></i></button>
+                            <button type="button" form="formCall" class="btn btn-danger" id="resetBtn" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Reset <i class="fa fa-refresh"></i></button>
+                        	<button type="submit" form="formCall" class="btn btn-success" id="saveBtn" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Save <i class="fa fa-save"></i></button>
                         </span>
                     </div><!-- Input Group -->
                 </form>
@@ -27,12 +27,12 @@
     </div>
     <div class="col-md-2">
         <ul class="list-unstyled mailbox-nav">
-            <li><a href="inbox.html"><i class="fa fa-inbox"></i>Consumed <span class="badge badge-success pull-right">4</span></a></li>
-            <li><a href="#"><i class="fa fa-check"></i>Agree <span class="badge badge-success pull-right">4</span></a></li>
-            <li><a href="#"><i class="fa fa-refresh"></i>Follow Up <span class="badge badge-success pull-right">4</span></a></li>
-            <li><a href="#"><i class="fa fa-user-times"></i>Decline <span class="badge badge-success pull-right">4</span></a></li>
-            <li><a href="#"><i class="fa fa-exclamation-circle"></i>Not Contacted <span class="badge badge-success pull-right">4</span></a></li>
-            <li><a href="#"><i class="fa fa-sign-in"></i>Return <span class="badge badge-success pull-right">4</span></a></li>
+            <li><a href="#"><i class="fa fa-inbox"></i>Consumed <span class="badge badge-success pull-right" id="consumed_daily">{{ $counting['consumed_daily'] }}</span></a></li>
+            <li><a href="#"><i class="fa fa-check"></i>Agree <span class="badge badge-success pull-right" id="agree_daily">{{ $counting['agree_daily'] }}</span></a></li>
+            <li><a href="#"><i class="fa fa-refresh"></i>Follow Up <span class="badge badge-success pull-right" id="fu_daily">{{ $counting['fu_daily'] }}</span></a></li>
+            <li><a href="#"><i class="fa fa-user-times"></i>Decline <span class="badge badge-success pull-right" id="decline_daily">{{ $counting['decline_daily'] }}</span></a></li>
+            <li><a href="#"><i class="fa fa-exclamation-circle"></i>Not Contacted <span class="badge badge-success pull-right" id="nc_daily">{{ $counting['nc_daily'] }}</span></a></li>
+            <li><a href="#"><i class="fa fa-sign-in"></i>Return <span class="badge badge-success pull-right" id="return_daily">{{ $counting['return_daily'] }}</span></a></li>
         </ul>
     </div>
     <div class="col-md-10">
@@ -220,8 +220,7 @@
                         	<label for="information" class="col-sm-3 control-label">Information</label>
                         	<div class="col-sm-9">
                         		<textarea class="form-control  @error('information') is-invalid @enderror" name="information" id="information" rows="3" style="resize: none;" required="required" autocomplete="off"></textarea>
-                        		<textarea class="form-control  @error('information') is-invalid @enderror" name="information" id="information" rows="3" style="resize: none;" required="required"></textarea>
-	                            @error('information')
+                        		@error('information')
                                 	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
                                 @enderror
 	                        </div>
@@ -303,6 +302,7 @@
 	          $("#" + labelTitles[i]).html('');
 	        }
 	        $("#dapros_id").removeAttr('value');
+	        activity();
 	       },
 	        error: function(jqXhr, json, errorThrown){// this are default for ajax errors
 	        	$('#saveBtn').button('reset');
@@ -429,6 +429,49 @@
 		toastr[type](title, message)
 	}
 
+	// Func Counting
+	function activity() {
+		$.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});
+        $.ajax({
+	       type:"post",
+	       url:'/agent/activity',
+	       //data: $( this ).serialize(),
+	       success: function(data){
+	        /*$('#saveBtn').button('reset');
+	        notificationScript("success", "Success", "Successfully submit form.");
+	        $('#resetBtn').click();
+	        var labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
+	        for (var i = 0; i < labelTitles.length; i++) {
+	          $("#" + labelTitles[i]).html('');
+	        }
+	        $("#dapros_id").removeAttr('value');*/
+	        console.log(data);
+	        var spanTitles = ['consumed_daily', 'agree_daily', 'fu_daily', 'decline_daily', 'nc_daily', 'return_daily'];
+	        var valueTitles = ['consumed_daily', 'agree_daily', 'fu_daily', 'decline_daily', 'nc_daily', 'return_daily'];
+	        for (var i = 0; i < spanTitles.length; i++) {
+	          $("#" + spanTitles[i]).html(data[valueTitles[i]]);
+	        }
+	       },
+	        error: function(jqXhr, json, errorThrown){// this are default for ajax errors
+	        	$('#saveBtn').button('reset');
+	            var errors = jqXhr.responseJSON;
+	            var errorsHtml = '<div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom: 0;"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Error ' + jqXhr.status + ': ' + errorThrown + '</div>';
+	            notificationScript("error", "Error " + jqXhr.status, errorThrown);
+	            $.each(errors['errors'], function (index, value) {
+	                errorsHtml += '<div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom: 0;><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + value + '</div>';
+	                notificationScript("error", "Error Field", value);
+	            });
+
+	        }
+	     }).done(function(){
+
+	     });
+	}
+
 	// Document Ready
 	$(document).ready(function() {
 	    $("select").select2({
@@ -448,14 +491,14 @@
 	// On Change Events
 	$("#status_call").change(function() {
 	    var id = $(this).val();
-	    if (id != "")
+	    if (id != "" && id != null)
 	    {
 	      chain2(id);
 	    }
 	  });
 	$("#status_detail").change(function() {
 	    var id = $(this).val();
-	    if (id != "")
+	    if (id != "" && id != null)
 	    {
 	      chain3(id);
 	    }
@@ -464,6 +507,8 @@
 	$('#resetBtn').click(function(){
 	    $("#formCall").trigger("reset");
 	    $("select").val('').trigger('change');
+	    $("#status_detail").html('');
+	    $("#status_detail_reason").html('');
 	});
 
 </script>
