@@ -92,20 +92,9 @@
                 @include('inc.navbar')
                 {{-- Navbar End --}}
             @endauth
-                
-            {{--  Page Sidebar --}}   
+
+            {{--  Page Sidebar --}}
             <div class="page-inner">
-                @auth
-                    <div class="page-breadcrumb">
-                        <ol class="breadcrumb container">
-                            <li><a href="/">{{ config('app.name') }}</a></li>
-                            @foreach (Request::segments() as $record)
-                                <li><a href="#">{{ ucwords($record) }}</a></li>
-                            @endforeach
-                        </ol>
-                    </div>
-                @endauth
-                
                 {{-- Main Wrapper Start --}}
                 <div id="main-wrapper" class="container">
                     @yield('content')
