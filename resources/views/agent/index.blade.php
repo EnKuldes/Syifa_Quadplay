@@ -219,13 +219,8 @@
                         <div class="form-group">
                         	<label for="information" class="col-sm-3 control-label">Information</label>
                         	<div class="col-sm-9">
-<<<<<<< HEAD
                         		<textarea class="form-control  @error('information') is-invalid @enderror" name="information" id="information" rows="3" style="resize: none;" required="required" autocomplete="off"></textarea>
-                        		
-=======
                         		<textarea class="form-control  @error('information') is-invalid @enderror" name="information" id="information" rows="3" style="resize: none;" required="required"></textarea>
-
->>>>>>> 30dddec9594af2e9b9e3d4539a64c541b9c2882e
 	                            @error('information')
                                 	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
                                 @enderror
@@ -270,7 +265,7 @@
 		        notificationScript("success", "Success", "Success fetching Data");
 		        $('#resetBtn').click();
 		       },
-		        error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
+		        error: function(jqXhr, json, errorThrown){// this are default for ajax errors
 				$('#get-data-form .btn').button('reset');
 				//notificationScript("error", "Error", "Error while trying fetching data.");
 				var errors = jqXhr.responseJSON;
@@ -346,13 +341,9 @@
 	        $('#status_call').html(ahtml);
 	       },
 	        error : function(data) {
-<<<<<<< HEAD
-	        
-	        console.log("error chain1");
-=======
 
+	        console.log("error chain1");
 	        console.log("error");
->>>>>>> 30dddec9594af2e9b9e3d4539a64c541b9c2882e
 	        }
 	     }).done(function(){
 
@@ -377,13 +368,10 @@
 
 	       },
 	        error : function(data) {
-<<<<<<< HEAD
-	        
+
 	        console.log("error chain2");
-=======
 
 	        console.log("error");
->>>>>>> 30dddec9594af2e9b9e3d4539a64c541b9c2882e
 	        }
 	     }).done(function(){
 
@@ -408,13 +396,10 @@
 
 	       },
 	        error : function(data) {
-<<<<<<< HEAD
-	        
+
 	        console.log("error chain3");
-=======
 
 	        console.log("error");
->>>>>>> 30dddec9594af2e9b9e3d4539a64c541b9c2882e
 	        }
 	     }).done(function(){
 
