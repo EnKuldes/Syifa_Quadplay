@@ -49,92 +49,92 @@
 		    	<div class="col-md-8">
 		    		<div class="col-sm-12 col-md-12">
 		        		<div class="row">
-		        			<div class="col-sm-4">BRAND</div>
+		        			<div class="col-sm-3">BRAND</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="brand"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">ROW_NUM</div>
+		        			<div class="col-sm-3">ROW_NUM</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="row_num"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">MSISDN_MASK</div>
+		        			<div class="col-sm-3">MSISDN_MASK</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="msisdn_mask"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">MSISDN</div>
+		        			<div class="col-sm-3">MSISDN</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="msisdn"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">NAME_MASK</div>
+		        			<div class="col-sm-3">NAME_MASK</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="name_mask"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">CUSTOMER_SUBTYPE</div>
+		        			<div class="col-sm-3">CUSTOMER_SUBTYPE</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="customer_subtype"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">TOT_BILL_AMOUNT</div>
+		        			<div class="col-sm-3">TOT_BILL_AMOUNT</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="tot_bill_amount"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">TOTAL_REVENUE</div>
+		        			<div class="col-sm-3">TOTAL_REVENUE</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="total_revenue"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">DEVICE_TYPE</div>
+		        			<div class="col-sm-3">DEVICE_TYPE</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="device_type"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">VOL_BROADBAND</div>
+		        			<div class="col-sm-3">VOL_BROADBAND</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="vol_broadband"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">VOL_BROADBAND_PACKAGE</div>
+		        			<div class="col-sm-3">VOL_BROADBAND_PACKAGE</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="vol_broadband_package"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">CI</div>
+		        			<div class="col-sm-3">CI</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="ci"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">KABUPATEN</div>
+		        			<div class="col-sm-3">KABUPATEN</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="kabupaten"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">LONGITUDE</div>
+		        			<div class="col-sm-3">LONGITUDE</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="longitude"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">LATITUDE</div>
+		        			<div class="col-sm-3">LATITUDE</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="latitude"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">ODP1</div>
+		        			<div class="col-sm-3">ODP1</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="odp1"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">ODP2</div>
+		        			<div class="col-sm-3">ODP2</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="odp2"></div>
 		    			</div>
 		    			<div class="row">
-		        			<div class="col-sm-4">ODP3</div>
+		        			<div class="col-sm-3">ODP3</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="odp3"></div>
 		    			</div>
