@@ -30,7 +30,24 @@ class AgentController extends Controller
      */
     public function index()
     {
-        return view('agent.index');
+    	$counting = _dapros_statistics::select(
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` > 0 THEN 1 ELSE 0 END), 0) AS `consumed`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 1 THEN 1 ELSE 0 END), 0)  AS `agree`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 2 THEN 1 ELSE 0 END), 0)  AS `fu`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 3 THEN 1 ELSE 0 END), 0)  AS `decline`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` = 2 THEN 1 ELSE 0 END), 0)  AS `nc`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 1 THEN 1 ELSE 0 END), 0)  AS `approved`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 THEN 1 ELSE 0 END), 0)  AS `return`"),
+
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` > 0 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0) AS `consumed_daily`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `agree_daily`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 2 THEN 1 ELSE 0 END), 0)  AS `fu_daily`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 3 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `decline_daily`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` = 2 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `nc_daily`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `approved_daily`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `return_daily`")
+    		)->where('call_agent_username', auth()->user()->username)->first();
+        return view('agent.index')->with('counting',$counting);
     }
 
     /**
@@ -160,13 +177,49 @@ class AgentController extends Controller
 				, 'call_consume_datetime' => $call->created_at
 				, 'call_attempts' => DB::raw('call_attempts+1')
         	]
-        );
+        )->first();
         #memastikan bahwa save ke tabel Dapros Statistics berhasil
         if (! _dapros_statistics::findOrFail($statistics_dapros->id)) {
         	abort(500, 'Error while saving statistics information');
         }
 
+        # Melakukan cek bila Attempt nya lebih dari sama dengan 9
+        $call_attempts = $statistics_dapros->call_attempts;
+        if ( $call_attempts >= 9 ) {
+        	$data = _dapros::where('id',$statistics_dapros->dapros_id)
+						    ->first();
+
+	    	$data->data_available = "junk";
+	    	$updateResult = $data->save();
+	    	# Memastikan pembaharuan data menjadi junk berhasil
+	    	if (! $updateResult) {
+	    		abort(500, 'Error while sending data to junk.');
+	    	}
+        }
         // Return hasilnya
     	return response()->json(['success' => "success"], 200);
+    }
+
+    # Function buat Counting Activity Agent
+    public function countActivityAgent()
+    {
+    	$data = _dapros_statistics::select(
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` > 0 THEN 1 ELSE 0 END), 0) AS `consumed`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 1 THEN 1 ELSE 0 END), 0)  AS `agree`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 2 THEN 1 ELSE 0 END), 0)  AS `fu`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 3 THEN 1 ELSE 0 END), 0)  AS `decline`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` = 2 THEN 1 ELSE 0 END), 0)  AS `nc`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 1 THEN 1 ELSE 0 END), 0)  AS `approved`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 THEN 1 ELSE 0 END), 0)  AS `return`"),
+
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` > 0 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0) AS `consumed_daily`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `agree_daily`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 2 THEN 1 ELSE 0 END), 0)  AS `fu_daily`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 3 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `decline_daily`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` = 2 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `nc_daily`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `approved_daily`"),
+			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `return_daily`")
+    		)->where('call_agent_username', auth()->user()->username)->first();
+    	return response()->json($data, 200);
     }
 }

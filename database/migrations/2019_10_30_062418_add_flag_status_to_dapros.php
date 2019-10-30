@@ -14,7 +14,7 @@ class AddFlagStatusToDapros extends Migration
     public function up()
     {
         Schema::table('_dapros', function (Blueprint $table) {
-            $table->enum('data_available',['available', 'in use'])->default('available')->after('ODP3');
+            $table->enum('data_available',['available', 'in use', 'junk'])->default('available')->after('ODP3');
         });
     }
 
