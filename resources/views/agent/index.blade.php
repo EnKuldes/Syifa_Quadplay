@@ -28,11 +28,14 @@
     <div class="col-md-2">
         <ul class="list-unstyled mailbox-nav">
             <li><a href="/agent/consume/all"><i class="fa fa-inbox"></i>Consumed <span class="badge badge-success pull-right" id="consumed_daily">{{ $counting['consumed_daily'] }}</span></a></li>
-            <li><a href="/agent/consume/agree"><i class="fa fa-check"></i>Agree <span class="badge badge-success pull-right" id="agree_daily">{{ $counting['agree_daily'] }}</span></a></li>
-            <li><a href="/agent/consume/follow_up"><i class="fa fa-refresh"></i>Follow Up <span class="badge badge-success pull-right" id="fu_daily">{{ $counting['fu_daily'] }}</span></a></li>
-            <li><a href="/agent/consume/decline"><i class="fa fa-user-times"></i>Decline <span class="badge badge-success pull-right" id="decline_daily">{{ $counting['decline_daily'] }}</span></a></li>
+            <li><a href="/agent/consume/contacted"><i class="fa fa-bullhorn"></i>Contacted <span class="badge badge-success pull-right" id="consumed_daily">{{ $counting['contacted_daily'] }}</span></a></li>
+            <li style="margin-left:15px;"><a href="/agent/consume/agree"><i class="fa fa-check"></i>Agree <span class="badge badge-success pull-right" id="agree_daily">{{ $counting['agree_daily'] }}</span></a></li>
+            <li style="margin-left:15px;"><a href="/agent/consume/follow_up"><i class="fa fa-refresh"></i>Follow Up <span class="badge badge-success pull-right" id="fu_daily">{{ $counting['fu_daily'] }}</span></a></li>
+            <li style="margin-left:15px;"><a href="/agent/consume/decline"><i class="fa fa-user-times"></i>Decline <span class="badge badge-success pull-right" id="decline_daily">{{ $counting['decline_daily'] }}</span></a></li>
             <li><a href="/agent/consume/not_contacted"><i class="fa fa-exclamation-circle"></i>Not Contacted <span class="badge badge-success pull-right" id="nc_daily">{{ $counting['nc_daily'] }}</span></a></li>
             <li><a href="/agent/consume/return"><i class="fa fa-sign-in"></i>Return <span class="badge badge-success pull-right" id="return_daily">{{ $counting['return_daily'] }}</span></a></li>
+            <li style="margin-left:15px;"><a href="/agent/consume/returntoagree"><i class="fa fa-sign-in"></i><i class="fa fa-check"></i>Retrun to Agree <span class="badge badge-success pull-right" id="agree_daily">{{ $counting['returntoagree_daily'] }}</span></a></li>
+            <li style="margin-left:15px;"><a href="/agent/consume/returntodecline"><i class="fa fa-sign-in"></i><i class="fa fa-user-times"></i>Return to Decline <span class="badge badge-success pull-right" id="decline_daily">{{ $counting['returntodecline_daily'] }}</span></a></li>
         </ul>
     </div>
     <div class="col-md-10">
