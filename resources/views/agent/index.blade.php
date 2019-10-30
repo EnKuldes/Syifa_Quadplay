@@ -187,7 +187,7 @@
 	                            	<span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
 	                            	<input type="text" class="form-control date-picker  @error('am_date') is-invalid @enderror" name="am_date" id="am_date">
 	                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
-	                                <input type="text" class="form-control time-picker  @error('am_time') is-invalid @enderror" name="am_time" id="am_time" >
+	                                <input type="text" class="form-control time-picker  @error('am_time') is-invalid @enderror" name="am_time" id="am_time" autocomplete="off">
 	                            </div>
 	                            
 	                            @error('am_date')
@@ -203,9 +203,9 @@
                         	<div class="col-sm-9">
 	                            <div class="input-group m-b-sm">
 	                            	<span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
-	                            	<input type="text" class="form-control date-picker  @error('fu_date') is-invalid @enderror" name="fu_date" id="fu_date">
+	                            	<input type="text" class="form-control date-picker  @error('fu_date') is-invalid @enderror" name="fu_date" id="fu_date" autocomplete="off">
 	                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
-	                                <input type="text" class="form-control time-picker  @error('fu_time') is-invalid @enderror" name="fu_time" id="fu_time" >
+	                                <input type="text" class="form-control time-picker  @error('fu_time') is-invalid @enderror" name="fu_time" id="fu_time" autocomplete="off">
 	                            </div>
 	                            
 	                            @error('fu_date')
@@ -219,7 +219,7 @@
                         <div class="form-group">
                         	<label for="information" class="col-sm-3 control-label">Information</label>
                         	<div class="col-sm-9">
-                        		<textarea class="form-control  @error('information') is-invalid @enderror" name="information" id="information" rows="3" style="resize: none;" required="required"></textarea>
+                        		<textarea class="form-control  @error('information') is-invalid @enderror" name="information" id="information" rows="3" style="resize: none;" required="required" autocomplete="off"></textarea>
                         		
 	                            @error('information')
                                 	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
@@ -239,35 +239,47 @@
 <script type="text/javascript" defer>
 	$('#get-data-form').on('submit', function(e){
         e.preventDefault();
-        $('#get-data-form .btn').button('loading');
-        $.ajaxSetup({
-		    headers: {
-		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		    }
-		});
-        $.ajax({
-	       type:"post",
-	       url:'/agent/data',
-	       //data: $( this ).serialize(),
-	       success: function(data){
-	       	var valueTitles = ['BRAND','ROW_NUM','MSISDN_MASK','MSISDN','NAME_MASK','CUSTOMER_SUBTYPE','TOT_BILL_AMOUNT','TOTAL_REVENUE','DEVICE_TYPE','VOL_BROADBAND','VOL_BROADBAND_PACKAGE','CI','KABUPATEN','LONGITUDE','LATITUDE','ODP1','ODP2','ODP3'];
-	       	var labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
-	        for (var i = 0; i < labelTitles.length; i++) {
-	          $("#" + labelTitles[i]).html(data[0][valueTitles[i]]);
-	        }
-	        $("#dapros_id").val(data[0]['id']);
-	        console.log($("#dapros_id").val())
-	        $('#get-data-form .btn').button('reset');
-	        notificationScript("success", "Success", "Success fetching Data");
-
-	       },
-	        error : function(data) {
-	         $('#get-data-form .btn').button('reset');
-	         notificationScript("error", "Error", "Error while trying fetching data.");
-	        }
-	     }).done(function(data){
-	     	//
-	     });
+        console.log($("#dapros_id").val())
+        if ( $("#dapros_id").val() != '' ) {
+        	notificationScript("warning", "Warning", "You still have data to call first!");
+        }
+        else{
+        	$('#get-data-form .btn').button('loading');
+	        $.ajaxSetup({
+			    headers: {
+			        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			    }
+			});
+	        $.ajax({
+		       type:"post",
+		       url:'/agent/data',
+		       //data: $( this ).serialize(),
+		       success: function(data){
+		       	var valueTitles = ['BRAND','ROW_NUM','MSISDN_MASK','MSISDN','NAME_MASK','CUSTOMER_SUBTYPE','TOT_BILL_AMOUNT','TOTAL_REVENUE','DEVICE_TYPE','VOL_BROADBAND','VOL_BROADBAND_PACKAGE','CI','KABUPATEN','LONGITUDE','LATITUDE','ODP1','ODP2','ODP3'];
+		       	var labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
+		        for (var i = 0; i < labelTitles.length; i++) {
+		          $("#" + labelTitles[i]).html(data[valueTitles[i]]);
+		        }
+		        $("#dapros_id").val(data['id']);
+		        $('#get-data-form .btn').button('reset');
+		        notificationScript("success", "Success", "Success fetching Data");
+		        $('#resetBtn').click();
+		       },
+		        error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
+				$('#get-data-form .btn').button('reset');
+				//notificationScript("error", "Error", "Error while trying fetching data.");
+				var errors = jqXhr.responseJSON;
+				var errorsHtml = '<div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom: 0;"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Error ' + jqXhr.status + ': ' + errorThrown + '</div>';
+				notificationScript("error", "Error " + jqXhr.status, errorThrown);
+				$.each(errors['errors'], function (index, value) {
+				    errorsHtml += '<div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom: 0;><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + value + '</div>';
+				    notificationScript("error", "Error Field", value);
+				});
+		        }
+		     }).done(function(data){
+		     	//
+		     });
+        }
 
     });
     $('#formCall').on('submit', function(e){
@@ -283,17 +295,14 @@
 	       url:'/agent/save',
 	       data: $( this ).serialize(),
 	       success: function(data){
-	       	/*var valueTitles = ['BRAND','ROW_NUM','MSISDN_MASK','MSISDN','NAME_MASK','CUSTOMER_SUBTYPE','TOT_BILL_AMOUNT','TOTAL_REVENUE','DEVICE_TYPE','VOL_BROADBAND','VOL_BROADBAND_PACKAGE','CI','KABUPATEN','LONGITUDE','LATITUDE','ODP1','ODP2','ODP3'];
-	       	var labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
-	        for (var i = 0; i < labelTitles.length; i++) {
-	          $("#" + labelTitles[i]).html(data[0][valueTitles[i]]);
-	        }
-	        $("#dapros_id").val(data[0]['id']);
-	        console.log($("#dapros_id").val())
-	        $('#get-data-form .btn').button('reset');
-	        $('.navbar').html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Well done! You successfully Get Data.</div>');*/
-	        console.log(data)
 	        $('#saveBtn').button('reset');
+	        notificationScript("success", "Success", "Successfully submit form.");
+	        $('#resetBtn').click();
+	        var labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
+	        for (var i = 0; i < labelTitles.length; i++) {
+	          $("#" + labelTitles[i]).html('');
+	        }
+	        $("#dapros_id").removeAttr('value');
 	       },
 	        error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
 	        	$('#saveBtn').button('reset');
@@ -333,7 +342,7 @@
 	       },
 	        error : function(data) {
 	        
-	        console.log("error");
+	        console.log("error chain1");
 	        }
 	     }).done(function(){
 
@@ -359,7 +368,7 @@
 	       },
 	        error : function(data) {
 	        
-	        console.log("error");
+	        console.log("error chain2");
 	        }
 	     }).done(function(){
 
@@ -385,7 +394,7 @@
 	       },
 	        error : function(data) {
 	        
-	        console.log("error");
+	        console.log("error chain3");
 	        }
 	     }).done(function(){
 
@@ -429,6 +438,7 @@
 	    	showMeridian: false
 	    });
 	    chain1();
+	    $('#resetBtn').click();
 	});
 	// On Change Events
 	$("#status_call").change(function() {

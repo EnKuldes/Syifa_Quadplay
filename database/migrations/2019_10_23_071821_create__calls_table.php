@@ -20,8 +20,8 @@ class CreateCallsTable extends Migration
             $table->tinyInteger('call_status_id');
             $table->tinyInteger('call_status_detail_id');
             $table->tinyInteger('call_status_detail_reason_id');
-            $table->dateTime('call_am_datetime'); // appointment management / Manajemen Janji
-            $table->dateTime('call_fu_datetime'); // Follow Up
+            $table->dateTime('call_am_datetime')->nullable()->default(null); // appointment management / Manajemen Janji
+            $table->dateTime('call_fu_datetime')->nullable()->default(null); // Follow Up
             $table->longText('call_information'); // Keterangan
             //$table->tinyInteger('call_attempts');
             $table->string('call_agent_username');

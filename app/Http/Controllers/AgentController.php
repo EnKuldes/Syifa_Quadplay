@@ -38,8 +38,37 @@ class AgentController extends Controller
      */
     public function getData()
     {
-    	$data = _dapros::all()->random(1);
-        return response()->json($data);
+    	#mencari data yang available
+    	$data = _dapros::where('data_available','available')
+						    ->inRandomOrder()
+						    ->first();
+
+    	$data->data_available = "in use";
+    	$updateResult = $data->save();
+    	# Memastikan bahwa save berhasil memperbaharui data
+    	if (! $updateResult) {
+    		abort(500, 'Error while updating status data.');
+    	}
+
+    	# Memasukan data ke statistik
+    	$saveResult = _dapros_statistics::updateOrCreate(
+        	['dapros_id' => $data->id],
+        	[
+        		'call_status_id' => 0
+				, 'call_status_detail_id' => 0
+				, 'call_status_detail_reason_id' => 0
+				, 'call_information' => ''
+				, 'call_agent_username' => auth()->user()->username
+				, 'call_consume_datetime' => now()
+        	]
+        );
+    	# Memastikan data yang disave masuk atau ga
+		if (! _dapros_statistics::findOrFail($saveResult->id)) {
+        	abort(500, 'Error while inserting data to statistics.');
+        }
+    	
+		// Return hasilnya
+    	return response()->json($data);
     }
     /**
      * Chained Select 
@@ -85,10 +114,10 @@ class AgentController extends Controller
             'status_detail' => 'required',
             'status_detail_reason' => 'required',
             'information' => 'required',
-            'am_date' => 'required_if:status_detail,1',
-            'am_time' => 'required_if:status_detail,1',
-            'fu_date' => 'required_if:status_detail,2',
-            'fu_time' => 'required_if:status_detail,2'
+            'am_date' => 'required_if:status_detail,1|nullable',
+            'am_time' => 'required_if:status_detail,1|nullable',
+            'fu_date' => 'required_if:status_detail,2|nullable',
+            'fu_time' => 'required_if:status_detail,2|nullable'
         ], $messages);
 
     	# Post ke tabel Call
@@ -98,23 +127,27 @@ class AgentController extends Controller
     	$call->call_status_detail_id = $request->input('status_detail');
     	$call->call_status_detail_reason_id = $request->input('status_detail_reason');
     	$call->call_information = $request->input('information');
-    	if (! $request->input('am_date') ) {
-    		$call->call_am_datetime = null;
-    	}
-    	else{
+    	if ( $request->input('status_detail') == 1 ) {
     		$call->call_am_datetime = $request->input('am_date')." ".$request->input('am_time');
     	}
-    	if (! $request->input('am_date') ) {
-    		$call->call_fu_datetime =  null;
-    	}
     	else{
+    		$call->call_am_datetime = null;
+    	}
+    	if ( $request->input('status_detail') == 2 ) {
     		$call->call_fu_datetime =  $request->input('fu_date')." ".$request->input('fu_time');
     	}
+    	else{
+    		$call->call_fu_datetime =  null;
+    	}
     	$call->call_agent_username = auth()->user()->username;
-    	$call->save();
+    	$boolSaveCall = $call->save();
 
+    	# Memastikan bahwa save ke tabel Call berhasil
+    	if (! $boolSaveCall) {
+    		abort(500, 'Error while saving call information');
+    	}
     	# Post ke Dapros_statistics dg status INSERT INTO ... ON DUPLICATE KEY UPDATE ...
-        _dapros_statistics::updateOrCreate(
+        $statistics_dapros = _dapros_statistics::updateOrCreate(
         	['dapros_id' => $request->input('dapros_id')],
         	[
         		'call_status_id' => $call->call_status_id
@@ -127,9 +160,13 @@ class AgentController extends Controller
 				, 'call_consume_datetime' => $call->created_at
 				, 'call_attempts' => DB::raw('call_attempts+1')
         	]
-        );//
+        );
+        #memastikan bahwa save ke tabel Dapros Statistics berhasil
+        if (! _dapros_statistics::findOrFail($statistics_dapros->id)) {
+        	abort(500, 'Error while saving statistics information');
+        }
 
         // Return hasilnya
-    	return $last_call;
+    	return response()->json(['success' => "success"], 200);
     }
 }
