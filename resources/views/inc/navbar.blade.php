@@ -6,8 +6,7 @@
             
             {{-- Consumed dan Follop Up hanya Agent --}}
             <li><a href="/agent/workspace"><span class="menu-icon icon-speedometer"></span><p>Workspace</p></a></li>
-            <li><a href="/agent/consume"><span class="menu-icon icon-user"></span><p>Consumed</p></a></li>
-            <li><a href="/agent/follow_up"><span class="menu-icon icon-user"></span><p>Follow Up</p></a></li>
+            <li><a href="/agent/consume/all"><span class="menu-icon icon-user"></span><p>Consumed</p></a></li>
 
             {{-- Consumed dan Return hanya QCO --}}
             <li><a href="/tapping/workspace"><span class="menu-icon icon-speedometer"></span><p>Workspace</p></a></li>
