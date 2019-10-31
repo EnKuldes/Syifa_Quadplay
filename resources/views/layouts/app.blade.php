@@ -49,6 +49,7 @@
         <script src="{{ asset('plugins/waves/waves.min.js') }}" defer></script>
         <script src="{{ asset('plugins/3d-bold-navigation/js/main.js') }}" defer></script>
         <script src="{{ asset('js/modern.min.js') }}" defer></script>
+        <script src="{{ asset('plugins/toastr/toastr.min.js')}}" defer></script>
 
     </head>
     <body class="page-header-fixed compact-menu page-horizontal-bar">
@@ -108,4 +109,28 @@
             </div>{{-- Page Inner End --}}
         </main>{{-- Page Content End --}}
         <div class="cd-overlay"></div>
+        <script type="text/javascript" defer>
+            // Func Notification
+            function notificationScript(type, title, message) {
+                console.log('Notification will start')
+                toastr.options = {
+                  "closeButton": false,
+                  "debug": false,
+                  "newestOnTop": false,
+                  "progressBar": false,
+                  "positionClass": "toast-top-center",
+                  "preventDuplicates": false,
+                  "onclick": null,
+                  "showDuration": "300",
+                  "hideDuration": "1000",
+                  "timeOut": "5000",
+                  "extendedTimeOut": "1000",
+                  "showEasing": "swing",
+                  "hideEasing": "linear",
+                  "showMethod": "fadeIn",
+                  "hideMethod": "fadeOut"
+                }
+                toastr[type](title, message)
+            }
+        </script>
 </html>

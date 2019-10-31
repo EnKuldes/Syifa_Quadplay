@@ -8,92 +8,75 @@
             <h4 class="panel-title">List Consume</h4>
         </div>
         <div class="panel-body">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>MSISDN MASK</th>
-                        <th>NAME MASK</th>
-                        <th>CALL STATUS</th> {{-- disini 3 biji aja lgs dari call sampe detail reason call --}}
-                        <th>APPOINTMENT MANAGEMENT</th>
-                        <th>FOLLOW UP</th>
-                        <th>INFORMATION</th>
-                        <th>ATTEMPTS</th>
-                        <th>CONSUMED</th>
-                        <th>AGENT</th>
-                        <th>ACTIONS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                	@if (count($datas) > 0)
-                		@php
-                		$idx = $datas->firstItem();
-                		@endphp
-                		@foreach ($datas as $data)
-                			<tr>
-                				@php
-                					$customer_information = $data->dapros;
-                					$call_status_detail = $data->call_status_detail;
-                					if ($call_status_detail->id == 1 OR $call_status_detail->id == 3) {
-                						$label_color = "success";
-                					}
-                					elseif ($call_status_detail->id == 2 ) {
-                						$label_color = "warning";
-                					}
-                					else{
-                						$label_color = "danger";
-                					}
-                					$user = $data->call_agent;
-                				@endphp
-		                        <th scope="row">{{ $idx }}</th>
-		                        <td>{{ $customer_information->MSISDN_MASK }}</td>
-		                        <td>{{ $customer_information->NAME_MASK }}</td>
-		                        <td><span class="label label-{{ $label_color }}">{{ $call_status_detail->value_call_status_detail }}</span> </td>
-		                        <td>{{ $data->call_am_datetime }}</td>
-		                        <td>{{ $data->call_fu_datetime }}</td>
-		                        <td>{{ $data->call_information }}</td>
-		                        <td>{{ $data->call_attempts }}</td>
-		                        <td>{{ $data->call_consume_datetime }}</td>
-		                        <td>{{ $user->name }}</td>
-		                        <td>
-		                        	<button type="button" class="btn btn-default btn-xs" id="view_call" data-toggle="modal" data-target="#myModal" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing"><i class="icon-magnifier"></i></button>
-		                        	@if ($call_status_detail->id != 1 AND $call_status_detail->id != 3)
-		                        		<a href="/agent/workspace/recall/{{ $data->dapros_id }}" type="button" class="btn btn-default btn-xs"><i class="fa fa-phone"></i></a>
-		                        	@endif
-		                        </td>
-		                    </tr>
-	                    	@php
-	                    	$idx++;
-	                    	@endphp
-                		@endforeach
-                	@else
-                		{{-- Kosong --}}
-                		<tr>
-                			<th colspan="11" rowspan="1" headers="" scope="row">No datas found.</th>
-                		</tr>
-                	@endif
-                </tbody>
-            </table>
-        </div>
+        	<div class="col-lg-8">
+        		<table class="table table-hover">
+	                <thead>
+	                    <tr>
+	                        <th>#</th>
+	                        <th>MSISDN MASK</th>
+	                        <th>NAME MASK</th>
+	                        <th>CALL STATUS</th> {{-- disini 3 biji aja lgs dari call sampe detail reason call --}}
+	                        <th>INFORMATION</th>
+	                        <th>ATTEMPTS</th>
+	                        <th>CONSUMED</th>
+	                        <th>AGENT</th>
+	                        <th>ACTIONS</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                	@if (count($datas) > 0)
+	                		@php
+	                		$idx = $datas->firstItem();
+	                		@endphp
+	                		@foreach ($datas as $data)
+	                			<tr>
+	                				@php
+	                					$customer_information = $data->dapros;
+	                					$call_status_detail = $data->call_status_detail;
+	                					if ($call_status_detail->id == 1 OR $call_status_detail->id == 3) {
+	                						$label_color = "success";
+	                					}
+	                					elseif ($call_status_detail->id == 2 ) {
+	                						$label_color = "warning";
+	                					}
+	                					else{
+	                						$label_color = "danger";
+	                					}
+	                					$user = $data->call_agent;
+	                				@endphp
+			                        <th scope="row">{{ $idx }}</th>
+			                        <td>{{ $customer_information->MSISDN_MASK }}</td>
+			                        <td>{{ $customer_information->NAME_MASK }}</td>
+			                        <td><span class="label label-{{ $label_color }}">{{ $call_status_detail->value_call_status_detail }}</span> </td>
+			                        <td>{{ $data->call_information }}</td>
+			                        <td>{{ $data->call_attempts }}</td>
+			                        <td>{{ $data->call_consume_datetime }}</td>
+			                        <td>{{ $user->name }}</td>
+			                        <td>
+			                        	<button type="button" class="btn btn-default btn-xs" onclick="view_data({{ $data->id }})" {{-- data-toggle="modal" data-target="#myModal" --}} data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>"><i class="icon-magnifier"></i></button>
+			                        	@if ($call_status_detail->id != 1 AND $call_status_detail->id != 3)
+			                        		<a href="/agent/workspace/recall/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="fa fa-phone"></i></a>
+			                        	@endif
+			                        </td>
+			                    </tr>
+		                    	@php
+		                    	$idx++;
+		                    	@endphp
+	                		@endforeach
+	                	@else
+	                		{{-- Kosong --}}
+	                		<tr>
+	                			<th colspan="11" rowspan="1" headers="" scope="row">No datas found.</th>
+	                		</tr>
+	                	@endif
+	                </tbody>
+	            </table>
+        	</div>
 
-    	<div class="panel-footer">
-    		{{ $datas->links() }}
-    	</div>
-        
-        	
-        </div>
-    </div>
-
-    {{-- Modal --}}
-	<div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myLargeModalLabel">Modal title</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
+        	<div class="col-lg-4">
+        		<div class="row">
+        			
+        			<div class="row">
                     	<div class="col-md-8">
 				    		<div class="col-sm-12 col-md-12">
 				        		<div class="row">
@@ -207,35 +190,72 @@
 			    			<div class="row">
 			        			<div class="col-md-3">AM</div>
 			        			<div class="col-md-1"> : </div>
-			        			<div class="" id="am"></div>
+			        			<div class="" id="am_call"></div>
 			    			</div>
 			    			<div class="row">
 			        			<div class="col-md-3">FU</div>
 			        			<div class="col-md-1"> : </div>
-			        			<div class="" id="fu"></div>
+			        			<div class="" id="fu_call"></div>
 			    			</div>
 			    			<div class="row">
-			        			<div class="col-md-3">Information</div>
+			        			<div class="col-md-3">Call Information</div>
 			        			<div class="col-md-1"> : </div>
-			        			<div class="" id="information"></div>
+			        			<div class="" id="information_call"></div>
 			    			</div>
-				    		
+				    		<div class="row">
+			        			<div class="col-md-3">Attempts</div>
+			        			<div class="col-md-1"> : </div>
+			        			<div class="" id="attempts_call"></div>
+			    			</div>
+			    			<div class="row">
+			        			<div class="col-md-3">Agent Call</div>
+			        			<div class="col-md-1"> : </div>
+			        			<div class="" id="agent_call"></div>
+			    			</div>
+			    			<div class="row">
+			        			<div class="col-md-3">Call Consumed</div>
+			        			<div class="col-md-1"> : </div>
+			        			<div class="" id="consume_call"></div>
+			    			</div>
+			    			<div class="row">
+			        			<div class="col-md-3">Status Tapping</div>
+			        			<div class="col-md-1"> : </div>
+			        			<div class="" id="status_tapping"></div>
+			    			</div>
+			    			<div class="row">
+			        			<div class="col-md-3">Tapping Information</div>
+			        			<div class="col-md-1"> : </div>
+			        			<div class="" id="information_tapping"></div>
+			    			</div>
+			    			<div class="row">
+			        			<div class="col-md-3">Agent Tapping</div>
+			        			<div class="col-md-1"> : </div>
+			        			<div class="" id="agent_tapping"></div>
+			    			</div>
+			    			<div class="row">
+			        			<div class="col-md-3">Tapping Consumed</div>
+			        			<div class="col-md-1"> : </div>
+			        			<div class="" id="consume_tapping"></div>
+			    			</div>
 				    	</div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
+
+        		</div>
+        	</div>
+        </div>
+
+    	<div class="panel-footer">
+    		{{ $datas->links() }}
+    	</div>
+        
+        	
         </div>
     </div>
-
 </div>
 <script type="text/javascript" defer>
-	$('#view_call').on('click', function(e){
-        e.preventDefault();
-        $(this).button('loading');
-        $.ajaxSetup({
+	function view_data(id) {
+		//$(this).button('loading');
+		$.ajaxSetup({
 		    headers: {
 		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		    }
@@ -243,20 +263,24 @@
         $.ajax({
 	       type:"post",
 	       url:'/agent/view',
-	       //data: $( this ).serialize(),
+	       data: {'id': id},
 	       success: function(data){
-	       	var valueTitles = ['BRAND','ROW_NUM','MSISDN_MASK','MSISDN','NAME_MASK','CUSTOMER_SUBTYPE','TOT_BILL_AMOUNT','TOTAL_REVENUE','DEVICE_TYPE','VOL_BROADBAND','VOL_BROADBAND_PACKAGE','CI','KABUPATEN','LONGITUDE','LATITUDE','ODP1','ODP2','ODP3'];
-	       	var labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
-	        for (var i = 0; i < labelTitles.length; i++) {
-	          $("#" + labelTitles[i]).html(data[valueTitles[i]]);
+	       	var valueCallTitles = ['status_call', 'reason_status_call', 'detail_reason_status_call', 'am_call', 'fu_call', 'information_call', 'attempts_call', 'agent_call', 'consume_call', 'status_tapping', 'information_tapping', 'agent_tapping', 'consume_tapping'];
+	       	var labelCallTitles = ['status_call', 'reason_status_call', 'detail_reason_status_call', 'am_call', 'fu_call', 'information_call', 'attempts_call', 'agent_call', 'consume_call', 'status_tapping', 'information_tapping', 'agent_tapping', 'consume_tapping'];
+	       	var valueDaprosTitles = ['BRAND','ROW_NUM','MSISDN_MASK','MSISDN','NAME_MASK','CUSTOMER_SUBTYPE','TOT_BILL_AMOUNT','TOTAL_REVENUE','DEVICE_TYPE','VOL_BROADBAND','VOL_BROADBAND_PACKAGE','CI','KABUPATEN','LONGITUDE','LATITUDE','ODP1','ODP2','ODP3'];
+	       	var labelDaprosTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
+	        for (var i = 0; i < labelCallTitles.length; i++) {
+	          $("#" + labelCallTitles[i]).html(data['details_call'][valueCallTitles[i]]);
 	        }
-	        $("#dapros_id").val(data['id']);
-	        $('#get-data-form .btn').button('reset');
+	        for (var i = 0; i < labelDaprosTitles.length; i++) {
+	          $("#" + labelDaprosTitles[i]).html(data['details_dapros'][valueDaprosTitles[i]]);
+	        }
+	        console.log(data)
+
 	        notificationScript("success", "Success", "Success fetching Data");
-	        $('#resetBtn').click();
+	        //$('#btnView').button('reset');
 	       },
 	        error: function(jqXhr, json, errorThrown){// this are default for ajax errors
-			$('#get-data-form .btn').button('reset');
 			//notificationScript("error", "Error", "Error while trying fetching data.");
 			var errors = jqXhr.responseJSON;
 			var errorsHtml = '<div class="alert alert-danger alert-dismissible" role="alert" style="margin-bottom: 0;"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Error ' + jqXhr.status + ': ' + errorThrown + '</div>';
@@ -268,17 +292,8 @@
 	        }
 	     }).done(function(data){
 	     	//
-	     });
-
-        /*if ( $("#dapros_id").val() != '' ) {
-        	notificationScript("warning", "Warning", "You still have data to call first!");
-        }
-        else{
-        	$('#get-data-form .btn').button('loading');
-        
-        }*/
-
-    });
+	     });//
+	}
 </script>
 	
 @endsection

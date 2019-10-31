@@ -237,7 +237,6 @@
 <script src="{{ asset('plugins/select2/js/select2.min.js') }}" defer></script>
 <script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" defer></script>
 <script src="{{ asset('plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" defer></script>
-<script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
 <script type="text/javascript" defer>
 	$('#get-data-form').on('submit', function(e){
         e.preventDefault();
@@ -404,29 +403,6 @@
 	     }).done(function(){
 
 	     });
-	}
-
-	// Func Notification
-	function notificationScript(type, title, message) {
-		console.log('Notification will start')
-		toastr.options = {
-		  "closeButton": false,
-		  "debug": false,
-		  "newestOnTop": false,
-		  "progressBar": false,
-		  "positionClass": "toast-top-center",
-		  "preventDuplicates": false,
-		  "onclick": null,
-		  "showDuration": "300",
-		  "hideDuration": "1000",
-		  "timeOut": "5000",
-		  "extendedTimeOut": "1000",
-		  "showEasing": "swing",
-		  "hideEasing": "linear",
-		  "showMethod": "fadeIn",
-		  "hideMethod": "fadeOut"
-		}
-		toastr[type](title, message)
 	}
 
 	// Func Counting
