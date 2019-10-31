@@ -112,6 +112,15 @@ class AgentController extends Controller
 			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `approved_daily`"),
 			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `return_daily`")
     		)->where('call_agent_username', auth()->user()->username)->first();
+
+    	$dataToRecall = _dapros_statistics::where([
+				    		['id', $id],
+				    		['call_attempts', '<', 9],
+				    		['call_status_detail_id', '!=', 1],
+				    		['call_status_detail_id', '!=', 3]
+				    	])->firstOrFail();
+		$counting['details_dapros'] = _dapros::where('id', $dataToRecall->dapros_id)->firstOrFail();
+
         return view('agent.index')->with('counting',$counting);
     }
 

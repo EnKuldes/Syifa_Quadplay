@@ -53,8 +53,8 @@
 			                        <td>{{ $data->call_consume_datetime }}</td>
 			                        <td>{{ $user->name }}</td>
 			                        <td>
-			                        	<button type="button" class="btn btn-default btn-xs" onclick="view_data({{ $data->id }})" {{-- data-toggle="modal" data-target="#myModal" --}} data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>"><i class="icon-magnifier"></i></button>
-			                        	@if ($call_status_detail->id != 1 AND $call_status_detail->id != 3)
+			                        	<button type="button" class="btn btn-default btn-xs" onclick="view_data({{ $data->id }})"><i class="icon-magnifier"></i></button>
+			                        	@if ($call_status_detail->id != 1 AND $call_status_detail->id != 3 AND $data->call_attempts < 9)
 			                        		<a href="/agent/workspace/recall/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="fa fa-phone"></i></a>
 			                        	@endif
 			                        </td>
