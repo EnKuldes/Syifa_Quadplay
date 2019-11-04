@@ -28,14 +28,15 @@
     <div class="col-md-2">
         <ul class="list-unstyled mailbox-nav">
             <li><a href="/agent/consume/all"><i class="fa fa-inbox"></i>Consumed <span class="badge badge-success pull-right" id="consumed_daily">{{ $counting['consumed_daily'] }}</span></a></li>
-            <li><a href="/agent/consume/contacted"><i class="fa fa-bullhorn"></i>Contacted <span class="badge badge-success pull-right" id="consumed_daily">{{ $counting['contacted_daily'] }}</span></a></li>
+            <li><a href="/agent/consume/contacted"><i class="fa fa-bullhorn"></i>Contacted <span class="badge badge-success pull-right" id="c_daily">{{ $counting['c_daily'] }}</span></a></li>
             <li style="margin-left:15px;"><a href="/agent/consume/agree"><i class="fa fa-check"></i>Agree <span class="badge badge-success pull-right" id="agree_daily">{{ $counting['agree_daily'] }}</span></a></li>
             <li style="margin-left:15px;"><a href="/agent/consume/follow_up"><i class="fa fa-refresh"></i>Follow Up <span class="badge badge-success pull-right" id="fu_daily">{{ $counting['fu_daily'] }}</span></a></li>
             <li style="margin-left:15px;"><a href="/agent/consume/decline"><i class="fa fa-user-times"></i>Decline <span class="badge badge-success pull-right" id="decline_daily">{{ $counting['decline_daily'] }}</span></a></li>
             <li><a href="/agent/consume/not_contacted"><i class="fa fa-exclamation-circle"></i>Not Contacted <span class="badge badge-success pull-right" id="nc_daily">{{ $counting['nc_daily'] }}</span></a></li>
+            <li><a href="/agent/consume/approved"><i class="fa fa-sign-in"></i>Approved <span class="badge badge-success pull-right" id="approved_daily">{{ $counting['approved_daily'] }}</span></a></li>
             <li><a href="/agent/consume/return"><i class="fa fa-sign-in"></i>Return <span class="badge badge-success pull-right" id="return_daily">{{ $counting['return_daily'] }}</span></a></li>
-            <li style="margin-left:15px;"><a href="/agent/consume/returntoagree"><i class="fa fa-sign-in"></i><i class="fa fa-check"></i>Retrun to Agree <span class="badge badge-success pull-right" id="agree_daily">{{ $counting['returntoagree_daily'] }}</span></a></li>
-            <li style="margin-left:15px;"><a href="/agent/consume/returntodecline"><i class="fa fa-sign-in"></i><i class="fa fa-user-times"></i>Return to Decline <span class="badge badge-success pull-right" id="decline_daily">{{ $counting['returntodecline_daily'] }}</span></a></li>
+            <li style="margin-left:15px;"><a href="/agent/consume/returntoagree"><i class="fa fa-sign-in"></i><i class="fa fa-check"></i>Retrun to Agree <span class="badge badge-success pull-right" id="returntoagree_daily">{{ $counting['returntoagree_daily'] }}</span></a></li>
+            <li style="margin-left:15px;"><a href="/agent/consume/returntodecline"><i class="fa fa-sign-in"></i><i class="fa fa-user-times"></i>Return to Decline <span class="badge badge-success pull-right" id="returntodecline_daily">{{ $counting['returntodecline_daily'] }}</span></a></li>
         </ul>
     </div>
     <div class="col-md-10">
@@ -186,6 +187,9 @@
 		    			@error('dapros_id')
                         	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ 'Please fetch data first!' }}</p>
                         @enderror
+                        @if ($counting['data_is_return'])
+                        	<input type="hidden" name="data_is_return" value="1">
+                        @endif
                         <div class="form-group">
                         	<label for="status_call" class="col-sm-3 control-label">Status Call</label>
                             <div class="col-sm-9">
@@ -462,8 +466,8 @@
 	        }
 	        $("#dapros_id").removeAttr('value');*/
 
-	        var spanTitles = ['consumed_daily', 'agree_daily', 'fu_daily', 'decline_daily', 'nc_daily', 'return_daily'];
-	        var valueTitles = ['consumed_daily', 'agree_daily', 'fu_daily', 'decline_daily', 'nc_daily', 'return_daily'];
+	        var spanTitles = ['consumed_daily', 'c_daily', 'agree_daily', 'fu_daily', 'decline_daily', 'nc_daily', 'approved_daily', 'return_daily', 'returntoagree_daily', 'returntodecline_daily'];
+	        var valueTitles = ['consumed_daily', 'c_daily', 'agree_daily', 'fu_daily', 'decline_daily', 'nc_daily', 'approved_daily', 'return_daily', 'returntoagree_daily', 'returntodecline_daily'];;
 	        for (var i = 0; i < spanTitles.length; i++) {
 	          $("#" + spanTitles[i]).html(data[valueTitles[i]]);
 	        }
