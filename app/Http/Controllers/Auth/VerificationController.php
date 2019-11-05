@@ -26,6 +26,13 @@ class VerificationController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+    protected function redirectTo()
+    {
+        if (auth()->user()->divisi == 'Agent') {
+            return '/agent/workspace';
+        }
+        return '/tapping/workspace';
+    }
 
     /**
      * Create a new controller instance.

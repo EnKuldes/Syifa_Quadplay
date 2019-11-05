@@ -21,6 +21,7 @@ class AgentController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('Agent');
     }
 
     /**
@@ -156,7 +157,7 @@ class AgentController extends Controller
     	#mencari data yang available
     	$data = _dapros::where('data_available','available')
 						    ->inRandomOrder()
-						    ->first();
+						    ->firstOrFail();
 
     	$data->data_available = "in use";
     	$updateResult = $data->save();

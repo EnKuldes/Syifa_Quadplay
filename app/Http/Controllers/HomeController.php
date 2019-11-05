@@ -23,6 +23,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        //return view('home');
+        if (auth()->user()->divisi == "Agent") {
+            return redirect('/agent');
+        }
+        elseif (auth()->user()->divisi == "QCO") {
+            return redirect('/tapping');
+        }
+        elseif (auth()->user()->divisi == "Inputter") {
+            return redirect('/inputter');
+        }
+        abort(421, "Misdirected Request!");
     }
 }
