@@ -12,8 +12,10 @@ class _dapros_statistics extends Model
      * @var array
      */
     protected $fillable = [
-        'dapros_id', 'call_status_id' , 'call_status_detail_id' , 'call_status_detail_reason_id' , 'call_am_datetime' , 'call_fu_datetime' , 'call_information' , 'call_agent_username' //, 'tapping_status_id' , 'tapping_information' , 'tapping_agent_username', 'tapping_consume_datetime' 
+        'dapros_id', 'call_status_id' , 'call_status_detail_id' , 'call_status_detail_reason_id' , 'call_am_datetime' , 'call_fu_datetime' , 'call_information' , 'call_agent_username'
+        , 'tapping_status_id' , 'tapping_information' , 'tapping_agent_username', 'tapping_consume_datetime' 
         , 'call_consume_datetime', 'call_attempts'
+        , 'ever_be_returned', 'data_condition'
     ];
     /**
      * The attributes that should be hidden for arrays.

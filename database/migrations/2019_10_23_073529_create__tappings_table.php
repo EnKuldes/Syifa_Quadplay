@@ -21,7 +21,7 @@ class CreateTappingsTable extends Migration
             $table->tinyInteger('tapping_status_id');
             $table->longText('tapping_information');
             $table->string('tapping_agent_username');
-            $table->dateTime('tapping_consume_datetime');
+            $table->dateTime('tapping_consume_datetime')->useCurrent = true;
             // Tapping END
             $table->timestamps();
         });

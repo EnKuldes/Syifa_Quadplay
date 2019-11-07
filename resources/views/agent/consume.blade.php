@@ -54,7 +54,7 @@
 			                        <td>{{ $user->name }}</td>
 			                        <td>
 			                        	<button type="button" class="btn btn-default btn-xs" onclick="view_data({{ $data->id }})"><i class="icon-magnifier"></i></button>
-			                        	@if ($call_status_detail->id != 1 AND $call_status_detail->id != 3 AND $data->call_attempts < 9)
+			                        	@if ( ($call_status_detail->id != 1 AND $call_status_detail->id != 3 AND $data->call_attempts < 9) OR ($data->data_condition == 'returned to agent') )
 			                        		<a href="/agent/workspace/recall/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="fa fa-phone"></i></a>
 			                        	@endif
 			                        </td>
