@@ -28,10 +28,10 @@
     </div>
     <div class="col-md-2">
         <ul class="list-unstyled mailbox-nav">
-            <li><a href="/tapping/consume/approved"><i class="fa fa-sign-in"></i>Approved <span class="badge badge-success pull-right" id="approved_daily">{{ $counting['approved_daily'] }}</span></a></li>
-            <li><a href="/tapping/consume/return"><i class="fa fa-sign-in"></i>Return <span class="badge badge-success pull-right" id="return_daily">{{ $counting['return_daily'] }}</span></a></li>
-            <li style="margin-left:15px;"><a href="/tapping/consume/returntoagree"><i class="fa fa-sign-in"></i><i class="fa fa-check"></i>Retrun to Agree <span class="badge badge-success pull-right" id="returntoagree_daily">{{ $counting['returntoagree_daily'] }}</span></a></li>
-            <li style="margin-left:15px;"><a href="/tapping/consume/returntodecline"><i class="fa fa-sign-in"></i><i class="fa fa-user-times"></i>Return to Decline <span class="badge badge-success pull-right" id="returntodecline_daily">{{ $counting['returntodecline_daily'] }}</span></a></li>
+            <li><a href="/qco/consume/approved"><i class="fa fa-sign-in"></i>Approved <span class="badge badge-success pull-right" id="approved_daily">{{ $counting['approved_daily'] }}</span></a></li>
+            <li><a href="/qco/consume/return"><i class="fa fa-sign-in"></i>Return <span class="badge badge-success pull-right" id="return_daily">{{ $counting['return_daily'] }}</span></a></li>
+            <li style="margin-left:15px;"><a href="/qco/consume/returntoagree"><i class="fa fa-sign-in"></i><i class="fa fa-check"></i>Retrun to Agree <span class="badge badge-success pull-right" id="returntoagree_daily">{{ $counting['returntoagree_daily'] }}</span></a></li>
+            <li style="margin-left:15px;"><a href="/qco/consume/returntodecline"><i class="fa fa-sign-in"></i><i class="fa fa-user-times"></i>Return to Decline <span class="badge badge-success pull-right" id="returntodecline_daily">{{ $counting['returntodecline_daily'] }}</span></a></li>
         </ul>
     </div>
     <div class="col-md-10">
@@ -182,9 +182,9 @@
                         	<div class="col-sm-9">
 	                            <div class="input-group m-b-sm">
 	                            	<span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
-	                            	<input type="text" class="form-control date-picker  @error('am_date') is-invalid @enderror" id="am_date" readonly>
+	                            	<input type="text" class="form-control date-picker  @error('am_date') is-invalid @enderror" id="am_date" readonly value="{{ isset($counting['details_call']) ? date('Y-m-d', strtotime($counting['details_call']->call_am_datetime)) : '' }}">
 	                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
-	                                <input type="text" class="form-control time-picker  @error('am_time') is-invalid @enderror" id="am_time" autocomplete="off" readonly>
+	                                <input type="text" class="form-control time-picker  @error('am_time') is-invalid @enderror" id="am_time" autocomplete="off" readonly value="{{ isset($counting['details_call']) ? date('H:i:s', strtotime($counting['details_call']->call_am_datetime)) : '' }}">
 	                            </div>
 
 	                            @error('am_date')
@@ -198,7 +198,7 @@
                         <div class="form-group">
                         	<label for="information" class="col-sm-3 control-label">Information</label>
                         	<div class="col-sm-9">
-                        		<textarea class="form-control  @error('information') is-invalid @enderror" id="c_information" rows="3" style="resize: none;" required="required" autocomplete="off" readonly></textarea>
+                        		<textarea class="form-control  @error('information') is-invalid @enderror" id="c_information" rows="3" style="resize: none;" required="required" autocomplete="off" readonly>{{ isset($counting['details_call']) ? $counting['details_call']->call_information : '' }}</textarea>
                         		@error('information')
                                 	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
                                 @enderror
@@ -209,9 +209,9 @@
                         	<div class="col-sm-9">
 	                            <div class="input-group m-b-sm">
 	                            	<span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
-	                            	<input type="text" class="form-control date-picker  @error('consumed_date') is-invalid @enderror" id="consumed_date" readonly>
+	                            	<input type="text" class="form-control date-picker  @error('consumed_date') is-invalid @enderror" id="consumed_date" readonly value="{{ isset($counting['details_call']) ? date('Y-m-d', strtotime($counting['details_call']->call_consume_datetime)) : '' }}">
 	                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
-	                                <input type="text" class="form-control time-picker  @error('consumed_time') is-invalid @enderror" id="consumed_time" autocomplete="off" readonly>
+	                                <input type="text" class="form-control time-picker  @error('consumed_time') is-invalid @enderror" id="consumed_time" autocomplete="off" readonly value="{{ isset($counting['details_call']) ? date('H:i:s', strtotime($counting['details_call']->call_consume_datetime)) : '' }}">
 	                            </div>
 
 	                            @error('consumed_date')
@@ -223,12 +223,15 @@
 	                        </div>
                         </div>
                 	</form>
-                	<form action="/tapping/save" method="POST" id="formTapping" class="form-horizontal">
+                	<form action="/qco/save" method="POST" id="formTapping" class="form-horizontal">
                 		@csrf
 		    			<input type="hidden" class="@error('dapros_id') is-invalid @enderror" name="dapros_id" id="dapros_id" {{ isset($counting['details_dapros']) ? 'value='.$counting['details_dapros']->id : '' }}>
 		    			@error('dapros_id')
                         	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ 'Please fetch data first!' }}</p>
                         @enderror
+                        @if ($counting['data_is_return'])
+                        	<input type="hidden" name="data_is_return" value="1">
+                        @endif
                     	<div class="form-group">
                         	<label for="status_tapping" class="col-sm-3 control-label">Status Tapping</label>
                             <div class="col-sm-9">
@@ -274,7 +277,7 @@
 			});
 	        $.ajax({
 		       type:"post",
-		       url:'/tapping/data',
+		       url:'/qco/data',
 		       //data: $( this ).serialize(),
 		       success: function(data){
 		       	{{-- Fill Dapros Details --}}
@@ -323,7 +326,7 @@
 		});
         $.ajax({
 	       type:"post",
-	       url:'/tapping/save',
+	       url:'/qco/save',
 	       data: $( this ).serialize(),
 	       success: function(data){
 	        $('#saveBtn').button('reset');
@@ -362,7 +365,7 @@
 		});
 		$.ajax({
 	       type:"post",
-	       url:'/tapping/status_tapping',
+	       url:'/qco/status_tapping',
 	       //data: {},
 	       success: function(data){
 
@@ -390,7 +393,7 @@
 		});
         $.ajax({
 	       type:"post",
-	       url:'/tapping/activity',
+	       url:'/qco/activity',
 	       //data: $( this ).serialize(),
 	       success: function(data){
 

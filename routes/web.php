@@ -49,12 +49,21 @@ Route::get('/agent/consume/{param}', 'AgentController@consume')->name('agent_con
 Route::post('/agent/view', 'AgentController@viewDataStatistics');
 
 # Bikir Route untuk QCO
-Route::get('/tapping', 'QCOController@index')->name('qco_workspace');
-Route::get('/tapping/workspace', 'QCOController@index')->name('qco_workspace');
+Route::get('/qco', 'QCOController@index')->name('qco_workspace');
+Route::get('/qco/workspace', 'QCOController@index')->name('qco_workspace');
+Route::get('/qco/consume/{param}', 'QCOController@consume')->name('qco_consume');
+# Retapping QCO
+Route::get('/qco/retapping/{id}', 'QCOController@retapping')->name('qco_retapping');
+# JSON view data
+Route::post('/qco/view', 'QCOController@viewDataStatistics');
 # Chaining Select 1
-Route::post('/tapping/status_tapping', 'QCOController@chain_tapping_call')->name('chain');
+Route::post('/qco/status_tapping', 'QCOController@chain_tapping_call')->name('chain');
 # Counting Agent Tapping
-Route::post('/tapping/activity', 'QCOController@countActivityAgent')->name('qco_activity');
+Route::post('/qco/activity', 'QCOController@countActivityAgent')->name('qco_activity');
 # Agebt view dan save data call
-Route::post('/tapping/data', 'QCOController@getData');
-Route::post('/tapping/save', 'QCOController@saveDataTapping');
+Route::post('/qco/data', 'QCOController@getData');
+Route::post('/qco/save', 'QCOController@saveDataTapping');
+
+# Route untuk Admin
+Route::get('/admin', 'AdminController@index')->name('admin_index');
+Route::get('/admin/report', 'AdminController@report')->name('admin_report');

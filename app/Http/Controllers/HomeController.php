@@ -28,10 +28,12 @@ class HomeController extends Controller
             return redirect('/agent');
         }
         elseif (auth()->user()->divisi == "QCO") {
-            return redirect('/tapping');
+            return redirect('/qco');
         }
         elseif (auth()->user()->divisi == "Inputter") {
             return redirect('/inputter');
+        }elseif (auth()->user()->divisi == "Admin") {
+            return redirect('/admin');
         }
         abort(421, "Misdirected Request!");
     }
