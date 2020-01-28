@@ -79,6 +79,7 @@ class AgentController extends Controller
     			break;
     	}
     	$datas = _dapros_statistics::whereRaw($qWhere)
+               ->where('call_agent_username', auth()->user()->username)
                ->orderBy('call_consume_datetime', 'desc')
                ->paginate(5);
     	//return response()->json($datas, 200);
