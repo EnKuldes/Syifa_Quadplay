@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'Agent' => 'App\Http\Middleware\Agent',
         'QCO' => 'App\Http\Middleware\QCO',
         'Inputter' => 'App\Http\Middleware\Inputter',
+        'Admin' => 'App\Http\Middleware\Admin',
     ];
 
     /**

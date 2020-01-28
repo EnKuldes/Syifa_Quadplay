@@ -5,13 +5,22 @@
             <li class="nav-heading"><span>Navigation</span></li>
             
             {{-- Consumed dan Follop Up hanya Agent --}}
+            @if (Auth::User()->divisi == 'Agent')
             <li><a href="/agent/workspace"><span class="menu-icon icon-speedometer"></span><p>Workspace</p></a></li>
             <li><a href="/agent/consume/all"><span class="menu-icon icon-user"></span><p>Consumed</p></a></li>
+            @endif
 
             {{-- Consumed dan Return hanya QCO --}}
+            @if (Auth::User()->divisi == 'QCO')
             <li><a href="/tapping/workspace"><span class="menu-icon icon-speedometer"></span><p>Workspace</p></a></li>
-            <li><a href="/tapping/approved"><span class="menu-icon icon-user"></span><p>Approved</p></a></li>
-            <li><a href="/tapping/return"><span class="menu-icon icon-user"></span><p>Return</p></a></li>
+            <li><a href="/tapping/consume/all"><span class="menu-icon icon-user"></span><p>Consumed</p></a></li>
+            @endif
+
+            {{-- Navbar Admin --}}
+            @if (Auth::User()->divisi == 'Admin')
+            <li><a href="/admin"><span class="menu-icon icon-speedometer"></span><p>Dashboard</p></a></li>
+            <li><a href="/admin/report"><span class="menu-icon icon-user"></span><p>Report</p></a></li>
+            @endif
 
             {{--
             <li class="droplink"><a href="#"><span class="menu-icon icon-envelope-open"></span><p>Mailbox</p><span class="arrow"></span></a>

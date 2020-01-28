@@ -33,6 +33,12 @@ class DatabaseSeeder extends Seeder
 	            'password' => bcrypt('333333'),
 	            'divisi' => 'Inputter',
 	            'leader' => '',
+	        ),array(
+	            'name' => 'Admin',
+	            'username' => '021022',
+	            'password' => bcrypt('021022'),
+	            'divisi' => 'Admin',
+	            'leader' => '',
 	        )
         );
         DB::table('users')->insert($dataUsers);

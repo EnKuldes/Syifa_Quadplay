@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 
 class Admin
@@ -15,6 +16,12 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        //return $next($request);
+        if (Auth::check() && Auth::user()->divisi == 'Admin') {
+            return $next($request);
+        }
+        else {
+            abort(403, 'Unauthorized action.');
+        }
     }
 }
