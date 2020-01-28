@@ -9,6 +9,8 @@
 
         <title>{{ config('app.name') }}</title>
 
+        <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
+
         {{-- Fonts --}}
         <link href="{{ asset('css/css-nunito.css') }}" rel="stylesheet">
         <link href='{{ asset('css/css-family-ubuntu.css') }}' rel='stylesheet' type='text/css'>
@@ -64,7 +66,8 @@
                             </a>
                         </div>
                         <div class="logo-box">
-                            <a href="/" class="logo-text"><span>{{ config('app.name') }}</span></a>
+                            {{-- <a href="/" class="logo-text"><span>{{ config('app.name') }}</span></a> --}}
+                            <a href="/" class="logo-image"><img class="logo-image" src="{{ asset('images/logo.png') }}" width="100" height="50" alt="Syifa"></a>
                         </div>{{-- Logo Box --}}
                         <div class="topmenu-outer">
                             <div class="top-menu">
