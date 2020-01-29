@@ -26,7 +26,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-    	return view('admin.index');
+        $datas['dev_message'] = 'Masih dalam tahap development, bila ada kekurangan bisa kami minta feedbacknya.';
+    	return view('admin.index')->with('datas',$datas);
     }
 
     /**
@@ -34,7 +35,7 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function report()
     {
         return view('admin.report');
     }

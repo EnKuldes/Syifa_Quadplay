@@ -31,6 +31,10 @@
         <link href="{{ asset('plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('plugins/bootstrap-datepicker/css/datepicker3.css') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css"/>
+        {{-- Datatables --}}
+        <link href="{{ asset('plugins/datatables/css/jquery.datatables.min.css') }}" rel="stylesheet" type="text/css"/> 
+        <link href="{{ asset('plugins/datatables/css/jquery.datatables_themeroller.css') }}" rel="stylesheet" type="text/css"/> 
+        
 
         {{-- Theme Styles --}}
         <link href="{{ asset('css/modern.min.css') }}" rel="stylesheet">
