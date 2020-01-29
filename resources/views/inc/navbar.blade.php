@@ -12,8 +12,8 @@
 
             {{-- Consumed dan Return hanya QCO --}}
             @if (Auth::User()->divisi == 'QCO')
-            <li><a href="/tapping/workspace"><span class="menu-icon icon-speedometer"></span><p>Workspace</p></a></li>
-            <li><a href="/tapping/consume/all"><span class="menu-icon icon-user"></span><p>Consumed</p></a></li>
+            <li><a href="/qco/workspace"><span class="menu-icon icon-speedometer"></span><p>Workspace</p></a></li>
+            <li><a href="/qco/consume/all"><span class="menu-icon icon-user"></span><p>Consumed</p></a></li>
             @endif
 
             {{-- Navbar Admin --}}
