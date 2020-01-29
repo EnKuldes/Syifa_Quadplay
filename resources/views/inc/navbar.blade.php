@@ -54,3 +54,9 @@
     </div>
     {{-- Page Sidebar Inner --}}
 </div>
+@if ($datas ?? '')
+    @if ($datas['dev_message'])
+        @include('inc.message')
+    @endif
+    
+@endif
