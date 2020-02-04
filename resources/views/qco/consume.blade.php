@@ -55,7 +55,7 @@
 							<td>
 								<button type="button" class="btn btn-default btn-xs" onclick="view_data({{ $data->id }})" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="icon-magnifier"></i></button>
 								@if ( ($call_status_detail->id == 1) AND (($data->data_condition == '-') OR ($data->data_condition == 'returned to qco')) )
-								<a href="/tapping/retapping/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="fa fa-phone"></i></a>
+								<a href="/qco/retapping/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="fa fa-phone"></i></a>
 								@endif
 							</td>
 						</tr>
@@ -271,7 +271,7 @@
 		});
 		$.ajax({
 			type:"post",
-			url:'/tapping/view',
+			url:'/qco/view',
 			data: {'id': id},
 			success: function(data){
 				var valueCallTitles = ['status_call', 'reason_status_call', 'detail_reason_status_call', 'am_call', 'fu_call', 'information_call', 'attempts_call', 'agent_call', 'consume_call', 'status_tapping', 'information_tapping', 'agent_tapping', 'consume_tapping'];
