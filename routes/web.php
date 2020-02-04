@@ -67,3 +67,4 @@ Route::post('/qco/save', 'QCOController@saveDataTapping');
 # Route untuk Admin
 Route::get('/admin', 'AdminController@index')->name('admin_index');
 Route::get('/admin/report', 'AdminController@report')->name('admin_report');
+Route::get('/admin/get_dapros_data', 'AdminController@get_dapros_data');
