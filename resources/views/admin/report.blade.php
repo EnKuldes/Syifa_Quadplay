@@ -4,7 +4,7 @@
 
 <div class="panel panel-white">
 	<div class="panel-heading clearfix">
-		<h4 class="panel-title">Basic example</h4>
+		<h4 class="panel-title">Report</h4>
 	</div>
 	<div class="panel-body">
 		<div class="table-responsive">
@@ -77,14 +77,24 @@
 	</div>
 </div>
 <script src="{{ asset('plugins/datatables/js/jquery.datatables.min.js')}}"></script>
+<script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
 <script type="text/javascript">
-	$('#report').DataTable({
+	var oTable = $('#report').DataTable({
 		searching: true,
 		processing: true,
         serverSide: true,
-        ajax: 'get_dapros_data',
+        ajax: {
+        	url: 'get_dapros_data',
+        	data: function(data) {
+        		data.from_date = $("#from_date").val();
+        		data.to_date = $("#to_date").val();
+        	},
+        },
         columnDefs: [
 		    { "searchable": false, "targets": [0,1,2,3,4,5] }
+		],
+		buttons: [
+		    'copy', 'excel', 'pdf'
 		],
         columns: [
             {{-- { data: 'idx', name: 'No' }
@@ -114,7 +124,55 @@
 			, { data: 'tapping_agent_username', name: 'call_information' }
 			, { data: 'tapping_agent_name', name: 'call_information' }
             , { data: 'tapping_consume', name: 'call_information' }
-        ]
+        ],
+        language: {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
+        dom: 
+        "<'row'<'col-md-2'l><'col-md-4 col-md-offset-6'<'daterange_filter float-right'>>>trip",
 	});
+	$(`<div class="row">
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="form-group">
+						<label class="sr-only" for="from_date">From Date</label>
+						<input type="text" class="form-control date-picker" name="from_date" id="from_date" placeholder="From Date">
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="to_date">To Date</label>
+						<input type="text" class="form-control date-picker" name="to_date" id="to_date" placeholder="To Date">
+					</div>
+					<button type="button" class="btn btn-primary " onclick="filterDate()"><i class="fa fa-filter"></i> </button>
+                	<button type="button" class="btn btn-success " onclick="resetSearch()"><i class="fa fa-repeat"></i> </button>
+                	<button type="button" class="btn btn-default " onclick="refreshTable()"><i class="fa fa-refresh"></i> </button>
+				</div>
+			</div>
+		</div>`).appendTo('#report_wrapper  div.daterange_filter');
+	function resetSearch() {
+		$('input').val('');
+		oTable
+		.search( '' )
+		.columns().search( '' )
+		.draw();
+	}
+	function refreshTable() {
+		oTable.ajax.reload(null, false);
+	}
+	function filterDate() {
+		var from_date_val = $('#from_date').val();
+		var to_date_val = $('#to_date').val();
+		if ((from_date_val != null || from_date_val != '') && (to_date_val != null || to_date_val != '')) {
+			//oTable.ajax.data(data: {from_date: from_date_val, to_date: to_date_val},).load();
+			oTable.ajax.reload();
+		}
+		else{
+			notificationScript("warning", "Warning", "Both Date is required!");
+		}
+	}
+	$('.date-picker').datepicker({
+        orientation: "top auto",
+        autoclose: true,
+        format: 'yyyy-mm-dd',
+    });
 </script>
 @endsection
