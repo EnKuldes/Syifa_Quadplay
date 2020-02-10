@@ -11,7 +11,7 @@
 			<table id="report" class="display table" style="width: 100%; cellspacing: 0;">
 				<thead>
 					<tr>
-						{{--<th>No</th>--}}
+						<th>No</th>
 						<th>BRAND</th>
 						<th>ROW_NUM</th>
 						<th>MSISDN_MASK</th>
@@ -37,11 +37,12 @@
 						<th>QCO</th>
 						<th>QCO Name</th>
 						<th>Tapping Consume</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tfoot>
 					<tr>
-						{{--<th>No</th>--}}
+						<th>No</th>
 						<th>BRAND</th>
 						<th>ROW_NUM</th>
 						<th>MSISDN_MASK</th>
@@ -67,6 +68,7 @@
 						<th>QCO</th>
 						<th>QCO Name</th>
 						<th>Tapping Consume</th>
+						<th>Action</th>
 					</tr>
 				</tfoot>
 				<tbody>
@@ -99,7 +101,8 @@
         columns: [
             {{-- { data: 'idx', name: 'No' }
                                      ,--}} 
-			{ data: 'brand', name: 'BRAND' }
+			{ data: 'i', name: 'i' }
+			, { data: 'brand', name: 'BRAND' }
             , { data: 'row_number', name: 'ROW_NUM' }
             , { data: 'msisdn_mask', name: 'MSISDN_MASK' }
             , { data: 'msisdn', name: 'MSISDN' }
@@ -115,15 +118,16 @@
             , { data: 'am_datetime', name: 'am_datetime' }
             , { data: 'fu_datetime', name: 'fu_datetime' }
             , { data: 'call_information', name: 'call_information' }
-            , { data: 'call_attempts', name: 'call_information' }
-            , { data: 'call_agent', name: 'call_information' }
-            , { data: 'call_agent_name', name: 'call_information' }
-            , { data: 'call_consume', name: 'call_information' }
-            , { data: 'tapping_status', name: 'call_information' }
-            , { data: 'tapping_information', name: 'call_information' }
-			, { data: 'tapping_agent_username', name: 'call_information' }
-			, { data: 'tapping_agent_name', name: 'call_information' }
-            , { data: 'tapping_consume', name: 'call_information' }
+            , { data: 'call_attempts', name: 'call_attempts' }
+            , { data: 'call_agent', name: 'call_agent' }
+            , { data: 'call_agent_name', name: 'call_agent_name' }
+            , { data: 'call_consume', name: 'call_consume' }
+            , { data: 'tapping_status', name: 'tapping_status' }
+            , { data: 'tapping_information', name: 'tapping_information' }
+			, { data: 'tapping_agent_username', name: 'tapping_agent_username' }
+			, { data: 'tapping_agent_name', name: 'tapping_agent_name' }
+            , { data: 'tapping_consume', name: 'tapping_consume' }
+            , { data: 'action', name: 'action' }
         ],
         language: {
             processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
@@ -208,5 +212,8 @@
         autoclose: true,
         format: 'yyyy-mm-dd',
     });
+    function modifyDataConsume(id) {
+    	window.location = "/admin/console/data-consume/" + id
+    }
 </script>
 @endsection

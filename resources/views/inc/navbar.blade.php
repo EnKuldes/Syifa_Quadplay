@@ -24,10 +24,9 @@
                 <ul class="sub-menu">
                     <li><a href="/admin/console/users">User</a></li>
                     <li><a href="/admin/console/resources">Resource</a></li>
-                    <li><a href="/admin/console/data-dapros">Data Dapros</a></li>
+                    <li><a href="/admin/console/data-consume">Data Call dan Tapping</a></li>
                 </ul>
             </li>
-            <li><a href="/admin/upload"><span class="menu-icon icon-user"></span><p>Upload Data</p></a></li>
             @endif
 
             {{--

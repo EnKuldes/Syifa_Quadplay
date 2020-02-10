@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use DB; // Untuk gunain Query 
 use App\_dapros;
 use App\_dapros_statistics;
+use App\_call;
+use App\_tapping;
 
 // Laravel Excel
 use App\Exports\DaprosExport;
@@ -50,9 +52,14 @@ class AdminController extends Controller
         return view('admin.console_resources')->with('datas',$datas);
     }
 
-    public function console_data_dapros()
+    public function console_data_consume($id)
     {
         $datas['dev_message'] = 'Masih dalam tahap development, bila ada kekurangan bisa kami minta feedbacknya. Page Console Data';
+        $dapros_stastics = _dapros_statistics::where('id', $id)->firstOrFail();
+        $dapros_information = _dapros::where('id', $dapros_stastics->dapros_id)->firstOrFail();
+        $datas['dapros_stastics'] = $dapros_stastics;
+        $datas['dapros_information'] = $dapros_information;
+
         return view('admin.console_data')->with('datas',$datas);
     }
 
@@ -77,7 +84,7 @@ class AdminController extends Controller
         ->leftJoin('users as ua', 'ds.call_agent_username', '=', 'ua.username')
         ->leftJoin('_tapping_statuses as ts', 'ds.tapping_status_id', '=', 'ts.id')
         ->leftJoin('users as uq', 'ds.tapping_agent_username', '=', 'uq.username')
-        ->select('da.BRAND as brand' , 'da.ROW_NUM as row_number' , 'da.MSISDN_MASK as msisdn_mask' , 'da.MSISDN as msisdn' , 'da.NAME_MASK as name_mask' , 'da.CUSTOMER_SUBTYPE as customer_subtype' , 'da.KABUPATEN as kabupaten' , 'da.ODP1 as odp1' , 'da.ODP2 as odp2' , 'da.ODP3 as odp3' , 'ds.call_am_datetime as am_datetime' , 'ds.call_fu_datetime as fu_datetime' , 'ds.call_information as call_information' , 'ds.call_attempts as call_attempts' , 'ds.call_agent_username as call_agent' , 'ds.call_consume_datetime as call_consume' , 'ds.tapping_information as tapping_information' , 'ds.tapping_agent_username as tapping_agent_username' , 'ds.tapping_consume_datetime as tapping_consume' , 'cs.value_call_status as call_status' , 'sd.value_call_status_detail as call_status_detail' , 'dr.value_call_status_detail_reason as call_status_detail_reason' , 'ua.name as call_agent_name' , 'ts.value_tapping_status as tapping_status' , 'uq.name as tapping_agent_name');
+        ->select('ds.id as id' , 'da.BRAND as brand' , 'da.ROW_NUM as row_number' , 'da.MSISDN_MASK as msisdn_mask' , 'da.MSISDN as msisdn' , 'da.NAME_MASK as name_mask' , 'da.CUSTOMER_SUBTYPE as customer_subtype' , 'da.KABUPATEN as kabupaten' , 'da.ODP1 as odp1' , 'da.ODP2 as odp2' , 'da.ODP3 as odp3' , 'ds.call_am_datetime as am_datetime' , 'ds.call_fu_datetime as fu_datetime' , 'ds.call_information as call_information' , 'ds.call_attempts as call_attempts' , 'ds.call_agent_username as call_agent' , 'ds.call_consume_datetime as call_consume' , 'ds.tapping_information as tapping_information' , 'ds.tapping_agent_username as tapping_agent_username' , 'ds.tapping_consume_datetime as tapping_consume' , 'cs.value_call_status as call_status' , 'sd.value_call_status_detail as call_status_detail' , 'dr.value_call_status_detail_reason as call_status_detail_reason' , 'ua.name as call_agent_name' , 'ts.value_tapping_status as tapping_status' , 'uq.name as tapping_agent_name');
         if(request()->ajax()){
             if(!empty($request->from_date)){
                 $datas->whereBetween('ds.created_at', array($request->from_date, $request->to_date));
@@ -86,7 +93,13 @@ class AdminController extends Controller
                 $datas->whereDate('ds.created_at', DB::raw('CURDATE()'));
             }
         }
-
+        $datas = $datas->get();
+        $datas->map(function ($datas, $i) {
+            $datas->action = '<button type="button" class="btn btn-default " onclick="modifyDataConsume('.$datas->id.')"><i class="fa fa-wrench"></i> </button>';
+            $datas->i = ++$i;
+            //$datas->action = null;
+            return $datas;
+        });
         return datatables()->of($datas)->toJson();
         
     }
@@ -391,7 +404,7 @@ class AdminController extends Controller
         Excel::import(new DaprosImport, public_path('/file_user/'.$nama_file));
  
         // notifikasi dengan session
-        
+
         $request->session()->flash('sukses', 'Upload Successfully!');
         /*$request->session()->flash('message', 'Upload Successfully!');
         $request->session()->flash('alert-class', 'success');
@@ -400,5 +413,74 @@ class AdminController extends Controller
         // alihkan halaman kembali
         return redirect('/admin');
         
+    }
+
+    public function update_data_dapros_statistics(Request $request)
+    {
+        // Dapatkan ds dari ID
+        $ds = _dapros_statistics::where('id', $request->id)->firstOrFail();
+        // Update log terakhir di call 
+        $call = _call::where('dapros_id', $ds->dapros_id)
+        ->orderBy('created_at', 'desc')
+        ->first();
+        if ($call !== null) {
+            $call->call_status_id = $request->status_call;
+            $call->call_status_detail_id = $request->status_detail;
+            $call->call_status_detail_reason_id = $request->status_detail_reason;
+            if ( $request->input('status_detail') == 1 ) {
+                $call->call_am_datetime = $request->input('am_date')." ".$request->input('am_time');
+            }
+            else{
+                $call->call_am_datetime = null;
+            }
+            if ( $request->input('status_detail') == 2 ) {
+                $call->call_fu_datetime =  $request->input('fu_date')." ".$request->input('fu_time');
+            }
+            else{
+                $call->call_fu_datetime =  null;
+            }
+            $call->call_information = $request->c_information;
+            $call->save();
+        }
+        // Update Log terakhir di tapping
+        $tapping = _tapping::where('dapros_id', $ds->dapros_id)
+        ->orderBy('created_at', 'desc')
+        ->first();
+        if ($tapping !== null) {
+            $tapping->tapping_status_id = $request->status_tapping;
+            $tapping->tapping_information = $request->t_information;
+            $tapping->save();
+        }
+        # Kalo data nya status tapping nya return maka
+        if ($request->input('status_tapping') == 2) {
+            $ebr_value = 'yes'; #Kolom ever_be_returned bernilai 'yes'
+            $dc_value = 'returned to agent'; #Kolom data_condition bernilai 'returned to agent'
+        }
+        elseif (null !== $ds->tapping_status_id AND $ds->tapping_status_id == 2){
+            $ebr_value = 'yes'; #Kolom ever_be_returned bernilai 'yes'
+            $dc_value = '-'; #Kolom data condituin bernilai '-'
+        }
+        else{
+            $ebr_value = 'no'; #Kolom ever_be_returned bernilai 'yes'
+            $dc_value = '-'; #Kolom data condituin bernilai '-'
+        }
+        // Save nilai baru dari updatean
+        $ds->call_status_id = $request->status_call;
+        $ds->call_status_detail_id = $request->status_detail;
+        $ds->call_status_detail_reason_id = $request->status_detail_reason;
+        $ds->call_am_datetime = $call->call_am_datetime;
+        $ds->call_fu_datetime =  $call->call_fu_datetime;
+        $ds->call_information = $request->c_information;
+        $ds->tapping_status_id = $request->status_tapping;
+        $ds->tapping_information = $request->t_information;
+        $ds->ever_be_returned = $ebr_value;
+        $ds->data_condition = $dc_value;
+        $save_status = $ds->save();
+        # Memastikan bahwa save berhasil memperbaharui data
+        if (! $save_status) {
+            abort(500, 'Error while updating status data.');
+        }
+        return response()->json(true);
+        //return response()->json($request->id);
     }
 }

@@ -73,7 +73,7 @@ Route::post('/admin/download_report', 'AdminController@download_report');
 // Page Console
 Route::get('/admin/console/users', 'AdminController@console_users')->name('admin_console');
 Route::get('/admin/console/resources', 'AdminController@console_resources')->name('admin_console');
-Route::get('/admin/console/data-dapros', 'AdminController@console_data_dapros')->name('admin_console');
+Route::get('/admin/console/data-consume/{id}', 'AdminController@console_data_consume')->name('admin_console');
 // JSON List Resources, User dan Data ke Datatables
 Route::get('/admin/console/get_status_call_list', 'AdminController@get_status_call_list')->name('admin_list_resources');
 Route::get('/admin/console/get_detail_call_list', 'AdminController@get_detail_call_list')->name('admin_list_resources');
@@ -105,3 +105,4 @@ Route::post('/admin/console/save_tapping_status', 'AdminController@save_tapping_
 Route::post('/admin/console/save_user', 'AdminController@save_user')->name('admin_save_resources');
 Route::post('/admin/console/import_users', 'AdminController@import_users')->name('admin_save_resources');
 Route::post('/admin/console/import_dapros', 'AdminController@import_dapros')->name('admin_save_resources');
+Route::post('/admin/console/update_data', 'AdminController@update_data_dapros_statistics')->name('admin_save_resources');

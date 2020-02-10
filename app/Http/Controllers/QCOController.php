@@ -19,7 +19,7 @@ class QCOController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('QCO');
+        $this->middleware('QCO', ['except' => ['chain_tapping_call']]);
     }
 
     /**

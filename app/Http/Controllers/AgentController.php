@@ -21,7 +21,7 @@ class AgentController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('Agent');
+        $this->middleware('Agent', ['except' => ['chain_status_call', 'chain_status_detail_call', 'chain_status_detail_reason_call']]);
     }
 
     /**
