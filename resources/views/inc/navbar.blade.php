@@ -20,6 +20,14 @@
             @if (Auth::User()->divisi == 'Admin')
             <li><a href="/admin"><span class="menu-icon icon-speedometer"></span><p>Dashboard</p></a></li>
             <li><a href="/admin/report"><span class="menu-icon icon-user"></span><p>Report</p></a></li>
+            <li><a href="#"><span class="menu-icon icon-user"></span><p>Console</p></a>
+                <ul class="sub-menu">
+                    <li><a href="/admin/console/users">User</a></li>
+                    <li><a href="/admin/console/resources">Resource</a></li>
+                    <li><a href="/admin/console/data-dapros">Data Dapros</a></li>
+                </ul>
+            </li>
+            <li><a href="/admin/upload"><span class="menu-icon icon-user"></span><p>Upload Data</p></a></li>
             @endif
 
             {{--

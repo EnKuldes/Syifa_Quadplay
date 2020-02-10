@@ -66,5 +66,41 @@ Route::post('/qco/save', 'QCOController@saveDataTapping');
 
 # Route untuk Admin
 Route::get('/admin', 'AdminController@index')->name('admin_index');
+// Page Reporting
 Route::get('/admin/report', 'AdminController@report')->name('admin_report');
 Route::get('/admin/get_dapros_data', 'AdminController@get_dapros_data');
+Route::post('/admin/download_report', 'AdminController@download_report');
+// Page Console
+Route::get('/admin/console/users', 'AdminController@console_users')->name('admin_console');
+Route::get('/admin/console/resources', 'AdminController@console_resources')->name('admin_console');
+Route::get('/admin/console/data-dapros', 'AdminController@console_data_dapros')->name('admin_console');
+// JSON List Resources, User dan Data ke Datatables
+Route::get('/admin/console/get_status_call_list', 'AdminController@get_status_call_list')->name('admin_list_resources');
+Route::get('/admin/console/get_detail_call_list', 'AdminController@get_detail_call_list')->name('admin_list_resources');
+Route::get('/admin/console/get_detail_reason_list', 'AdminController@get_detail_reason_list')->name('admin_list_resources');
+Route::get('/admin/console/get_status_tapping_list', 'AdminController@get_status_tapping_list')->name('admin_list_resources');
+Route::get('/admin/console/get_users_list', 'AdminController@get_users_list')->name('admin_list_resources');
+// Ambil informasi User by ID
+Route::post('/admin/console/get_users_list', 'AdminController@get_users_list')->name('admin_get_user');
+// JSON List All Resources ke Select2
+Route::post('/admin/console/get_status_call_list_options', 'AdminController@list_all_options_status_call')->name('admin_list_option_resources');
+Route::post('/admin/console/get_detail_call_list_options', 'AdminController@list_all_options_status_detail_call')->name('admin_list_option_resources');
+Route::post('/admin/console/get_detail_reason_list_options', 'AdminController@list_all_options_status_detail_reason_call')->name('admin_list_option_resources');
+Route::post('/admin/console/get_status_tapping_list_options', 'AdminController@list_all_options_tapping_status')->name('admin_list_option_resources');
+
+//Route::post('/admin/console/get_role_list_options', 'AdminController@list_all_options_tapping_status')->name('admin_list_option_resources');
+Route::post('/admin/console/get_role_list_options', function () {
+	$datas = array( 
+		['id'=>'Agent', 'value_role'=>'Agent'],
+		['id'=>'QCO', 'value_role'=>'QCO'],
+		['id'=>'Inputter', 'value_role'=>'Inputter']
+	);
+    return response()->json($datas);
+})->name('admin_list_option_resources');
+// Handle Submit Request dari COnsole
+Route::post('/admin/console/save_status_call', 'AdminController@save_status_call')->name('admin_save_resources');
+Route::post('/admin/console/save_status_detail_call', 'AdminController@save_status_detail_call')->name('admin_save_resources');
+Route::post('/admin/console/save_status_detail_reason_call', 'AdminController@save_status_detail_reason_call')->name('admin_save_resources');
+Route::post('/admin/console/save_tapping_status', 'AdminController@save_tapping_status')->name('admin_save_resources');
+Route::post('/admin/console/save_user', 'AdminController@save_user')->name('admin_save_resources');
+Route::post('/admin/console/import_users', 'AdminController@import_users')->name('admin_save_resources');
