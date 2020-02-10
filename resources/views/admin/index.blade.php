@@ -4,7 +4,9 @@
 
 <div class="panel panel-white">
 	<div class="panel-heading">
+		Dashboard
 		<div class="panel-control">
+			<a href="javascript:void(0);" data-toggle="modal" data-target="#modalForUploadDapros" title="Upload" data-original-title="Upload Data Dapros"><i class="fa fa-upload"></i></a>
 			<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Refresh" class="panel-reload" data-original-title="Reload"><i class="icon-reload"></i></a>
 		</div>
 	</div>
@@ -181,6 +183,29 @@
 	</div>
 </div>
 
+<div class="modal fade" id="modalForUploadDapros" tabindex="-1" role="dialog" aria-labelledby="modalForUploadDaprosLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				<h4 class="modal-title" id="modalForUploadDaprosLabel">Form Upload Dapros</h4>
+			</div>
+			<div class="modal-body">
+				<form id="formForUploadDapros" method="post" action="/admin/console/import_dapros" enctype="multipart/form-data">
+					{{ csrf_field() }}
+					<div class="form-group">
+						<label for="file"></label>
+						<input type="file" name="file" id="file" required="required" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-success" form="formForUploadDapros">Submit</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 {{-- Scripts --}}
 <script src="{{ asset('plugins/flot/jquery.flot.min.js') }}"></script>
 <script src="{{ asset('plugins/flot/jquery.flot.time.min.js') }}"></script>
@@ -283,6 +308,11 @@
 	};
 
 	flot1();
+	$(document).ready(function() {
+		@if(Session::has('sukses'))
+		notificationScript("success", "Success", "Successfully save data.");
+		@endif
+	});
 </script>
 
 @endsection

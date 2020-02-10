@@ -10,6 +10,7 @@ use App\_dapros_statistics;
 // Laravel Excel
 use App\Exports\DaprosExport;
 use App\Imports\UsersImport;
+use App\Imports\DaprosImport;
 use Maatwebsite\Excel\Facades\Excel;
 //use App\Http\Controllers\Controller;
 
@@ -367,6 +368,37 @@ class AdminController extends Controller
  
         // alihkan halaman kembali
         return redirect('/admin/console/users');
+        
+    }
+
+    public function import_dapros(Request $request)
+    {
+        // validasi
+        $this->validate($request, [
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+ 
+        // menangkap file excel
+        $file = $request->file('file');
+ 
+        // membuat nama file unik
+        $nama_file = rand().$file->getClientOriginalName();
+ 
+        // upload ke folder file_siswa di dalam folder public
+        $file->move('file_user',$nama_file);
+ 
+        // import data
+        Excel::import(new DaprosImport, public_path('/file_user/'.$nama_file));
+ 
+        // notifikasi dengan session
+        
+        $request->session()->flash('sukses', 'Upload Successfully!');
+        /*$request->session()->flash('message', 'Upload Successfully!');
+        $request->session()->flash('alert-class', 'success');
+        $request->session()->flash('title-alert', 'Success!');*/
+ 
+        // alihkan halaman kembali
+        return redirect('/admin');
         
     }
 }

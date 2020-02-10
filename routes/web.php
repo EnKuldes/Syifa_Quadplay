@@ -104,3 +104,4 @@ Route::post('/admin/console/save_status_detail_reason_call', 'AdminController@sa
 Route::post('/admin/console/save_tapping_status', 'AdminController@save_tapping_status')->name('admin_save_resources');
 Route::post('/admin/console/save_user', 'AdminController@save_user')->name('admin_save_resources');
 Route::post('/admin/console/import_users', 'AdminController@import_users')->name('admin_save_resources');
+Route::post('/admin/console/import_dapros', 'AdminController@import_dapros')->name('admin_save_resources');
