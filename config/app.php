@@ -177,6 +177,8 @@ return [
 
         // Datatables
         Yajra\DataTables\DataTablesServiceProvider::class,
+        // Laravel Excel / PHPSpreadsheet on Laravel
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -230,6 +232,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         // Datatables
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        // Laravel Excel / PHPSpreadsheet on Laravel
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 
