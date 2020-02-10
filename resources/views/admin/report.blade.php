@@ -145,6 +145,7 @@
 					<button type="button" class="btn btn-primary " onclick="filterDate()"><i class="fa fa-filter"></i> </button>
                 	<button type="button" class="btn btn-success " onclick="resetSearch()"><i class="fa fa-repeat"></i> </button>
                 	<button type="button" class="btn btn-default " onclick="refreshTable()"><i class="fa fa-refresh"></i> </button>
+                	<button type="button" class="btn btn-info " onclick="downloadReport()"><i class="fa fa-download"></i> </button>
 				</div>
 			</div>
 		</div>`).appendTo('#report_wrapper  div.daterange_filter');
@@ -161,9 +162,42 @@
 	function filterDate() {
 		var from_date_val = $('#from_date').val();
 		var to_date_val = $('#to_date').val();
-		if ((from_date_val != null || from_date_val != '') && (to_date_val != null || to_date_val != '')) {
+		if ((from_date_val != null && from_date_val != '') && (to_date_val != null && to_date_val != '')) {
 			//oTable.ajax.data(data: {from_date: from_date_val, to_date: to_date_val},).load();
 			oTable.ajax.reload();
+		}
+		else{
+			notificationScript("warning", "Warning", "Both Date is required!");
+		}
+	}
+	function downloadReport() {
+		var from_date_val = $('#from_date').val();
+		var to_date_val = $('#to_date').val();
+		if ((from_date_val != null && from_date_val != '') && (to_date_val != null && to_date_val != '')) {
+		     var form = document.createElement("form");
+		     var efdate = document.createElement("input"); 
+		     var eldate = document.createElement("input");  
+		     var ecsrf = document.createElement("input");  
+		     form.method = "POST";
+		     form.id = "formtemp";
+		     form.action = "/admin/download_report";
+		     efdate.value= from_date_val;
+		     efdate.name="from_date";
+		     form.appendChild(efdate);  
+		     eldate.value= to_date_val;
+		     eldate.name="to_date";
+		     form.appendChild(eldate);
+		     document.body.appendChild(form);
+
+		     ecsrf.value= '{{ csrf_token() }}';
+		     ecsrf.name="_token";
+		     ecsrf.type="hidden";
+		     form.appendChild(ecsrf);
+
+		     document.body.appendChild(form);
+		     form.submit();
+		     // loadings
+		     $("#formtemp").remove();
 		}
 		else{
 			notificationScript("warning", "Warning", "Both Date is required!");
