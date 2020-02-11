@@ -8,7 +8,7 @@
 		<div class="panel-control">
 			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalForUser"><i class="fa fa-plus"></i></button>
 			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalForUploadUser"><i class="fa fa-upload"></i></button>
-			<button type="button" class="btn btn-default " onclick="resetSearch()"><i class="fa fa-repeat"></i> </button>
+			{{-- <button type="button" class="btn btn-default " onclick="resetSearch()"><i class="fa fa-repeat"></i> </button> --}}
 			<button type="button" class="btn btn-default " onclick="refreshTable()"><i class="fa fa-refresh"></i> </button>
 		</div>
 	</div>
@@ -205,6 +205,7 @@
 		.draw();
 	}
 	function refreshTable() {
+		resetSearch();
 		oTable.ajax.reload(null, false);
 	}
     // Setiap kali close Modal, cek ada inputt Hidden ga

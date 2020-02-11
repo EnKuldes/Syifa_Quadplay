@@ -413,10 +413,11 @@
 	  });
 	// Button On Click
 	$('#resetBtn').click(function(){
-	    $("form").trigger("reset");
+		location.reload();
+	    /*$("form").trigger("reset");
 	    $("select").val('').trigger('change');
 	    $("#status_detail").html('');
-	    $("#status_detail_reason").html('');
+	    $("#status_detail_reason").html('');*/
 	});
 	$('#saveBtn').click(function(){
 	    $(this).button('loading');
