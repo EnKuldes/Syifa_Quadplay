@@ -28,6 +28,7 @@
     </div>
     <div class="col-md-2">
         <ul class="list-unstyled mailbox-nav">
+        	<li><a href="/qco/unconsume"><i class="fa fa-sign-in"></i>Unconsume <span class="badge badge-success pull-right" id="unconsume_daily">{{ $counting['unconsume_daily'] }}</span></a></li>
             <li><a href="/qco/consume/approved"><i class="fa fa-sign-in"></i>Approved <span class="badge badge-success pull-right" id="approved_daily">{{ $counting['approved_daily'] }}</span></a></li>
             <li><a href="/qco/consume/return"><i class="fa fa-sign-in"></i>Return <span class="badge badge-success pull-right" id="return_daily">{{ $counting['return_daily'] }}</span></a></li>
             <li style="margin-left:15px;"><a href="/qco/consume/returntoagree"><i class="fa fa-sign-in"></i><i class="fa fa-check"></i>Retrun to Agree <span class="badge badge-success pull-right" id="returntoagree_daily">{{ $counting['returntoagree_daily'] }}</span></a></li>

@@ -88,6 +88,17 @@ class AgentController extends Controller
     	//return response()->json($datas, 200);
        	return view('agent.consume')->with('datas',$datas);
     }
+    public function unconsume()
+    {
+        $qWhere = "`call_status_id` = 0";
+        $datas = _dapros_statistics::whereRaw($qWhere)
+               ->where('call_agent_username', auth()->user()->username)
+               ->orderBy('call_consume_datetime', 'desc')
+               ->orderBy('updated_at', 'desc')
+               ->paginate(5);
+        //return response()->json($datas, 200);
+        return view('agent.unconsume')->with('datas',$datas);
+    }
 
     /**
      * Workspace dengan value dari parameter.

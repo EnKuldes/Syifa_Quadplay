@@ -45,6 +45,7 @@ Route::post('/agent/status_detail_reason_call', 'AgentController@chain_status_de
 Route::post('/agent/activity', 'AgentController@countActivityAgent')->name('agent_activity');
 # List view Consume
 Route::get('/agent/consume/{param}', 'AgentController@consume')->name('agent_consume');
+Route::get('/agent/unconsume', 'AgentController@unconsume')->name('agent_unconsume');
 # JSON view data
 Route::post('/agent/view', 'AgentController@viewDataStatistics');
 
@@ -52,6 +53,7 @@ Route::post('/agent/view', 'AgentController@viewDataStatistics');
 Route::get('/qco', 'QCOController@index')->name('qco_workspace');
 Route::get('/qco/workspace', 'QCOController@index')->name('qco_workspace');
 Route::get('/qco/consume/{param}', 'QCOController@consume')->name('qco_consume');
+Route::get('/qco/unconsume', 'QCOController@unconsume')->name('qco_unconsume');
 # Retapping QCO
 Route::get('/qco/retapping/{id}', 'QCOController@retapping')->name('qco_retapping');
 # JSON view data

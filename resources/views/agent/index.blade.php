@@ -27,6 +27,7 @@
     </div>
     <div class="col-md-2">
         <ul class="list-unstyled mailbox-nav">
+        	<li><a href="/agent/unconsume"><i class="fa fa-inbox"></i>Unconsumed <span class="badge badge-success pull-right" id="unconsumed_daily">{{ $counting['unconsumed_daily'] }}</span></a></li>
             <li><a href="/agent/consume/all"><i class="fa fa-inbox"></i>Consumed <span class="badge badge-success pull-right" id="consumed_daily">{{ $counting['consumed_daily'] }}</span></a></li>
             <li><a href="/agent/consume/contacted"><i class="fa fa-bullhorn"></i>Contacted <span class="badge badge-success pull-right" id="c_daily">{{ $counting['c_daily'] }}</span></a></li>
             <li style="margin-left:15px;"><a href="/agent/consume/agree"><i class="fa fa-check"></i>Agree <span class="badge badge-success pull-right" id="agree_daily">{{ $counting['agree_daily'] }}</span></a></li>
@@ -475,8 +476,8 @@
 	        }
 	        $("#dapros_id").removeAttr('value');*/
 
-	        var spanTitles = ['consumed_daily', 'c_daily', 'agree_daily', 'fu_daily', 'decline_daily', 'nc_daily', 'approved_daily', 'return_daily', 'returntoagree_daily', 'returntodecline_daily'];
-	        var valueTitles = ['consumed_daily', 'c_daily', 'agree_daily', 'fu_daily', 'decline_daily', 'nc_daily', 'approved_daily', 'return_daily', 'returntoagree_daily', 'returntodecline_daily'];;
+	        var spanTitles = ['unconsumed_daily', 'consumed_daily', 'c_daily', 'agree_daily', 'fu_daily', 'decline_daily', 'nc_daily', 'approved_daily', 'return_daily', 'returntoagree_daily', 'returntodecline_daily'];
+	        var valueTitles = ['unconsumed_daily', 'consumed_daily', 'c_daily', 'agree_daily', 'fu_daily', 'decline_daily', 'nc_daily', 'approved_daily', 'return_daily', 'returntoagree_daily', 'returntodecline_daily'];;
 	        for (var i = 0; i < spanTitles.length; i++) {
 	          $("#" + spanTitles[i]).html(data[valueTitles[i]]);
 	        }

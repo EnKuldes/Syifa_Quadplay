@@ -8,12 +8,14 @@
             @if (Auth::User()->divisi == 'Agent')
             <li><a href="/agent/workspace"><span class="menu-icon icon-speedometer"></span><p>Workspace</p></a></li>
             <li><a href="/agent/consume/all"><span class="menu-icon icon-list"></span><p>Consumed</p></a></li>
+            <li><a href="/agent/unconsume"><span class="menu-icon icon-list"></span><p>Unconsumed</p></a></li>
             @endif
 
             {{-- Consumed dan Return hanya QCO --}}
             @if (Auth::User()->divisi == 'QCO')
             <li><a href="/qco/workspace"><span class="menu-icon icon-speedometer"></span><p>Workspace</p></a></li>
             <li><a href="/qco/consume/all"><span class="menu-icon icon-list"></span><p>Consumed</p></a></li>
+            <li><a href="/qco/unconsume"><span class="menu-icon icon-list"></span><p>Unconsumed</p></a></li>
             @endif
 
             {{-- Navbar Admin --}}
