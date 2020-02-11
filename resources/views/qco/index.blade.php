@@ -338,6 +338,10 @@
 	        }
 	        $("#dapros_id").removeAttr('value');
 	        activity();
+	        {{-- Jika di direct dari Recall maka redirect Workpsace --}}
+	        @if ( isset($counting['details_dapros']) )
+	        	window.location.replace("/qco/workspace");
+	        @endif
 	       },
 	        error: function(jqXhr, json, errorThrown){// this are default for ajax errors
 	        	$('#saveBtn').button('reset');

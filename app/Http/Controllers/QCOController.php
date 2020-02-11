@@ -62,7 +62,7 @@ class QCOController extends Controller
         }
         $datas = _dapros_statistics::whereRaw($qWhere)
                ->where('tapping_agent_username', auth()->user()->username)
-               ->orderBy('call_consume_datetime', 'desc')
+               ->orderBy([['call_consume_datetime', 'desc'], ['updated_at', 'desc']])
                ->paginate(5);
         //return response()->json($datas, 200);
         return view('qco.consume')->with('datas',$datas);
