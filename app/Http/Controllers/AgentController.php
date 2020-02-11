@@ -10,6 +10,8 @@ use App\_call;
 use App\_call_status;
 use App\_call_status_detail;
 use App\_call_status_detail_reason;
+// Untuk menangkap error ketika FirstorFail error
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AgentController extends Controller
 {
@@ -119,36 +121,43 @@ class AgentController extends Controller
     public function getData()
     {
     	#mencari data yang available
-    	$data = _dapros::where('data_available','available')
-						    ->inRandomOrder()
-						    ->firstOrFail();
+        try {
+            $data = _dapros::where('data_available','available')
+                                ->inRandomOrder()
+                                ->firstOrFail();
+            $data->data_available = "in use";
+            $updateResult = $data->save();
+            # Memastikan bahwa save berhasil memperbaharui data
+            if (! $updateResult) {
+                abort(500, 'Error while updating status data.');
+            }
 
-    	$data->data_available = "in use";
-    	$updateResult = $data->save();
-    	# Memastikan bahwa save berhasil memperbaharui data
-    	if (! $updateResult) {
-    		abort(500, 'Error while updating status data.');
-    	}
+            # Memasukan data ke statistik
+            $saveResult = _dapros_statistics::updateOrCreate(
+                ['dapros_id' => $data->id],
+                [
+                    'call_status_id' => 0
+                    , 'call_status_detail_id' => 0
+                    , 'call_status_detail_reason_id' => 0
+                    , 'call_information' => ''
+                    , 'call_agent_username' => auth()->user()->username
+                    , 'call_consume_datetime' => now()
+                ]
+            );
+            # Memastikan data yang disave masuk atau ga
+            if (! _dapros_statistics::findOrFail($saveResult->id)) {
+                abort(500, 'Error while inserting data to statistics.');
+            }
+            
+            // Return hasilnya
+            return response()->json($data);
 
-    	# Memasukan data ke statistik
-    	$saveResult = _dapros_statistics::updateOrCreate(
-        	['dapros_id' => $data->id],
-        	[
-        		'call_status_id' => 0
-				, 'call_status_detail_id' => 0
-				, 'call_status_detail_reason_id' => 0
-				, 'call_information' => ''
-				, 'call_agent_username' => auth()->user()->username
-				, 'call_consume_datetime' => now()
-        	]
-        );
-    	# Memastikan data yang disave masuk atau ga
-		if (! _dapros_statistics::findOrFail($saveResult->id)) {
-        	abort(500, 'Error while inserting data to statistics.');
+        } catch (ModelNotFoundException $e) {
+            $data['message'] = 'Data empty.';
+            $data['alert-title'] = 'Error';
+            $data['alert-class'] = 'warning';
+            return response()->json($data);
         }
-    	
-		// Return hasilnya
-    	return response()->json($data);
     }
     /**
      * Chained Select 

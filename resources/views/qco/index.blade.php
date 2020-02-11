@@ -280,23 +280,28 @@
 		       url:'/qco/data',
 		       //data: $( this ).serialize(),
 		       success: function(data){
-		       	{{-- Fill Dapros Details --}}
-		       	var valueTitles = ['BRAND','ROW_NUM','MSISDN_MASK','MSISDN','NAME_MASK','CUSTOMER_SUBTYPE','TOT_BILL_AMOUNT','TOTAL_REVENUE','DEVICE_TYPE','VOL_BROADBAND','VOL_BROADBAND_PACKAGE','CI','KABUPATEN','LONGITUDE','LATITUDE','ODP1','ODP2','ODP3'];
-		       	var labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
-		        for (var i = 0; i < labelTitles.length; i++) {
-		          $("#" + labelTitles[i]).html(data['details_dapros'][valueTitles[i]]);
-		        }
-		        {{-- Fill Call details --}}
-		        $("#am_date").val(moment(data['details_call']['call_am_datetime']).format("YYYY-M-D"));
-		        $("#am_time").val(moment(data['details_call']['call_am_datetime']).format("H:m"));
-		        $("#c_information").val(data['details_call']['call_information']);
-		        $("#consumed_date").val(moment(data['details_call']['call_consume_datetime']).format("YYYY-M-D"));
-		        $("#consumed_time").val(moment(data['details_call']['call_consume_datetime']).format("H:m"));
-		        {{-- Fill Dapros ID --}}
-		        $("#dapros_id").val(data['details_dapros']['id']);
-		        {{-- Refresh Form --}}
+		       	if (data['message'] != null && data['message'] != '') {
+		       		notificationScript(data['alert-class'], data['alert-title'], data['message']);
+		       	}
+		       	else{
+			       	{{-- Fill Dapros Details --}}
+			       	var valueTitles = ['BRAND','ROW_NUM','MSISDN_MASK','MSISDN','NAME_MASK','CUSTOMER_SUBTYPE','TOT_BILL_AMOUNT','TOTAL_REVENUE','DEVICE_TYPE','VOL_BROADBAND','VOL_BROADBAND_PACKAGE','CI','KABUPATEN','LONGITUDE','LATITUDE','ODP1','ODP2','ODP3'];
+			       	var labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
+			        for (var i = 0; i < labelTitles.length; i++) {
+			          $("#" + labelTitles[i]).html(data['details_dapros'][valueTitles[i]]);
+			        }
+			        {{-- Fill Call details --}}
+			        $("#am_date").val(moment(data['details_call']['call_am_datetime']).format("YYYY-M-D"));
+			        $("#am_time").val(moment(data['details_call']['call_am_datetime']).format("H:m"));
+			        $("#c_information").val(data['details_call']['call_information']);
+			        $("#consumed_date").val(moment(data['details_call']['call_consume_datetime']).format("YYYY-M-D"));
+			        $("#consumed_time").val(moment(data['details_call']['call_consume_datetime']).format("H:m"));
+			        {{-- Fill Dapros ID --}}
+			        $("#dapros_id").val(data['details_dapros']['id']);
+			        {{-- Refresh Form --}}
+			        notificationScript("success", "Success", "Success fetching Data");
+			    }
 		        $('#get-data-form .btn').button('reset');
-		        notificationScript("success", "Success", "Success fetching Data");
 		        $('#resetBtn').click();
 		       },
 		        error: function(jqXhr, json, errorThrown){// this are default for ajax errors

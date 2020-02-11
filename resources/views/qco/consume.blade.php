@@ -284,9 +284,10 @@
 				for (var i = 0; i < labelDaprosTitles.length; i++) {
 					$("#" + labelDaprosTitles[i]).html(data['details_dapros'][valueDaprosTitles[i]]);
 				}
-				console.log(data)
+				//console.log(data)
 
-				notificationScript("success", "Success", "Success fetching Data");
+				//notificationScript("success", "Success", "Success fetching Data");
+				console.log('Success fetching Data')
 	        //$('#btnView').button('reset');
 	    },
 	        error: function(jqXhr, json, errorThrown){// this are default for ajax errors

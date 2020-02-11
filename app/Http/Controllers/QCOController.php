@@ -9,6 +9,9 @@ use App\_dapros_statistics;
 use App\_tapping_status;
 use App\_tapping;
 
+// Untuk menangkap error ketika FirstorFail error
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class QCOController extends Controller
 {
     /**
@@ -74,26 +77,34 @@ class QCOController extends Controller
     public function getData()
     {
     	#mencari data yang available
-    	$data = _dapros_statistics::where([
-					    		['tapping_agent_username',NULL],
-					    		['call_status_detail_reason_id',1]
-					    	])
-						    ->inRandomOrder()
-						    ->firstOrFail();
+        try {
+            $data = _dapros_statistics::where([
+                                    ['tapping_agent_username',NULL],
+                                    ['call_status_detail_reason_id',1]
+                                ])
+                                ->inRandomOrder()
+                                ->firstOrFail();
 
-    	$data->tapping_agent_username = auth()->user()->username;
-    	$updateResult = $data->save();
-    	# Memastikan bahwa save berhasil memperbaharui data
-    	if (! $updateResult) {
-    		abort(500, 'Error while updating status data.');
-    	}
+            $data->tapping_agent_username = auth()->user()->username;
+            $updateResult = $data->save();
+            # Memastikan bahwa save berhasil memperbaharui data
+            if (! $updateResult) {
+                abort(500, 'Error while updating status data.');
+            }
 
-    	# Ngambil value yang diperlukan saja
-    	$datas['details_dapros'] = _dapros::where('id', $data->dapros_id)->firstOrFail();
-    	$datas['details_call'] = $data;
-    	
-		// Return hasilnya
-    	return response()->json($datas);
+            # Ngambil value yang diperlukan saja
+            $datas['details_dapros'] = _dapros::where('id', $data->dapros_id)->firstOrFail();
+            $datas['details_call'] = $data;
+            
+            // Return hasilnya
+            return response()->json($datas);
+        } catch (ModelNotFoundException $e) {
+            $data['message'] = 'Data empty.';
+            $data['alert-title'] = 'Error';
+            $data['alert-class'] = 'warning';
+            return response()->json($data);
+        }
+        	
     }
     /**
      * Save Data dari inputan ke Tabel Dapros_statitisctic 
