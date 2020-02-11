@@ -448,6 +448,7 @@
 	$('#resetBtn').click(function(){
 	    $("#formTapping").trigger("reset");
 	    $("select").val('').trigger('change');
+	    $('input').val('')
 	});
 
 </script>
