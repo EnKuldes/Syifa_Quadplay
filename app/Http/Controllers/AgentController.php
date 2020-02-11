@@ -154,19 +154,22 @@ class AgentController extends Controller
      */
     public function chain_status_call()
     {
-    	$data = _call_status::select('id','value_call_status')->get();
+    	//$data = _call_status::select('id','value_call_status')->get();
+        $data = _call_status::select('id','value_call_status')->where('is_enabled', '=', '1')->get();
         return response()->json($data);
     }
     public function chain_status_detail_call(Request $request)
     {
     	$input = $request->input('id');
-    	$data = _call_status::find($input)->status_details;
+    	//$data = _call_status::find($input)->status_details;
+        $data = _call_status_detail::select('id','value_call_status_detail')->where([ ['is_enabled', '=', '1'], ['id_call_status', '=', $input] ])->get();
         return response()->json($data);
     }
     public function chain_status_detail_reason_call(Request $request)
     {
     	$input = $request->input('id');
-    	$data = _call_status_detail::find($input)->status_detail_reasons;
+    	//$data = _call_status_detail::find($input)->status_detail_reasons;
+        $data = _call_status_detail_reason::select('id','value_call_status_detail_reason')->where([ ['is_enabled', '=', '1'], ['id_call_status_detail', '=', $input] ])->get();
         return response()->json($data);
     }
     /**

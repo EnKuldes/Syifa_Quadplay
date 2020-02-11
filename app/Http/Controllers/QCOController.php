@@ -218,18 +218,12 @@ class QCOController extends Controller
      */
     public function chain_tapping_call()
     {
-    	$data = _tapping_status::select('id','value_tapping_status')->get();
+    	$data = _tapping_status::select('id','value_tapping_status')->where('is_enabled', '=', '1')->get();
         return response()->json($data);
     }
     # Function buat Counting Activity Agent
     public function countActivityAgent()
     {
-    	/*$data = _dapros_statistics::select(
-			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `approved_daily`"),
-            DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `return_daily`"),
-            DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntoagree_daily`"), // Belum kebikin countingnya
-            DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntodecline_daily`") // Belum kebikin countingny
-    		)->where('tapping_agent_username', auth()->user()->username)->first();*/
 		$data = $this->countingActivity();
     	return response()->json($data, 200);
     }
