@@ -177,7 +177,7 @@
 		        	</div>
 		    	</div>
 		    	<div class="col-md-4">
-		    		<form class="form-horizontal">
+		    		<form class="form-horizontal" id="formInfoCall">
                         <div class="form-group">
                         	<label for="" class="col-sm-3 control-label">Appointment Management</label>
                         	<div class="col-sm-9">
@@ -448,8 +448,9 @@
 	// Button On Click
 	$('#resetBtn').click(function(){
 	    $("#formTapping").trigger("reset");
+	    $("#formInfoCall").trigger("reset");
 	    $("select").val('').trigger('change');
-	    $('input').val('')
+	    
 	});
 
 </script>
