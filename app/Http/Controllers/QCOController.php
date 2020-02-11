@@ -195,10 +195,11 @@ class QCOController extends Controller
         $counting = $this->countingActivity();
 
         $dataToRecall = _dapros_statistics::where([
-                            ['id', $id],
+                            ['id', $id]/*,
                             ['data_condition', '=', 'returned to qco'],
-                            ['ever_be_returned', '=', 'yes']
+                            ['ever_be_returned', '=', 'yes']*/
                         ])
+                        ->whereRaw("(data_condition = 'returned to qco' AND ever_be_returned = 'yes' OR tapping_status_id is null)")
                         ->firstOrFail();
         $counting['details_call'] = $dataToRecall;
         $counting['details_dapros'] = _dapros::where('id', $dataToRecall->dapros_id)->firstOrFail();
@@ -254,6 +255,7 @@ class QCOController extends Controller
     protected function countingActivity()
     {
     	$data = _dapros_statistics::select(
+            DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` is null THEN 1 ELSE 0 END), 0)  AS `unconsume_daily`"),
 			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 1 AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `approved_daily`"),
             DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 AND data_condition = 'returned to agent' AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `return_daily`"),
             DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 1 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco' AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntoagree_daily`"), // Belum kebikin countingnya

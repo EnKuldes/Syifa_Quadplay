@@ -110,14 +110,15 @@ class AgentController extends Controller
     	$counting = $this->countingActivity();
 
     	$dataToRecall = _dapros_statistics::where([
-				    		['id', $id],
+				    		['id', $id]/*,
 				    		['call_attempts', '<', 9],
 				    		['call_status_detail_id', '!=', 1],
-				    		['call_status_detail_id', '!=', 3]
+				    		['call_status_detail_id', '!=', 3]*/
 				    	])
-                        ->orWhere('data_condition', '=', 'returned to agent')
+                        //->orWhere('data_condition', '=', 'returned to agent')
+                        ->whereRaw("(call_attempts < 9 AND call_status_detail_id != 3 AND call_status_detail_id != 1 OR data_condition = 'returned to agent')")
                         ->firstOrFail();
-		$counting['details_dapros'] = _dapros::where('id', $dataToRecall->dapros_id)->firstOrFail();
+        $counting['details_dapros'] = _dapros::where('id', $dataToRecall->dapros_id)->firstOrFail();
         # Apakah data pernah di return atau data return?
         if ($dataToRecall->tapping_status_id == 2) {
             $counting['data_is_return'] = true;
@@ -319,6 +320,7 @@ class AgentController extends Controller
     protected function countingActivity()
     {
         $data = _dapros_statistics::select(
+            DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` = 0 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0) AS `unconsumed_daily`"),
             DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` > 0 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0) AS `consumed_daily`"),
             DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() AND data_condition != 'returned to agent' THEN 1 ELSE 0 END), 0)  AS `c_daily`"),
             DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() AND data_condition != 'returned to agent' THEN 1 ELSE 0 END), 0)  AS `agree_daily`"),
