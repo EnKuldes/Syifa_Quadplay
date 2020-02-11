@@ -213,7 +213,7 @@ class QCOController extends Controller
             'attempts_call' => $data->call_attempts,
             'agent_call' => ($data->call_agent_username != null ? $data->call_agent->name : null),
             'consume_call' => $data->call_consume_datetime,
-            'status_tapping' => $data->tapping_status_id,
+            'status_tapping' => $data->tapping_status->value_tapping_status,
             'information_tapping' => $data->tapping_information,
             'agent_tapping' => ($data->tapping_agent_username != null ? $data->tapping_agent->name : null),
             'consume_tapping' => $data->tapping_consume_datetime
@@ -243,11 +243,11 @@ class QCOController extends Controller
     protected function countingActivity()
     {
     	$data = _dapros_statistics::select(
-			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `approved_daily`"),
-            DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 AND data_condition = 'returned to agent' AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `return_daily`"),
-            DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 1 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco' AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntoagree_daily`"), // Belum kebikin countingnya
-            DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 3 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco' AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntodecline_daily`") // Belum kebikin countingnya
-    		)->where('tapping_agent_username', auth()->user()->username)->first();
+			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 1 AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `approved_daily`"),
+            DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 AND data_condition = 'returned to agent' AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `return_daily`"),
+            DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 1 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco' AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntoagree_daily`"), // Belum kebikin countingnya
+            DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 3 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco' AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntodecline_daily`") // Belum kebikin countingnya
+    		)->where('tapping_agent_username', auth()->user()->username)->whereRaw('DATE(updated_at) >= curdate()')->first();
     	return $data;
     }
 }
