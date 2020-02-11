@@ -76,7 +76,7 @@
         </div>
         <div class="logo-box">
           {{-- <a href="/" class="logo-text"><span>{{ config('app.name') }}</span></a> --}}
-          <a href="/" class="logo-image"><img class="logo-image" src="{{ asset('images/logo.png') }}" width="100" alt="Syifa" style="padding-top: 15px;"></a>
+          <a href="/" class="logo-image"><img class="logo-image" src="{{ asset('images/logo.png') }}" width="100" alt="Syifa" style="padding-top: 13px;"></a>
         </div>{{-- Logo Box --}}
         <div class="topmenu-outer">
           <div class="top-menu">
