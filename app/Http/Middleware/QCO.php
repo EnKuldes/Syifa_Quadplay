@@ -17,7 +17,7 @@ class QCO
     public function handle($request, Closure $next)
     {
         //return $next($request);
-        if (Auth::check() && Auth::user()->divisi == 'QCO') {
+        if (Auth::check() && Auth::user()->level == 'QCO') {
             return $next($request);
         }
         else {

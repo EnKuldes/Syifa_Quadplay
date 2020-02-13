@@ -5,28 +5,28 @@
             <li class="nav-heading"><span>Navigation</span></li>
 
             {{-- Consumed dan Follop Up hanya Agent --}}
-            @if (Auth::User()->divisi == 'Agent')
+            @if (Auth::User()->level == 'Agent')
             <li><a href="/agent/workspace"><span class="menu-icon icon-home"></span><p>Workspace</p></a></li>
             <li><a href="/agent/consume/all"><span class="menu-icon icon-list"></span><p>Consumed</p></a></li>
             <li><a href="/agent/unconsume"><span class="menu-icon icon-list"></span><p>Unconsumed</p></a></li>
             @endif
 
             {{-- Consumed dan Return hanya QCO --}}
-            @if (Auth::User()->divisi == 'QCO')
+            @if (Auth::User()->level == 'QCO')
             <li><a href="/qco/workspace"><span class="menu-icon icon-home"></span><p>Workspace</p></a></li>
             <li><a href="/qco/consume/all"><span class="menu-icon icon-list"></span><p>Consumed</p></a></li>
             <li><a href="/qco/unconsume"><span class="menu-icon icon-list"></span><p>Unconsumed</p></a></li>
             @endif
 
             {{-- Navbar Admin --}}
-            @if (Auth::User()->divisi == 'Admin')
+            @if (Auth::User()->level == 'Admin')
             <li><a href="/admin"><span class="menu-icon icon-home"></span><p>Dashboard</p></a></li>
             <li><a href="/admin/report"><span class="menu-icon icon-bar-chart"></span><p>Report</p></a></li>
             <li><a href="#"><span class="menu-icon icon-settings"></span><p>Console</p></a>
                 <ul class="sub-menu">
                     <li><a href="/admin/console/users">User</a></li>
                     <li><a href="/admin/console/resources">Resource</a></li>
-                    <li><a href="/admin/console/data-consume">Data Call dan Tapping</a></li>
+                    {{-- <li><a href="/admin/console/data-consume">Data Call dan Tapping</a></li> --}}
                 </ul>
             </li>
             @endif

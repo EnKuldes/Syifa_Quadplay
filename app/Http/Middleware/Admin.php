@@ -17,7 +17,7 @@ class Admin
     public function handle($request, Closure $next)
     {
         //return $next($request);
-        if (Auth::check() && Auth::user()->divisi == 'Admin') {
+        if (Auth::check() && Auth::user()->level == 'Admin') {
             return $next($request);
         }
         else {

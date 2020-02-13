@@ -17,7 +17,7 @@ class Agent
     public function handle($request, Closure $next)
     {
         //return $next($request);
-        if (Auth::check() && Auth::user()->divisi == 'Agent') {
+        if (Auth::check() && Auth::user()->level == 'Agent') {
             return $next($request);
         }
         else {

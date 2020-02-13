@@ -19,25 +19,29 @@ class DatabaseSeeder extends Seeder
 	            'name' => 'Tes Agent',
 	            'username' => '111111',
 	            'password' => bcrypt('111111'),
-	            'divisi' => 'Agent',
+	            'divisi' => 'Offering',
+	            'level' => 'Agent',
 	            'leader' => '',
 	        ),array(
 	            'name' => 'Tes QCO',
 	            'username' => '222222',
 	            'password' => bcrypt('222222'),
-	            'divisi' => 'QCO',
+	            'divisi' => 'Offering',
+	            'level' => 'QCO',
 	            'leader' => '',
 	        ),array(
 	            'name' => 'Tes Inputter',
 	            'username' => '333333',
 	            'password' => bcrypt('333333'),
-	            'divisi' => 'Inputter',
+	            'divisi' => 'Offering',
+	            'level' => 'Inputter',
 	            'leader' => '',
 	        ),array(
 	            'name' => 'Admin',
 	            'username' => '021022',
 	            'password' => bcrypt('021022'),
-	            'divisi' => 'Admin',
+	            'divisi' => 'Offering',
+	            'level' => 'Admin',
 	            'leader' => '',
 	        )
         );
@@ -182,7 +186,7 @@ class DatabaseSeeder extends Seeder
         DB::table('_tapping_statuses')->insert($listStatusTapping);
 
         // Insert ke Dapros
-        $dataDapros = array(
+        /*$dataDapros = array(
         	array('BRAND' => '748439', 'ROW_NUM' => '62811320***', 'MSISDN_MASK' => '62811320790', 'MSISDN' => 'YETT*************', 'NAME_MASK' => 'YETTY PUSPITAWATI', 'CUSTOMER_SUBTYPE' => 'kartuHALO', 'TOT_BILL_AMOUNT' => '322630', 'TOTAL_REVENUE' => '185130', 'DEVICE_TYPE' => 'SMARTPHONE', 'VOL_BROADBAND' => '11555488768', 'VOL_BROADBAND_PACKAGE' => '11555488768', 'CI' => '20301', 'KABUPATEN' => 'KOTA SURABAYA', 'LONGITUDE' => '11.269.446', 'LATITUDE' => '-726.407', 'ODP1' => 'ODP-TDS-FBB/20', 'ODP2' => '0', 'ODP3' => 'ODP-TDS-FBB/21'),
 			array('BRAND' => '745703', 'ROW_NUM' => '62811356****', 'MSISDN_MASK' => '6,28114E+11', 'MSISDN' => 'ERWI*********', 'NAME_MASK' => 'ERWIN SUTIKNA', 'CUSTOMER_SUBTYPE' => 'kartuHALO', 'TOT_BILL_AMOUNT' => '202031', 'TOTAL_REVENUE' => '40018', 'DEVICE_TYPE' => 'SMARTPHONE', 'VOL_BROADBAND' => '3313975296', 'VOL_BROADBAND_PACKAGE' => '3313975296', 'CI' => '11', 'KABUPATEN' => 'KOTA SURABAYA', 'LONGITUDE' => '11.279.771', 'LATITUDE' => '-733.341', 'ODP1' => 'ODP-RKT-FGB/81', 'ODP2' => '0', 'ODP3' => 'ODP-RKT-FGB/82'),
 			array('BRAND' => '740494', 'ROW_NUM' => '62811538****', 'MSISDN_MASK' => '6,28115E+11', 'MSISDN' => 'VEBI************', 'NAME_MASK' => 'VEBIANTI PERMADI', 'CUSTOMER_SUBTYPE' => 'kartuHALO', 'TOT_BILL_AMOUNT' => '288761', 'TOTAL_REVENUE' => '202273', 'DEVICE_TYPE' => 'SMARTPHONE', 'VOL_BROADBAND' => '2361024512', 'VOL_BROADBAND_PACKAGE' => '2361024512', 'CI' => '24', 'KABUPATEN' => 'KOTA SURABAYA', 'LONGITUDE' => '1.127.347', 'LATITUDE' => '-724.534', 'ODP1' => 'ODP-KBL-FCE/168', 'ODP2' => '0', 'ODP3' => 'ODP-KBL-FCE/126'),
@@ -193,6 +197,6 @@ class DatabaseSeeder extends Seeder
 			array('BRAND' => '634391', 'ROW_NUM' => '62812303*****', 'MSISDN_MASK' => '6,28123E+12', 'MSISDN' => '', 'NAME_MASK' => '', 'CUSTOMER_SUBTYPE' => 'simPATI', 'TOT_BILL_AMOUNT' => '', 'TOTAL_REVENUE' => '290526', 'DEVICE_TYPE' => 'SMARTPHONE', 'VOL_BROADBAND' => '16506591232', 'VOL_BROADBAND_PACKAGE' => '16506570752', 'CI' => '45978', 'KABUPATEN' => 'JAKARTA UTARA', 'LONGITUDE' => '10.679.941', 'LATITUDE' => '-612.312', 'ODP1' => 'ODP-MKR-FBK/201', 'ODP2' => 'ODP-MKR-FBK/228', 'ODP3' => 'ODP-MKR-FBK/281'),
 			array('BRAND' => '1416490', 'ROW_NUM' => '62812313*****', 'MSISDN_MASK' => '6,28123E+12', 'MSISDN' => '', 'NAME_MASK' => '', 'CUSTOMER_SUBTYPE' => 'simPATI', 'TOT_BILL_AMOUNT' => '', 'TOTAL_REVENUE' => '487033', 'DEVICE_TYPE' => 'SMARTPHONE', 'VOL_BROADBAND' => '5076163584', 'VOL_BROADBAND_PACKAGE' => '5076081664', 'CI' => '20992', 'KABUPATEN' => 'KOTA SURABAYA', 'LONGITUDE' => '11.268.244', 'LATITUDE' => '-729.485', 'ODP1' => 'ODP-TDS-FNA/26', 'ODP2' => 'ODP-TDS-FNA/27', 'ODP3' => 'ODP-TDS-FNA/31')
         );
-        DB::table('_dapros')->insert($dataDapros);
+        DB::table('_dapros')->insert($dataDapros);*/
     }
 }

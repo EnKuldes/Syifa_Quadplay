@@ -17,7 +17,7 @@ class Inputter
     public function handle($request, Closure $next)
     {
         //return $next($request);
-        if (Auth::check() && Auth::user()->divisi == 'Inputter') {
+        if (Auth::check() && Auth::user()->level == 'Inputter') {
             return $next($request);
         }
         else {

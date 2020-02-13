@@ -166,7 +166,7 @@
 	var oTable = $('#console_users').DataTable({
 		pageLength: 10,
 		ordering: false,
-		scrollY: '364px',
+		//scrollY: '364px',
 		searching: true,
 		processing: true,
 		serverSide: true,
@@ -179,7 +179,7 @@
 		{ data: 'i', name: 'i' }
 		, { data: 'name', name: 'name' }
 		, { data: 'username', name: 'username' }
-		, { data: 'divisi', name: 'divisi' }
+		, { data: 'level', name: 'level' }
 		{{-- , { data: 'leader', name: 'leader' } --}}
 		, { data: 'status', name: 'status' }
 		{{-- , { data: 'updated_at', name: 'updated_at' } --}}
@@ -260,7 +260,7 @@
 	       		// Masang value ke masing-masing input pada form
 	       		form.elements["input_name"].value = data[i]['name']
 	       		form.elements["input_username"].value = data[i]['username']
-	       		form.elements["select_role_value"].value = data[i]['divisi']
+	       		form.elements["select_role_value"].value = data[i]['level']
 	       		form.elements["select_role_value"].dispatchEvent(new Event('change'));
 	       		form.elements["input_status"].value = data[i]['is_enabled']
 	       		form.elements["input_status"].dispatchEvent(new Event('change'));

@@ -165,8 +165,8 @@ class AdminController extends Controller
     public function get_users_list(Request $request)
     {
         $datas = DB::table('users')
-        ->select('id', 'name', 'username', 'divisi', 'leader', 'is_enabled', 'updated_at')
-        ->where('divisi', '!=', 'Admin');
+        ->select('id', 'name', 'username', 'level', 'leader', 'is_enabled', 'updated_at')
+        ->where('level', '!=', 'Admin');
         if ( request()->ajax() ) {
             if (!empty($request->id)) {
                 $datas->where('id', '=', $request->id);
@@ -347,7 +347,7 @@ class AdminController extends Controller
         $model = DB::table('users');
         $model->updateOrInsert(
             ['id' => $request->id],
-            ['name' => $request->input_name, 'username' => $request->input_username, 'divisi' => $request->select_role_value, 'is_enabled' => $request->input_status, 'password' => bcrypt('infomedia2020'), 'leader' =>'']
+            ['name' => $request->input_name, 'username' => $request->input_username, 'level' => $request->select_role_value, 'divisi' => 'Offering', 'is_enabled' => $request->input_status, 'password' => bcrypt('infomedia2020'), 'leader' =>'']
         );
         if ($model) {
             return response()->json(true);

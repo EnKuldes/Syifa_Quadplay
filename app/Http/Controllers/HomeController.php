@@ -24,15 +24,15 @@ class HomeController extends Controller
     public function index()
     {
         //return view('home');
-        if (auth()->user()->divisi == "Agent") {
+        if (auth()->user()->level == "Agent") {
             return redirect('/agent');
         }
-        elseif (auth()->user()->divisi == "QCO") {
+        elseif (auth()->user()->level == "QCO") {
             return redirect('/qco');
         }
-        elseif (auth()->user()->divisi == "Inputter") {
+        elseif (auth()->user()->level == "Inputter") {
             return redirect('/inputter');
-        }elseif (auth()->user()->divisi == "Admin") {
+        }elseif (auth()->user()->level == "Admin") {
             return redirect('/admin');
         }
         abort(421, "Misdirected Request!");

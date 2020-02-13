@@ -18,9 +18,10 @@ class UsersImport implements ToCollection, WithHeadingRow
                 'username' => $row['id_prener'],
             ], [
                 'name' => $row['name'],
-                'divisi' => $row['user_level'],
+                'level' => $row['user_level'],
+                'divisi' => $row['user_division'],
                 'password' => bcrypt('infomedia2020'),
-                'leader' => ''
+                'leader' => $row['id_prener_tl']
             ]);
         }
     }
