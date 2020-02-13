@@ -11,23 +11,25 @@
 
                 <div class="form-group">
                     <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" placeholder="Username" required autofocus>
-                    @error('username')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                    
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required>
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                    
                 </div>
                 <button type="submit" class="btn btn-success btn-block">{{ __('Login') }}</button>
             </form>
         </div>
+        @error('username')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+        @error('password')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
     </div>
 </div><!-- Row -->
 @endsection
