@@ -42,25 +42,20 @@
     </div>
     <div class="col-md-10">
         <div class="panel panel-white">
-        	<div class="panel-heading clearfix">
-        		<div class="col-md-8">
-        			<h4 class="panel-title">Customer Information</h4>
-        		</div>
-        		<div class="col-md-4">
-        			<h4 class="panel-title">Form Call</h4>
-        		</div>
-            </div>
-            <div class="panel-body mailbox-content">
-		    	<div class="col-md-8">
+        	<div class="panel-body mailbox-content">
+		    	<div class="col-md-5">
+		    		<div class="col-md-12">
+	        			<h4 class="panel-title">Customer Information</h4>
+	        		</div>
 		    		<div class="col-sm-12 col-md-12">
-		        		<div class="row">
+		        		<div class="row hidden-div">
 		        			<div class="col-sm-3">BRAND</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="brand">
 		        				{{ isset($counting['details_dapros']) ? $counting['details_dapros']->BRAND : '' }}
 		        			</div>
 		    			</div>
-		    			<div class="row">
+		    			<div class="row hidden-div">
 		        			<div class="col-sm-3">ROW_NUM</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="row_num">
@@ -74,7 +69,7 @@
 		        				{{ isset($counting['details_dapros']) ? $counting['details_dapros']->MSISDN_MASK : '' }}
 		        			</div>
 		    			</div>
-		    			<div class="row">
+		    			<div class="row hidden-div">
 		        			<div class="col-sm-3">MSISDN</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="msisdn">
@@ -88,49 +83,49 @@
 		        				{{ isset($counting['details_dapros']) ? $counting['details_dapros']->NAME_MASK : '' }}
 		        			</div>
 		    			</div>
-		    			<div class="row">
+		    			<div class="row hidden-div">
 		        			<div class="col-sm-3">CUSTOMER_SUBTYPE</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="customer_subtype">
 		        				{{ isset($counting['details_dapros']) ? $counting['details_dapros']->CUSTOMER_SUBTYPE : '' }}
 		        			</div>
 		    			</div>
-		    			<div class="row">
+		    			<div class="row hidden-div">
 		        			<div class="col-sm-3">TOT_BILL_AMOUNT</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="tot_bill_amount">
 		        				{{ isset($counting['details_dapros']) ? $counting['details_dapros']->TOT_BILL_AMOUNT : '' }}
 		        			</div>
 		    			</div>
-		    			<div class="row">
+		    			<div class="row hidden-div">
 		        			<div class="col-sm-3">TOTAL_REVENUE</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="total_revenue">
 		        				{{ isset($counting['details_dapros']) ? $counting['details_dapros']->TOTAL_REVENUE : '' }}
 		        			</div>
 		    			</div>
-		    			<div class="row">
+		    			<div class="row hidden-div">
 		        			<div class="col-sm-3">DEVICE_TYPE</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="device_type">
 		        				{{ isset($counting['details_dapros']) ? $counting['details_dapros']->DEVICE_TYPE : '' }}
 		        			</div>
 		    			</div>
-		    			<div class="row">
+		    			<div class="row hidden-div">
 		        			<div class="col-sm-3">VOL_BROADBAND</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="vol_broadband">
 		        				{{ isset($counting['details_dapros']) ? $counting['details_dapros']->VOL_BROADBAND : '' }}
 		        			</div>
 		    			</div>
-		    			<div class="row">
+		    			<div class="row hidden-div">
 		        			<div class="col-sm-3">VOL_BROADBAND_PACKAGE</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="vol_broadband_package">
 		        				{{ isset($counting['details_dapros']) ? $counting['details_dapros']->VOL_BROADBAND_PACKAGE : '' }}
 		        			</div>
 		    			</div>
-		    			<div class="row">
+		    			<div class="row hidden-div">
 		        			<div class="col-sm-3">CI</div>
 		        			<div class="col-sm-1"> : </div>
 		        			<div class="" id="ci">
@@ -181,7 +176,10 @@
 		    			</div>
 		        	</div>
 		    	</div>
-		    	<div class="col-md-4">
+		    	<div class="col-md-7">
+		    		<div class="col-md-12">
+	        			<h4 class="panel-title">Form Call</h4>
+	        		</div>
 		    		<form class="form-horizontal" id="formCall" method="POST" action="/agent/save">
 		    			@csrf
 		    			<input type="hidden" class="@error('dapros_id') is-invalid @enderror" name="dapros_id" id="dapros_id" {{ isset($counting['details_dapros']) ? 'value='.$counting['details_dapros']->id : '' }}>
@@ -224,12 +222,42 @@
                                 @enderror
                             </div>
                         </div>
+
+                        {{-- Input by Agent --}}
                         <div class="form-group">
-                        	<label for="" class="col-sm-3 control-label">Appointment Management</label>
+                        	<label for="input_k_kontak" class="col-sm-3 control-label">K-Kontak</label>
+                        	<div class="col-sm-9">
+                        		<textarea class="form-control  @error('input_k_kontak') is-invalid @enderror" name="input_k_kontak" id="input_k_kontak" rows="3" style="resize: none;" autocomplete="off"></textarea>
+                        		@error('input_k_kontak')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+	                        </div>
+                        </div>
+                        <div class="form-group">
+                        	<label for="input_cp_marshanda" class="col-sm-3 control-label">CP Marshanda</label>
+                        	<div class="col-sm-9">
+                        		<input type="text" class="form-control @error('input_cp_marshanda') is-invalid @enderror" id="input_cp_marshanda" name="input_cp_marshanda" autocomplete="off">
+                        		@error('input_cp_marshanda')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+	                        </div>
+                        </div>
+                        <div class="form-group">
+                        	<label for="input_an_pemasangan" class="col-sm-3 control-label">A.N Pemasangan</label>
+                        	<div class="col-sm-9">
+                        		<input type="text" class="form-control @error('input_an_pemasangan') is-invalid @enderror" id="input_an_pemasangan" name="input_an_pemasangan" autocomplete="off">
+                        		@error('input_an_pemasangan')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+	                        </div>
+                        </div>                        
+
+                        <div class="form-group">
+                        	<label for="" class="col-sm-3 control-label">Manja</label>
                         	<div class="col-sm-9">
 	                            <div class="input-group m-b-sm">
 	                            	<span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
-	                            	<input type="text" class="form-control date-picker  @error('am_date') is-invalid @enderror" name="am_date" id="am_date">
+	                            	<input type="text" class="form-control date-picker  @error('am_date') is-invalid @enderror" name="am_date" id="am_date" autocomplete="off">
 	                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
 	                                <input type="text" class="form-control time-picker  @error('am_time') is-invalid @enderror" name="am_time" id="am_time" autocomplete="off">
 	                            </div>
@@ -260,8 +288,76 @@
                                 @enderror
 	                        </div>
                         </div>
+
                         <div class="form-group">
-                        	<label for="information" class="col-sm-3 control-label">Information</label>
+                        	<label for="regional" class="col-sm-3 control-label">Regional</label>
+                            <div class="col-sm-9">
+                                <select class="form-control  @error('regional') is-invalid @enderror" name="regional" id="regional" tabindex="-1" style="width:100%;">
+	                            </select>
+
+	                            @error('regional')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        	<label for="witel" class="col-sm-3 control-label">Witel</label>
+                            <div class="col-sm-9">
+                                <select class="form-control  @error('witel') is-invalid @enderror" name="witel" id="witel" tabindex="-1" style="width:100%;">
+	                            </select>
+
+	                            @error('witel')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        	<label for="paket" class="col-sm-3 control-label">Paket</label>
+                            <div class="col-sm-9">
+                                <select class="form-control  @error('paket') is-invalid @enderror" name="paket" id="paket" tabindex="-1" style="width:100%;">
+	                            </select>
+
+	                            @error('paket')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        	<label for="input_alamat_pemasangan" class="col-sm-3 control-label">Alamat Pemasangan</label>
+                        	<div class="col-sm-9">
+                        		<textarea class="form-control  @error('input_alamat_pemasangan') is-invalid @enderror" name="input_alamat_pemasangan" id="input_alamat_pemasangan" rows="3" style="resize: none;" autocomplete="off"></textarea>
+                        		@error('input_alamat_pemasangan')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+	                        </div>
+                        </div>
+                        <div class="form-group">
+                        	<label for="input_email" class="col-sm-3 control-label">Email</label>
+                        	<div class="col-sm-9">
+                        		<input type="text" class="form-control @error('input_email') is-invalid @enderror" id="input_email" name="input_email" autocomplete="off">
+                        		@error('input_email')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+	                        </div>
+                        </div>
+                        <div class="form-group">
+                        	<label for="via_by" class="col-sm-3 control-label">Via by</label>
+                            <div class="col-sm-9">
+                                <select class="form-control  @error('via_by') is-invalid @enderror" name="via_by" id="via_by" tabindex="-1" style="width:100%;">
+                                	<option></option>
+                                	<option value="Telpon">Telpon</option>
+                                	<option value="Whatsapp">Whatsapp</option>
+                                	<option value="Email">Email</option>
+	                            </select>
+
+	                            @error('via_by')
+                                	<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                        	<label for="information" class="col-sm-3 control-label">Information/TIKOR</label>
                         	<div class="col-sm-9">
                         		<textarea class="form-control  @error('information') is-invalid @enderror" name="information" id="information" rows="3" style="resize: none;" required="required" autocomplete="off"></textarea>
                         		@error('information')
@@ -279,6 +375,7 @@
 <script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" defer></script>
 <script src="{{ asset('plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" defer></script>
 <script type="text/javascript" defer>
+	$('.hidden-div').hide();
 	$('#get-data-form').on('submit', function(e){
         e.preventDefault();
 
@@ -454,6 +551,85 @@
 
 	     });
 	}
+	function chain4() {
+		$.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});
+		$.ajax({
+	       type:"post",
+	       url:'/agent/regional',
+	       //data: {},
+	       success: function(data){
+
+	       	var ahtml = '<option></option>';
+	       	for (var i = 0; i < data.length; i++) {
+	       		ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['regional_desc']+"</option>"
+	       	}
+	        $('#regional').html(ahtml);
+	       },
+	        error : function(data) {
+
+	        console.log("error chain4");
+	        }
+	     }).done(function(){
+
+	     });
+	}
+	function chain5(id) {
+		$.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});
+		$.ajax({
+	       type:"post",
+	       url:'/agent/witel',
+	       data: {'id':id},
+	       success: function(data){
+	       	var ahtml = '<option></option>';
+	       	for (var i = 0; i < data.length; i++) {
+	       		ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['witel_desc']+"</option>"
+	       	}
+	        $('#witel').html(ahtml);
+
+	       },
+	        error : function(data) {
+
+	        console.log("error chain3");
+
+	        }
+	     }).done(function(){
+
+	     });
+	}
+	function chain6() {
+		$.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});
+		$.ajax({
+	       type:"post",
+	       url:'/agent/paket',
+	       data: {'skill':'Quadplay'},
+	       success: function(data){
+
+	       	var ahtml = '<option></option>';
+	       	for (var i = 0; i < data.length; i++) {
+	       		ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['paket_desc']+"</option>"
+	       	}
+	        $('#paket').html(ahtml);
+	       },
+	        error : function(data) {
+
+	        console.log("error chain4");
+	        }
+	     }).done(function(){
+
+	     });
+	}
 
 	// Func Counting
 	function activity() {
@@ -512,6 +688,8 @@
 	    	showMeridian: false
 	    });
 	    chain1();
+	    chain4();
+	    chain6();
 	    $('#resetBtn').click();
 	});
 	// On Change Events
@@ -527,6 +705,13 @@
 	    if (id != "" && id != null)
 	    {
 	      chain3(id);
+	    }
+	  });
+	$("#regional").change(function() {
+	    var id = $(this).val();
+	    if (id != "" && id != null)
+	    {
+	      chain5(id);
 	    }
 	  });
 	// Button On Click

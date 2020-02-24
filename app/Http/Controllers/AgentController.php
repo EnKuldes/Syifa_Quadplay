@@ -10,6 +10,9 @@ use App\_call;
 use App\_call_status;
 use App\_call_status_detail;
 use App\_call_status_detail_reason;
+use App\_regional;
+use App\_witel;
+use App\_paket;
 // Untuk menangkap error ketika FirstorFail error
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -70,10 +73,10 @@ class AgentController extends Controller
                 $qWhere = "`tapping_status_id` = 1";
                 break;
             case 'returntoagree':
-                //$qWhere = "`tapping_status_id` = 1";
+                $qWhere = "`call_status_detail_id` = 1 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco'";
                 break;
             case 'returntodecline':
-                //$qWhere = "`tapping_status_id` = 1";
+                $qWhere = "`call_status_detail_id` = 3 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco'";
                 break;
             
     		default:
@@ -194,6 +197,26 @@ class AgentController extends Controller
         $data = _call_status_detail_reason::select('id','value_call_status_detail_reason')->where([ ['is_enabled', '=', '1'], ['id_call_status_detail', '=', $input] ])->get();
         return response()->json($data);
     }
+    public function chain_regional()
+    {
+        //$data = _call_status::select('id','value_call_status')->get();
+        $data = _regional::select('id','regional_desc')->where('is_enabled', '=', '1')->get();
+        return response()->json($data);
+    }
+    public function chain_witel(Request $request)
+    {
+        $input = $request->input('id');
+        //$data = _call_status::find($input)->status_details;
+        $data = _witel::select('id','witel_desc')->where([ ['is_enabled', '=', '1'], ['id_regional', '=', $input] ])->get();
+        return response()->json($data);
+    }
+    public function chain_paket(Request $request)
+    {
+        $input = $request->input('skill');
+        //$data = _call_status::find($input)->status_details;
+        $data = _paket::select('id','paket_desc')->where([ ['is_enabled', '=', '1'], ['skill', '=', $input] ])->get();
+        return response()->json($data);
+    }
     /**
      * Save Data dari inputan ke Tabel Dapros_statitisctic 
      */
@@ -209,7 +232,17 @@ class AgentController extends Controller
 	        'am_date.required_if'  => 'A Appointment Management Date is required if detail status call is Agree',
 	        'am_time.required_if'  => 'A Appointment Management Time is required if detail status call is Agree',
 	        'fu_date.required_if'  => 'A Follow Up Date is required if detail status call is Follow Up',
-	        'fu_time.required_if'  => 'A Follow Up Time is required if detail status call is Follow Up'
+	        'fu_time.required_if'  => 'A Follow Up Time is required if detail status call is Follow Up',
+
+            'input_k_kontak.required_if'  => 'K-Kontak is required if detail status call is Agree',
+            'input_cp_marshanda.required_if'  => 'CP Marshanda is required if detail status call is Agree',
+            'input_an_pemasangan.required_if'  => 'AN Pemasangan is required if detail status call is Agree',
+            'regional.required_if'  => 'Regional is required if detail status call is Agree',
+            'witel.required_if'  => 'Witel is required if detail status call is Agree',
+            'paket.required_if'  => 'Paket is required if detail status call is Agree',
+            'input_alamat_pemasangan.required_if'  => 'Alamat Pemasangan is required if detail status call is Agree',
+            'input_email.required_if'  => 'Email is required if detail status call is Agree',
+            'via_by.required_if'  => 'Via by is required if detail status call is Agree'
 	    ];
 	    # Rules Validation
     	$validation = $this->validate($request, [
@@ -221,7 +254,17 @@ class AgentController extends Controller
             'am_date' => 'required_if:status_detail,1|nullable',
             'am_time' => 'required_if:status_detail,1|nullable',
             'fu_date' => 'required_if:status_detail,2|nullable',
-            'fu_time' => 'required_if:status_detail,2|nullable'
+            'fu_time' => 'required_if:status_detail,2|nullable',
+            
+            'input_k_kontak' => 'required_if:status_detail,1|nullable',
+            'input_cp_marshanda' => 'required_if:status_detail,1|nullable',
+            'input_an_pemasangan' => 'required_if:status_detail,1|nullable',
+            'regional' => 'required_if:status_detail,1|nullable',
+            'witel' => 'required_if:status_detail,1|nullable',
+            'paket' => 'required_if:status_detail,1|nullable',
+            'input_alamat_pemasangan' => 'required_if:status_detail,1|nullable',
+            'input_email' => 'required_if:status_detail,1|nullable',
+            'via_by' => 'required_if:status_detail,1|nullable'
         ], $messages);
 
     	# Post ke tabel Call
@@ -243,6 +286,17 @@ class AgentController extends Controller
     	else{
     		$call->call_fu_datetime =  null;
     	}
+        // Input Agent
+        $call->call_input_k_kontak = $request->input('input_k_kontak');
+        $call->call_input_cp_marshanda = $request->input('input_cp_marshanda');
+        $call->call_input_an_pemasangan = $request->input('input_an_pemasangan');
+        $call->call_regional = $request->input('regional');
+        $call->call_witel = $request->input('witel');
+        $call->call_paket = $request->input('paket');
+        $call->call_alamat_pemasangan = $request->input('input_alamat_pemasangan');
+        $call->call_email = $request->input('input_email');
+        $call->call_via_by = $request->input('via_by');
+
     	$call->call_agent_username = auth()->user()->username;
     	$boolSaveCall = $call->save();
 
@@ -265,6 +319,18 @@ class AgentController extends Controller
                     , 'call_agent_username' => $call->call_agent_username
                     , 'call_consume_datetime' => $call->created_at
                     //, 'call_attempts' => DB::raw('call_attempts+1')
+
+                    // Input Agent
+                    ,'call_input_k_kontak' => $call->call_input_k_kontak
+                    ,'call_input_cp_marshanda' => $call->call_input_cp_marshanda
+                    ,'call_input_an_pemasangan' => $call->call_input_an_pemasangan
+                    ,'call_regional' => $call->call_regional
+                    ,'call_witel' => $call->call_witel
+                    ,'call_paket' => $call->call_paket
+                    ,'call_alamat_pemasangan' => $call->call_alamat_pemasangan
+                    ,'call_email' => $call->call_email
+                    ,'call_via_by' => $call->call_via_by
+
                     , 'data_condition' => 'returned to qco'
                 ]
             )->first();
@@ -280,6 +346,18 @@ class AgentController extends Controller
                     , 'call_am_datetime' => $call->call_am_datetime
                     , 'call_fu_datetime' => $call->call_fu_datetime
                     , 'call_information' => $call->call_information
+
+                    // Input Agent
+                    ,'call_input_k_kontak' => $call->call_input_k_kontak
+                    ,'call_input_cp_marshanda' => $call->call_input_cp_marshanda
+                    ,'call_input_an_pemasangan' => $call->call_input_an_pemasangan
+                    ,'call_regional' => $call->call_regional
+                    ,'call_witel' => $call->call_witel
+                    ,'call_paket' => $call->call_paket
+                    ,'call_alamat_pemasangan' => $call->call_alamat_pemasangan
+                    ,'call_email' => $call->call_email
+                    ,'call_via_by' => $call->call_via_by
+
                     , 'call_agent_username' => $call->call_agent_username
                     , 'call_consume_datetime' => $call->created_at
                     , 'call_attempts' => DB::raw('call_attempts+1')
@@ -355,7 +433,17 @@ class AgentController extends Controller
     		'status_tapping' => $data->tapping_status_id,
     		'information_tapping' => $data->tapping_information,
     		'agent_tapping' => ($data->tapping_agent_username != null ? $data->tapping_agent->name : null),
-    		'consume_tapping' => $data->tapping_consume_datetime
+    		'consume_tapping' => $data->tapping_consume_datetime,
+
+            'k_kontak' => $data->call_input_k_kontak ,
+            'cp_marshanda' => $data->call_input_cp_marshanda ,
+            'an_pemasangan' => $data->call_input_an_pemasangan ,
+            'regional' => ($data->call_regional != null ? $data->regional->regional_desc : null) ,
+            'witel' => ($data->call_witel != null ? $data->witel->witel_desc : null) ,
+            'paket' => ($data->call_paket != null ? $data->paket->paket_desc : null) ,
+            'alamat_pemasangan' => $data->call_alamat_pemasangan ,
+            'email' => $data->call_email ,
+            'via_by' => $data->call_via_by
 		];
 		$datas = [
 			'details_dapros' => $details_dapros,

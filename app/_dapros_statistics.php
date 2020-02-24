@@ -16,6 +16,7 @@ class _dapros_statistics extends Model
         , 'tapping_status_id' , 'tapping_information' , 'tapping_agent_username', 'tapping_consume_datetime' 
         , 'call_consume_datetime', 'call_attempts'
         , 'ever_be_returned', 'data_condition'
+        , 'call_input_k_kontak', 'call_input_cp_marshanda', 'call_input_an_pemasangan', 'call_regional', 'call_witel', 'call_paket', 'call_alamat_pemasangan', 'call_email', 'call_via_by'
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -62,5 +63,19 @@ class _dapros_statistics extends Model
     public function dapros()
     {
         return $this->belongsTo('App\_dapros', 'dapros_id');
+    }
+
+    // Relasi antara Tabel _regional dan _witel dengan _dapros_statistics || One To Many Relationship Inverse 
+    public function regional()
+    {
+        return $this->belongsTo('App\_regional', 'call_regional');
+    }
+    public function witel()
+    {
+        return $this->belongsTo('App\_witel', 'call_witel');
+    }
+    public function paket()
+    {
+        return $this->belongsTo('App\_paket', 'call_paket');
     }
 }

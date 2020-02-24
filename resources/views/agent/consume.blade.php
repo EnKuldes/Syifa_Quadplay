@@ -92,12 +92,12 @@
 				<div class="row">
 					<div class="col-lg-12">
 						
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">BRAND</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="brand"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">ROW_NUM</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="row_num"></div>
@@ -107,7 +107,7 @@
 							<div class="col-sm-1"> : </div>
 							<div class="" id="msisdn_mask"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">MSISDN</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="msisdn"></div>
@@ -117,37 +117,37 @@
 							<div class="col-sm-1"> : </div>
 							<div class="" id="name_mask"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">CUSTOMER_SUBTYPE</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="customer_subtype"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">TOT_BILL_AMOUNT</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="tot_bill_amount"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">TOTAL_REVENUE</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="total_revenue"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">DEVICE_TYPE</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="device_type"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">VOL_BROADBAND</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="vol_broadband"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">VOL_BROADBAND_PACKAGE</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="vol_broadband_package"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">CI</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="ci"></div>
@@ -200,8 +200,25 @@
 							<div class="col-sm-1"> : </div>
 							<div class="" id="detail_reason_status_call"></div>
 						</div>
+						{{-- Input dari Agent Start --}}
 						<div class="row">
-							<div class="col-sm-4">AM</div>
+							<div class="col-sm-4">K-Kontak</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="k_kontak"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">CP Marshanda</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="cp_marshanda"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">A.N Pemasangan</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="an_pemasangan"></div>
+						</div>
+						{{-- Input dari Agent End --}}
+						<div class="row">
+							<div class="col-sm-4">Manja</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="am_call"></div>
 						</div>
@@ -210,6 +227,39 @@
 							<div class="col-sm-1"> : </div>
 							<div class="" id="fu_call"></div>
 						</div>
+						{{-- Input dari Agent Start --}}
+						<div class="row">
+							<div class="col-sm-4">Regional</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="regional"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">Witel</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="witel"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">Paket</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="paket"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">Alamat Pemasangan</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="alamat_pemasangan"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">Email</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="email"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">Via by</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="via_by"></div>
+						</div>
+
+						{{-- Input dari Agent End --}}
 						<div class="row">
 							<div class="col-sm-4">Call Information</div>
 							<div class="col-sm-1"> : </div>
@@ -262,6 +312,7 @@
 
 </div>
 <script type="text/javascript" defer>
+	$('.hidden-div').hide();
 	function view_data(id) {
 		//$(this).button('loading');
 		$.ajaxSetup({
@@ -274,8 +325,8 @@
 			url:'/agent/view',
 			data: {'id': id},
 			success: function(data){
-				var valueCallTitles = ['status_call', 'reason_status_call', 'detail_reason_status_call', 'am_call', 'fu_call', 'information_call', 'attempts_call', 'agent_call', 'consume_call', 'status_tapping', 'information_tapping', 'agent_tapping', 'consume_tapping'];
-				var labelCallTitles = ['status_call', 'reason_status_call', 'detail_reason_status_call', 'am_call', 'fu_call', 'information_call', 'attempts_call', 'agent_call', 'consume_call', 'status_tapping', 'information_tapping', 'agent_tapping', 'consume_tapping'];
+				var valueCallTitles = ['status_call', 'reason_status_call', 'detail_reason_status_call', 'am_call', 'fu_call', 'information_call', 'attempts_call', 'agent_call', 'consume_call', 'status_tapping', 'information_tapping', 'agent_tapping', 'consume_tapping', 'k_kontak', 'cp_marshanda', 'an_pemasangan', 'regional', 'witel', 'paket', 'alamat_pemasangan', 'email', 'via_by'];
+				var labelCallTitles = ['status_call', 'reason_status_call', 'detail_reason_status_call', 'am_call', 'fu_call', 'information_call', 'attempts_call', 'agent_call', 'consume_call', 'status_tapping', 'information_tapping', 'agent_tapping', 'consume_tapping', 'k_kontak', 'cp_marshanda', 'an_pemasangan', 'regional', 'witel', 'paket', 'alamat_pemasangan', 'email', 'via_by'];
 				var valueDaprosTitles = ['BRAND','ROW_NUM','MSISDN_MASK','MSISDN','NAME_MASK','CUSTOMER_SUBTYPE','TOT_BILL_AMOUNT','TOTAL_REVENUE','DEVICE_TYPE','VOL_BROADBAND','VOL_BROADBAND_PACKAGE','CI','KABUPATEN','LONGITUDE','LATITUDE','ODP1','ODP2','ODP3'];
 				var labelDaprosTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
 				for (var i = 0; i < labelCallTitles.length; i++) {

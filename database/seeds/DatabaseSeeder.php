@@ -197,6 +197,117 @@ class DatabaseSeeder extends Seeder
         );
         DB::table('_tapping_statuses')->insert($listStatusTapping);
 
+        // Insert ke Tabel Regional
+        $listRegional = array(
+        	array(
+        		'id' => 1,
+	            'regional_desc' => 'REG 1',
+	        ),array(
+	        	'id' => 2,
+	            'regional_desc' => 'REG 2',
+	        ),
+	        array(
+	        	'id' => 3,
+	            'regional_desc' => 'REG 3',
+	        ),array(
+	        	'id' => 4,
+	            'regional_desc' => 'REG 4',
+	        ),
+	        array(
+	        	'id' => 5,
+	            'regional_desc' => 'REG 5',
+	        ),array(
+	        	'id' => 6,
+	            'regional_desc' => 'REG 6',
+	        ),
+	        array(
+	        	'id' => 7,
+	            'regional_desc' => 'REG 7',
+	        )
+        );
+        DB::table('_regionals')->insert($listRegional);
+
+        // Insert ke Tabel Witel
+        $listWitel = array(
+        	array('id' => '1', 'witel_desc' => 'MEDAN', 'id_regional' => '1'),
+        	array('id' => '2', 'witel_desc' => 'RIDAR', 'id_regional' => '1'),
+        	array('id' => '3', 'witel_desc' => 'RIKEP', 'id_regional' => '1'),
+        	array('id' => '4', 'witel_desc' => 'SUMBAR', 'id_regional' => '1'),
+        	array('id' => '5', 'witel_desc' => 'SUMSEL', 'id_regional' => '1'),
+        	array('id' => '6', 'witel_desc' => 'SUMUT', 'id_regional' => '1'),
+        	array('id' => '7', 'witel_desc' => 'ACEH', 'id_regional' => '1'),
+        	array('id' => '8', 'witel_desc' => 'BABEL', 'id_regional' => '1'),
+        	array('id' => '9', 'witel_desc' => 'BENGKULU', 'id_regional' => '1'),
+        	array('id' => '10', 'witel_desc' => 'JAMBI', 'id_regional' => '1'),
+        	array('id' => '11', 'witel_desc' => 'LAMPUNG', 'id_regional' => '1'),
+        	array('id' => '12', 'witel_desc' => 'BEKASI', 'id_regional' => '2'),
+        	array('id' => '13', 'witel_desc' => 'BOGOR', 'id_regional' => '2'),
+        	array('id' => '14', 'witel_desc' => 'JAKBAR', 'id_regional' => '2'),
+        	array('id' => '15', 'witel_desc' => 'JAKPUS', 'id_regional' => '2'),
+        	array('id' => '16', 'witel_desc' => 'JAKSEL', 'id_regional' => '2'),
+        	array('id' => '17', 'witel_desc' => 'JAKTIM', 'id_regional' => '2'),
+        	array('id' => '18', 'witel_desc' => 'JAKUT', 'id_regional' => '2'),
+        	array('id' => '19', 'witel_desc' => 'TANGERANG', 'id_regional' => '2'),
+        	array('id' => '20', 'witel_desc' => 'BANTEN', 'id_regional' => '2'),
+        	array('id' => '21', 'witel_desc' => 'BANDUNG', 'id_regional' => '3'),
+        	array('id' => '22', 'witel_desc' => 'BANDUNG BARAT', 'id_regional' => '3'),
+        	array('id' => '23', 'witel_desc' => 'CIREBON', 'id_regional' => '3'),
+        	array('id' => '24', 'witel_desc' => 'KARAWANG', 'id_regional' => '3'),
+        	array('id' => '25', 'witel_desc' => 'SUKABUMI', 'id_regional' => '3'),
+        	array('id' => '26', 'witel_desc' => 'TASIKMALAYA', 'id_regional' => '3'),
+        	array('id' => '27', 'witel_desc' => 'SEMARANG', 'id_regional' => '4'),
+        	array('id' => '28', 'witel_desc' => 'YOGYAKARTA', 'id_regional' => '4'),
+        	array('id' => '29', 'witel_desc' => 'SOLO', 'id_regional' => '4'),
+        	array('id' => '30', 'witel_desc' => 'KUDUS', 'id_regional' => '4'),
+        	array('id' => '31', 'witel_desc' => 'MAGELANG', 'id_regional' => '4'),
+        	array('id' => '32', 'witel_desc' => 'PEKALONGAN', 'id_regional' => '4'),
+        	array('id' => '33', 'witel_desc' => 'PURWOKERTO', 'id_regional' => '4'),
+        	array('id' => '34', 'witel_desc' => 'DENPASAR', 'id_regional' => '5'),
+        	array('id' => '35', 'witel_desc' => 'SURABAYA SELATAN', 'id_regional' => '5'),
+        	array('id' => '36', 'witel_desc' => 'SURABAYA UTARA', 'id_regional' => '5'),
+        	array('id' => '37', 'witel_desc' => 'MALANG', 'id_regional' => '5'),
+        	array('id' => '38', 'witel_desc' => 'SIDOARJO', 'id_regional' => '5'),
+        	array('id' => '39', 'witel_desc' => 'JEMBER', 'id_regional' => '5'),
+        	array('id' => '40', 'witel_desc' => 'KEDIRI', 'id_regional' => '5'),
+        	array('id' => '41', 'witel_desc' => 'MADIUN', 'id_regional' => '5'),
+        	array('id' => '42', 'witel_desc' => 'MADURA', 'id_regional' => '5'),
+        	array('id' => '43', 'witel_desc' => 'NTB', 'id_regional' => '5'),
+        	array('id' => '44', 'witel_desc' => 'NTT', 'id_regional' => '5'),
+        	array('id' => '45', 'witel_desc' => 'PASURUAN', 'id_regional' => '5'),
+        	array('id' => '46', 'witel_desc' => 'SINGARAJA', 'id_regional' => '5'),
+        	array('id' => '47', 'witel_desc' => 'BALIKPAPAN', 'id_regional' => '6'),
+        	array('id' => '48', 'witel_desc' => 'KALBAR', 'id_regional' => '6'),
+        	array('id' => '49', 'witel_desc' => 'KALSEL', 'id_regional' => '6'),
+        	array('id' => '50', 'witel_desc' => 'SAMARINDA', 'id_regional' => '6'),
+        	array('id' => '51', 'witel_desc' => 'KALTARA', 'id_regional' => '6'),
+        	array('id' => '52', 'witel_desc' => 'KALTENG', 'id_regional' => '6'),
+        	array('id' => '53', 'witel_desc' => 'MAKASAR', 'id_regional' => '7'),
+        	array('id' => '54', 'witel_desc' => 'SULUTMALUT', 'id_regional' => '7'),
+        	array('id' => '55', 'witel_desc' => 'GORONTALO', 'id_regional' => '7'),
+        	array('id' => '56', 'witel_desc' => 'MALUKU', 'id_regional' => '7'),
+        	array('id' => '57', 'witel_desc' => 'PAPUA', 'id_regional' => '7'),
+        	array('id' => '58', 'witel_desc' => 'PAPUA BARAT', 'id_regional' => '7'),
+        	array('id' => '59', 'witel_desc' => 'SULSELBAR', 'id_regional' => '7'),
+        	array('id' => '60', 'witel_desc' => 'SULTENG', 'id_regional' => '7'),
+        	array('id' => '61', 'witel_desc' => 'SULTRA', 'id_regional' => '7'),
+        );
+        DB::table('_witels')->insert($listWitel);
+
+        // Insert ke Tabel Paket
+        $listPaket = array(
+        	array(
+        		'id' => 1,
+	            'paket_desc' => 'New Entry 300K',
+	            'skill' => 'Quadplay',
+	        ),
+	        array(
+        		'id' => 2,
+	            'paket_desc' => 'New Entry 380K',
+	            'skill' => 'Quadplay',
+	        )
+        );
+        DB::table('_pakets')->insert($listPaket);
+
         // Insert ke Dapros
         /*$dataDapros = array(
         	array('BRAND' => '748439', 'ROW_NUM' => '62811320***', 'MSISDN_MASK' => '62811320790', 'MSISDN' => 'YETT*************', 'NAME_MASK' => 'YETTY PUSPITAWATI', 'CUSTOMER_SUBTYPE' => 'kartuHALO', 'TOT_BILL_AMOUNT' => '322630', 'TOTAL_REVENUE' => '185130', 'DEVICE_TYPE' => 'SMARTPHONE', 'VOL_BROADBAND' => '11555488768', 'VOL_BROADBAND_PACKAGE' => '11555488768', 'CI' => '20301', 'KABUPATEN' => 'KOTA SURABAYA', 'LONGITUDE' => '11.269.446', 'LATITUDE' => '-726.407', 'ODP1' => 'ODP-TDS-FBB/20', 'ODP2' => '0', 'ODP3' => 'ODP-TDS-FBB/21'),

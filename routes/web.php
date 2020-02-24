@@ -41,6 +41,9 @@ Route::post('/agent/save', 'AgentController@saveDataCall');
 Route::post('/agent/status_call', 'AgentController@chain_status_call')->name('chain');
 Route::post('/agent/status_detail_call', 'AgentController@chain_status_detail_call')->name('chain');
 Route::post('/agent/status_detail_reason_call', 'AgentController@chain_status_detail_reason_call')->name('chain');
+Route::post('/agent/regional', 'AgentController@chain_regional')->name('chain');
+Route::post('/agent/witel', 'AgentController@chain_witel')->name('chain');
+Route::post('/agent/paket', 'AgentController@chain_paket')->name('chain');
 # Coiunting Agent Call
 Route::post('/agent/activity', 'AgentController@countActivityAgent')->name('agent_activity');
 # List view Consume

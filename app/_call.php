@@ -33,4 +33,18 @@ class _call extends Model
     {
     	return $this->belongsTo('App\User', 'call_agent_username');
     }
+
+    // Relasi antara Tabel _regional dan _witel dengan _dapros_statistics || One To Many Relationship Inverse 
+    public function regional()
+    {
+        return $this->belongsTo('App\_regional', 'call_regional');
+    }
+    public function witel()
+    {
+        return $this->belongsTo('App\_witel', 'call_witel');
+    }
+    public function paket()
+    {
+        return $this->belongsTo('App\_paket', 'call_witel');
+    }
 }
