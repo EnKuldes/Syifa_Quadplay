@@ -20,7 +20,10 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('divisi');
             $table->string('level');
+            $table->string('skill')->nullable()->default('-');
             $table->string('leader');
+            $table->string('email')->nullable()->default('-');
+            $table->string('handphone')->nullable()->default('-');
             $table->rememberToken();
             $table->timestamps();
         });
