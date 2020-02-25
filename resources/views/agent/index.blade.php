@@ -58,14 +58,14 @@
             </div>
             <div class="col-md-3">
                 <ul class="list-unstyled weather-info">
-                  <li><b>{{ isset($counting['details_dapros']) ? $counting['details_dapros']->MSISDN_MASK : '' }}</b></span></li>
-                  <li><b>{{ isset($counting['details_dapros']) ? $counting['details_dapros']->NAME_MASK : '' }}</b></span></li>
-                  <li><b>{{ isset($counting['details_dapros']) ? $counting['details_dapros']->KABUPATEN : '' }}</b></span></li>
-                  <li><b>{{ isset($counting['details_dapros']) ? $counting['details_dapros']->LONGITUDE : '' }}</b></span></li>
-                  <li><b>{{ isset($counting['details_dapros']) ? $counting['details_dapros']->LATITUDE : '' }}</b></span></li>
-                  <li><b>{{ isset($counting['details_dapros']) ? $counting['details_dapros']->ODP1 : '' }}</b></span></li>
-                  <li><b>{{ isset($counting['details_dapros']) ? $counting['details_dapros']->ODP2 : '' }}</b></span></li>
-                  <li><b>{{ isset($counting['details_dapros']) ? $counting['details_dapros']->ODP3 : '' }}</b></span></li>
+                  <li><b id="msisdn_mask">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->MSISDN_MASK : '' }}</b></span></li>
+                  <li><b id="name_mask">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->NAME_MASK : '' }}</b></span></li>
+                  <li><b id="kabupaten">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->KABUPATEN : '' }}</b></span></li>
+                  <li><b id="longitude">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->LONGITUDE : '' }}</b></span></li>
+                  <li><b id="latitude">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->LATITUDE : '' }}</b></span></li>
+                  <li><b id="odp1">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->ODP1 : '' }}</b></span></li>
+                  <li><b id="odp2">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->ODP2 : '' }}</b></span></li>
+                  <li><b id="odp3">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->ODP3 : '' }}</b></span></li>
                 </ul>
               </div>
             <div class="col-md-4">
@@ -247,8 +247,8 @@
             <div class="col-md-12">
                 <div class="timeline-options list-unstyled weather-days text-center">
                     <a href="/agent/unconsume" id="unconsumed_daily"><i class="icon-basket-loaded"></i> Unconsume ({{ $counting['unconsumed_daily'] }})</a>
-                    <a href="/agent/consume/all" id="consumed_daily"><i class="icon-user-following"></i> Consume ({{ $counting['consumed_daily'] }})</a>
-                    <a href="/agent/consume/contacted" id="c_daily"><i class="icon-call-out"></i> Contacted ({{ $counting['c_daily'] }})</a>
+                    <a href="/agent/consume/all" id="consumed_daily"><i class="icon-call-out"></i> Consume ({{ $counting['consumed_daily'] }})</a>
+                    <a href="/agent/consume/contacted" id="c_daily"><i class="icon-user-following"></i> Contacted ({{ $counting['c_daily'] }})</a>
                     <a href="/agent/consume/agree" id="agree_daily"><i class="icon-check"></i> Agree ({{ $counting['agree_daily'] }})</a>
                     <a href="/agent/consume/follow_up" id="fu_daily"><i class="icon-refresh"></i> Follow Up ({{ $counting['fu_daily'] }})</a>
                     <a href="/agent/consume/decline" id="decline_daily"><i class="icon-close"></i> Decline ({{ $counting['decline_daily'] }})</a>
