@@ -257,13 +257,13 @@ class AgentController extends Controller
             'fu_time' => 'required_if:status_detail,2|nullable',
             
             'input_k_kontak' => 'required_if:status_detail,1|nullable',
-            'input_cp_marshanda' => 'required_if:status_detail,1|nullable',
+            'input_cp_marshanda' => 'required_if:status_detail,1|nullable|regex:/(0)[0-9]/',
             'input_an_pemasangan' => 'required_if:status_detail,1|nullable',
             'regional' => 'required_if:status_detail,1|nullable',
             'witel' => 'required_if:status_detail,1|nullable',
             'paket' => 'required_if:status_detail,1|nullable',
             'input_alamat_pemasangan' => 'required_if:status_detail,1|nullable',
-            'input_email' => 'required_if:status_detail,1|nullable',
+            'input_email' => 'required_if:status_detail,1|nullable|email',
             'via_by' => 'required_if:status_detail,1|nullable'
         ], $messages);
 
@@ -411,7 +411,7 @@ class AgentController extends Controller
             DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 3 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco' AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntodecline_daily`") // Belum kebikin countingnya
             )->where([
                 ['call_agent_username', auth()->user()->username]
-            ])->whereRaw('DATE(updated_at) >= curdate()')->first();
+            ])->whereRaw('DATE(call_consume_datetime) >= curdate()')->first();
         return $data;
     }
 
