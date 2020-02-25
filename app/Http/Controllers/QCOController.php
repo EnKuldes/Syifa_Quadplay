@@ -105,7 +105,26 @@ class QCOController extends Controller
 
             # Ngambil value yang diperlukan saja
             $datas['details_dapros'] = _dapros::where('id', $data->dapros_id)->firstOrFail();
-            $datas['details_call'] = $data;
+            //$datas['details_call'] = $data;
+            $details_call =[
+                'call_am_datetime' => $data->call_am_datetime,
+                //'fu_call' => $data->call_fu_datetime,
+                'call_information' => $data->call_information,
+                //'call_attempts' => $data->call_attempts,
+                'call_agent_username' => ($data->call_agent_username != null ? $data->call_agent->name : null),
+                'call_consume_datetime' => $data->call_consume_datetime,
+
+                'input_k_kontak' => $data->call_input_k_kontak ,
+                'input_cp_marshanda' => $data->call_input_cp_marshanda ,
+                'input_an_pemasangan' => $data->call_input_an_pemasangan ,
+                'regional' => ($data->call_regional != null ? $data->regional->regional_desc : null) ,
+                'witel' => ($data->call_witel != null ? $data->witel->witel_desc : null) ,
+                'paket' => ($data->call_paket != null ? $data->paket->paket_desc : null) ,
+                'input_alamat_pemasangan' => $data->call_alamat_pemasangan ,
+                'input_email' => $data->call_email ,
+                'via_by' => $data->call_via_by
+            ];
+            $datas['details_call'] = $details_call;
             
             // Return hasilnya
             return response()->json($datas);
@@ -201,7 +220,27 @@ class QCOController extends Controller
                         ])
                         ->whereRaw("(data_condition = 'returned to qco' AND ever_be_returned = 'yes' OR tapping_status_id is null)")
                         ->firstOrFail();
-        $counting['details_call'] = $dataToRecall;
+        $details_call =[
+            'call_am_datetime' => $dataToRecall->call_am_datetime,
+            //'fu_call' => $dataToRecall->call_fu_datetime,
+            'call_information' => $dataToRecall->call_information,
+            //'call_attempts' => $dataToRecall->call_attempts,
+            'call_agent_username' => ($dataToRecall->call_agent_username != null ? $dataToRecall->call_agent->name : null),
+            'call_consume_datetime' => $dataToRecall->call_consume_datetime,
+
+            'input_k_kontak' => $dataToRecall->call_input_k_kontak ,
+            'input_cp_marshanda' => $dataToRecall->call_input_cp_marshanda ,
+            'input_an_pemasangan' => $dataToRecall->call_input_an_pemasangan ,
+            'regional' => ($dataToRecall->call_regional != null ? $dataToRecall->regional->regional_desc : null) ,
+            'witel' => ($dataToRecall->call_witel != null ? $dataToRecall->witel->witel_desc : null) ,
+            'paket' => ($dataToRecall->call_paket != null ? $dataToRecall->paket->paket_desc : null) ,
+            'input_alamat_pemasangan' => $dataToRecall->call_alamat_pemasangan ,
+            'input_email' => $dataToRecall->call_email ,
+            'via_by' => $dataToRecall->call_via_by
+        ];
+        $counting['details_call'] = (object) $details_call;
+        
+        //$counting['details_call'] = $dataToRecall;
         $counting['details_dapros'] = _dapros::where('id', $dataToRecall->dapros_id)->firstOrFail();
         # Apakah data pernah di return atau data return?
         if ($dataToRecall->tapping_status_id == 2) {
