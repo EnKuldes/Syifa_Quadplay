@@ -267,7 +267,17 @@ class QCOController extends Controller
             'status_tapping' => $data->tapping_status->value_tapping_status,
             'information_tapping' => $data->tapping_information,
             'agent_tapping' => ($data->tapping_agent_username != null ? $data->tapping_agent->name : null),
-            'consume_tapping' => $data->tapping_consume_datetime
+            'consume_tapping' => $data->tapping_consume_datetime,
+            
+            'k_kontak' => $data->call_input_k_kontak ,
+            'cp_marshanda' => $data->call_input_cp_marshanda ,
+            'an_pemasangan' => $data->call_input_an_pemasangan ,
+            'regional' => ($data->call_regional != null ? $data->regional->regional_desc : null) ,
+            'witel' => ($data->call_witel != null ? $data->witel->witel_desc : null) ,
+            'paket' => ($data->call_paket != null ? $data->paket->paket_desc : null) ,
+            'alamat_pemasangan' => $data->call_alamat_pemasangan ,
+            'email' => $data->call_email ,
+            'via_by' => $data->call_via_by
         ];
         $datas = [
             'details_dapros' => $details_dapros,
