@@ -29,21 +29,21 @@
         </form>
       </div>
     </div>
+    <form id="formCall" method="POST" action="/agent/save">
+        @csrf
+        <input type="hidden" class="@error('dapros_id') is-invalid @enderror" name="dapros_id" id="dapros_id"
+          {{ isset($counting['details_dapros']) ? 'value='.$counting['details_dapros']->id : '' }}>
+        @error('dapros_id')
+        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+            aria-label="Close"><span aria-hidden="true">×</span></button>{{ 'Please fetch data first!' }}</p>
+        @enderror
+        @if ($counting['data_is_return'])
+        <input type="hidden" name="data_is_return" value="1">
+        @endif
     <div class="panel panel-white">
       <div class="panel-body">
         <div class="weather-widget">
           <div class="row">
-            <form class="form-horizontal" id="formCall" method="POST" action="/agent/save">
-                @csrf
-                <input type="hidden" class="@error('dapros_id') is-invalid @enderror" name="dapros_id" id="dapros_id"
-                  {{ isset($counting['details_dapros']) ? 'value='.$counting['details_dapros']->id : '' }}>
-                @error('dapros_id')
-                <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                    aria-label="Close"><span aria-hidden="true">×</span></button>{{ 'Please fetch data first!' }}</p>
-                @enderror
-                @if ($counting['data_is_return'])
-                <input type="hidden" name="data_is_return" value="1">
-                @endif
             <div class="col-md-1">
               <ul class="list-unstyled weather-info">
                 <li>MSISDN MASK</li>
@@ -156,7 +156,6 @@
                             </div>
                         </div>
                     </div>
-                </form>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
@@ -263,6 +262,7 @@
         </div>
       </div>
     </div>
+    </form>
 </div><!-- Row -->
 <script src="{{ asset('plugins/select2/js/select2.min.js') }}" defer></script>
 <script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" defer></script>
