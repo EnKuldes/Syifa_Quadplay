@@ -245,17 +245,17 @@
             </div>
             <div class="col-md-12">
                 <div class="timeline-options list-unstyled weather-days text-center">
-                    <a href="/agent/unconsume" id="unconsumed_daily"><i class="icon-basket-loaded"></i> Unconsume ({{ $counting['unconsumed_daily'] }})</a>
-                    <a href="/agent/consume/all" id="consumed_daily"><i class="icon-call-out"></i> Consume ({{ $counting['consumed_daily'] }})</a>
-                    <a href="/agent/consume/contacted" id="c_daily"><i class="icon-user-following"></i> Contacted ({{ $counting['c_daily'] }})</a>
-                    <a href="/agent/consume/agree" id="agree_daily"><i class="icon-check"></i> Agree ({{ $counting['agree_daily'] }})</a>
-                    <a href="/agent/consume/follow_up" id="fu_daily"><i class="icon-refresh"></i> Follow Up ({{ $counting['fu_daily'] }})</a>
-                    <a href="/agent/consume/decline" id="decline_daily"><i class="icon-close"></i> Decline ({{ $counting['decline_daily'] }})</a>
-                    <a href="/agent/consume/not_contacted" id="nc_daily"><i class="icon-user-unfollow"></i> Not Contacted ({{ $counting['nc_daily'] }})</a>
-                    <a href="/agent/consume/approved" id="approved_daily"><i class="icon-like"></i> Approved ({{ $counting['approved_daily'] }})</a>
-                    <a href="/agent/consume/return" id="return_daily"><i class="icon-dislike"></i> Return ({{ $counting['return_daily'] }})</a>
-                    <a href="/agent/consume/returntoagree" id="returntoagree_daily"><i class="icon-action-undo"></i><i class="icon-like"></i> Retrun to Agree ({{ $counting['returntoagree_daily'] }})</a>
-                    <a href="/agent/consume/returntodecline" id="returntodecline_daily"><i class="icon-action-undo"></i><i class="icon-dislike"></i> Return to Decline ({{ $counting['returntodecline_daily'] }})</a>
+                    <a href="/agent/unconsume"><i class="icon-basket-loaded"></i> Unconsume (<span id="unconsumed_daily">{{ $counting['unconsumed_daily'] }}</span>)</a>
+                    <a href="/agent/consume/all"><i class="icon-call-out"></i> Consume (<span id="consumed_daily">{{ $counting['consumed_daily'] }}</span>)</a>
+                    <a href="/agent/consume/contacted"><i class="icon-user-following"></i> Contacted (<span id="c_daily">{{ $counting['c_daily'] }}</span>)</a>
+                    <a href="/agent/consume/agree"><i class="icon-check"></i> Agree (<span id="agree_daily">{{ $counting['agree_daily'] }}</span>)</a>
+                    <a href="/agent/consume/follow_up"><i class="icon-refresh"></i> Follow Up (<span id="fu_daily">{{ $counting['fu_daily'] }}</span>)</a>
+                    <a href="/agent/consume/decline"><i class="icon-close"></i> Decline (<span id="decline_daily">{{ $counting['decline_daily'] }}</span>)</a>
+                    <a href="/agent/consume/not_contacted"><i class="icon-user-unfollow"></i> Not Contacted (<span id="nc_daily">{{ $counting['nc_daily'] }}</span>)</a>
+                    <a href="/agent/consume/approved"><i class="icon-like"></i> Approved (<span id="approved_daily">{{ $counting['approved_daily'] }}</span>)</a>
+                    <a href="/agent/consume/return"><i class="icon-dislike"></i> Return (<span id="return_daily">{{ $counting['return_daily'] }}</span>)</a>
+                    <a href="/agent/consume/returntoagree"><i class="icon-action-undo"></i><i class="icon-like"></i> Retrun to Agree (<span id="returntoagree_daily">{{ $counting['returntoagree_daily'] }}</span>)</a>
+                    <a href="/agent/consume/returntodecline"><i class="icon-action-undo"></i><i class="icon-dislike"></i> Return to Decline (<span id="returntodecline_daily">{{ $counting['returntodecline_daily'] }}</span>)</a>
                 </div>
             </div>
           </div>
