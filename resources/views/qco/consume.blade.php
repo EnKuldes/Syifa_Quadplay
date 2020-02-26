@@ -15,11 +15,13 @@
 							<th>#</th>
 							<th>MSISDN MASK</th>
 							<th>NAME MASK</th>
+							<th>TAPPING STATUS</th>
 							<th>CALL STATUS</th> {{-- disini 3 biji aja lgs dari call sampe detail reason call --}}
-							<th>INFORMATION</th>
-							<th>ATTEMPTS</th>
-							<th>CONSUMED</th>
-							<th>AGENT</th>
+							<th>CALL INFORMATION</th>
+							<th>CALL ATTEMPTS</th>
+							<th>CALL CONSUMED</th>
+							<th>CALL AGENT</th>
+							<th>TAPPING INFORMATION</th>
 							<th>ACTIONS</th>
 						</tr>
 					</thead>
@@ -43,15 +45,28 @@
 								$label_color = "danger";
 							}
 							$user = $data->call_agent;
+
+							$tapping_status = $data->tapping_status;
+							if ($tapping_status->id == 1) {
+								$label_color1 = "success";
+							}
+							elseif ($tapping_status->id == 2 ) {
+								$label_color1 = "warning";
+							}
+							else{
+								$label_color1 = "danger";
+							}
 							@endphp
 							<th scope="row">{{ $idx }}</th>
 							<td>{{ $customer_information->MSISDN_MASK }}</td>
 							<td>{{ $customer_information->NAME_MASK }}</td>
+							<td><span class="label label-{{ $label_color1 }}">{{ $tapping_status->value_tapping_status }}</span> </td>
 							<td><span class="label label-{{ $label_color }}">{{ $call_status_detail->value_call_status_detail }}</span> </td>
 							<td>{{ $data->call_information }}</td>
 							<td>{{ $data->call_attempts }}</td>
 							<td>{{ $data->call_consume_datetime }}</td>
 							<td>{{ $user->name }}</td>
+							<td>{{ $data->tapping_information }}</td>
 							<td>
 								<button type="button" class="btn btn-default btn-xs" onclick="view_data({{ $data->id }})" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="icon-magnifier"></i></button>
 								@if ( ($call_status_detail->id == 1) AND (/*($data->data_condition == '-') OR */($data->data_condition == 'returned to qco')) )
