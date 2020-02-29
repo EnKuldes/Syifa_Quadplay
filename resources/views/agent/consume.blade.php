@@ -82,7 +82,7 @@
 	</div>
 </div>
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-lg" style="width:90%;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -90,217 +90,152 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-lg-12">
-						
-						<div class="row hidden-div">
-							<div class="col-sm-4">BRAND</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="brand"></div>
-						</div>
-						<div class="row hidden-div">
-							<div class="col-sm-4">ROW_NUM</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="row_num"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">MSISDN_MASK</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="msisdn_mask"></div>
-						</div>
-						<div class="row hidden-div">
-							<div class="col-sm-4">MSISDN</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="msisdn"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">NAME_MASK</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="name_mask"></div>
-						</div>
-						<div class="row hidden-div">
-							<div class="col-sm-4">CUSTOMER_SUBTYPE</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="customer_subtype"></div>
-						</div>
-						<div class="row hidden-div">
-							<div class="col-sm-4">TOT_BILL_AMOUNT</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="tot_bill_amount"></div>
-						</div>
-						<div class="row hidden-div">
-							<div class="col-sm-4">TOTAL_REVENUE</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="total_revenue"></div>
-						</div>
-						<div class="row hidden-div">
-							<div class="col-sm-4">DEVICE_TYPE</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="device_type"></div>
-						</div>
-						<div class="row hidden-div">
-							<div class="col-sm-4">VOL_BROADBAND</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="vol_broadband"></div>
-						</div>
-						<div class="row hidden-div">
-							<div class="col-sm-4">VOL_BROADBAND_PACKAGE</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="vol_broadband_package"></div>
-						</div>
-						<div class="row hidden-div">
-							<div class="col-sm-4">CI</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="ci"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">KABUPATEN</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="kabupaten"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">LONGITUDE</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="longitude"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">LATITUDE</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="latitude"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">ODP1</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="odp1"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">ODP2</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="odp2"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">ODP3</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="odp3"></div>
-						</div>
-						
+                    <div class="col-lg-2">
+                        <div class="well well-sm">
+                            <p>
+                                <strong>MSISDN MASK</strong>
+                                <br>
+                                <span id="msisdn_mask"></span>
+                                <br>
 
+                                <strong>NAME MASK</strong>
+                                <br>
+                                <span id="name_mask"></span>
+                                <br>
 
-						<div class="row">
-							<div class="col-sm-4">Status Call</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="status_call"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">Reason</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="reason_status_call"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">Detail Reason</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="detail_reason_status_call"></div>
-						</div>
-						{{-- Input dari Agent Start --}}
-						<div class="row">
-							<div class="col-sm-4">K-Kontak</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="k_kontak"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">CP Marshanda</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="cp_marshanda"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">A.N Pemasangan</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="an_pemasangan"></div>
-						</div>
-						{{-- Input dari Agent End --}}
-						<div class="row">
-							<div class="col-sm-4">Manja</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="am_call"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">FU</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="fu_call"></div>
-						</div>
-						{{-- Input dari Agent Start --}}
-						<div class="row">
-							<div class="col-sm-4">Regional</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="regional"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">Witel</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="witel"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">Paket</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="paket"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">Alamat Pemasangan</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="alamat_pemasangan"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">Email</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="email"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">Via by</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="via_by"></div>
-						</div>
+                                <strong>KABUPATEN</strong>
+                                <br>
+                                <span id="kabupaten">asdfsa</span>
+                                <br>
 
-						{{-- Input dari Agent End --}}
-						<div class="row">
-							<div class="col-sm-4">Call Information</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="information_call"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">Attempts</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="attempts_call"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">Agent Call</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="agent_call"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">Call Consumed</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="consume_call"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">Status Tapping</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="status_tapping"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">Tapping Information</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="information_tapping"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">Agent Tapping</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="agent_tapping"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">Tapping Consumed</div>
-							<div class="col-sm-1"> : </div>
-							<div class="" id="consume_tapping"></div>
-						</div>
-					</div>
+                                <strong>LONGITUDE</strong>
+                                <br>
+                                <span id="longitude">asdfsa</span>
+                                <br>
+
+                                <strong>LATITUDE</strong>
+                                <br>
+                                <span id="latitude">asdfsa</span>
+                                <br>
+
+                                <strong>ODP1</strong>
+                                <br>
+                                <span id="odp1">asdfsa</span>
+                                <br>
+
+                                <strong>ODP2</strong>
+                                <br>
+                                <span id="odp2">asdfsa</span>
+                                <br>
+
+                                <strong>ODP3</strong>
+                                <br>
+                                <span id="odp3">asdfsa</span>
+                                <br>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="well well-sm">
+                            <div class="row">
+                                <div class="col-sm-3">Status Call</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="status_call"></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Reason</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="reason_status_call"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Detail</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="detail_reason_status_call"></div>
+                            </div>
+                            {{-- Input dari Agent Start --}}
+                            <div class="row">
+                                <div class="col-sm-3">K-Kontak</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="k_kontak"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">CP</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="cp_marshanda"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Atas Nama</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="an_pemasangan"></div>
+                            </div>
+                            {{-- Input dari Agent End --}}
+                            <div class="row">
+                                <div class="col-sm-3">Manja</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="am_call"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">FU</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="fu_call"></div>
+                            </div>
+                            {{-- Input dari Agent Start --}}
+                            <div class="row">
+                                <div class="col-sm-3">Regional</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="regional"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Witel</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="witel"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Paket</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="paket"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Alamat</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="alamat_pemasangan"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Email</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="email"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Via by</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="via_by"></div>
+                            </div>
+
+                            {{-- Input dari Agent End --}}
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="well well-sm">
+                            <div class="row">
+                                <div class="col-sm-3">Call Info</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="information_call"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Attempts</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="attempts_call"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Agent Call</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="agent_call"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Consumed</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="consume_call"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Status Tapping</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="status_tapping"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Tapping Info</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="information_tapping"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Agent Tapping</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="agent_tapping"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Tapping Consumed</div>
+                                <div class="col-sm-8"> : &nbsp;&nbsp; <span id="consume_tapping"></div>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 			</div>
 			<div class="modal-footer">
