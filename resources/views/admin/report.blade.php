@@ -11,6 +11,7 @@
 			<table id="report" class="display table" style="width: 100%; cellspacing: 0;">
 				<thead>
 					<tr>
+						<th>Action</th>
 						<th>No</th>
 						<th>BRAND</th>
 						<th>ROW_NUM</th>
@@ -37,44 +38,12 @@
 						<th>QCO</th>
 						<th>QCO Name</th>
 						<th>Tapping Consume</th>
-						<th>Action</th>
 					</tr>
 				</thead>
-				<tfoot>
-					<tr>
-						<th>No</th>
-						<th>BRAND</th>
-						<th>ROW_NUM</th>
-						<th>MSISDN_MASK</th>
-						<th>MSISDN</th>
-						<th>NAME_MASK</th>
-						<th>CUSTOMER_SUBTYPE</th>
-						<th>KABUPATEN</th>
-						<th>ODP1</th>
-						<th>ODP2</th>
-						<th>ODP3</th>
-						<th>Call Status</th>
-						<th>Status Detail</th>
-						<th>Detail Reason</th>
-						<th>Appointment Management</th>
-						<th>Follow Up Date</th>
-						<th>Call Information</th>
-						<th>Call Attempts</th>
-						<th>Agent Username</th>
-						<th>Agent Name</th>
-						<th>Call Consume</th>
-						<th>Tapping Status</th>
-						<th>Tapping Information</th>
-						<th>QCO</th>
-						<th>QCO Name</th>
-						<th>Tapping Consume</th>
-						<th>Action</th>
-					</tr>
-				</tfoot>
 				<tbody>
-					
+
 				</tbody>
-			</table>  
+			</table>
 		</div>
 	</div>
 </div>
@@ -100,8 +69,9 @@
 		],
         columns: [
             {{-- { data: 'idx', name: 'No' }
-                                     ,--}} 
-			{ data: 'i', name: 'i' }
+                                     ,--}}
+			{ data: 'action', name: 'action' }
+			, { data: 'i', name: 'i' }
 			, { data: 'brand', name: 'BRAND' }
             , { data: 'row_number', name: 'ROW_NUM' }
             , { data: 'msisdn_mask', name: 'MSISDN_MASK' }
@@ -127,12 +97,11 @@
 			, { data: 'tapping_agent_username', name: 'tapping_agent_username' }
 			, { data: 'tapping_agent_name', name: 'tapping_agent_name' }
             , { data: 'tapping_consume', name: 'tapping_consume' }
-            , { data: 'action', name: 'action' }
         ],
         language: {
             processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
         },
-        dom: 
+        dom:
         "<'row'<'col-md-2'l><'col-md-4 col-md-offset-6'<'daterange_filter float-right'>>>trip",
 	});
 	$(`<div class="row">
@@ -140,11 +109,11 @@
 				<div class="form-inline">
 					<div class="form-group">
 						<label class="sr-only" for="from_date">From Date</label>
-						<input type="text" class="form-control date-picker" name="from_date" id="from_date" placeholder="From Date">
+						<input type="text" class="form-control date-picker" name="from_date" id="from_date" placeholder="From Date" autocomplete="off" required>
 					</div>
 					<div class="form-group">
 						<label class="sr-only" for="to_date">To Date</label>
-						<input type="text" class="form-control date-picker" name="to_date" id="to_date" placeholder="To Date">
+						<input type="text" class="form-control date-picker" name="to_date" id="to_date" placeholder="To Date" autocomplete="off" required>
 					</div>
 					<button type="button" class="btn btn-primary " onclick="filterDate()"><i class="fa fa-filter"></i> </button>
                 	<button type="button" class="btn btn-success " onclick="resetSearch()"><i class="fa fa-repeat"></i> </button>
@@ -179,15 +148,15 @@
 		var to_date_val = $('#to_date').val();
 		if ((from_date_val != null && from_date_val != '') && (to_date_val != null && to_date_val != '')) {
 		     var form = document.createElement("form");
-		     var efdate = document.createElement("input"); 
-		     var eldate = document.createElement("input");  
-		     var ecsrf = document.createElement("input");  
+		     var efdate = document.createElement("input");
+		     var eldate = document.createElement("input");
+		     var ecsrf = document.createElement("input");
 		     form.method = "POST";
 		     form.id = "formtemp";
 		     form.action = "/admin/download_report";
 		     efdate.value= from_date_val;
 		     efdate.name="from_date";
-		     form.appendChild(efdate);  
+		     form.appendChild(efdate);
 		     eldate.value= to_date_val;
 		     eldate.name="to_date";
 		     form.appendChild(eldate);

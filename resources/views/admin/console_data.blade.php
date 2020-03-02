@@ -1,260 +1,276 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="panel panel-white">
-	<div class="panel-heading">
-		<h3 class="panel-title">Console Data</h3>
-		<div class="panel-control">
-			<button type="button" class="btn btn-danger" id="resetBtn" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Reset <i class="fa fa-refresh"></i></button>
-			<button type="submit" class="btn btn-success" id="saveBtn" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Save <i class="fa fa-save"></i></button>
-		</div>
-	</div>
-	<div class="panel-body">
-		<div class="row clearfix">
-			<div class="col-md-6">
-				<div class="col-sm-12 col-md-12">
-					<div class="row hidden-div">
-						<div class="col-sm-3">BRAND</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="brand">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->BRAND : '' }}
-						</div>
-					</div>
-					<div class="row hidden-div">
-						<div class="col-sm-3">ROW_NUM</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="row_num">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->ROW_NUM : '' }}
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-3">MSISDN_MASK</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="msisdn_mask">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->MSISDN_MASK : '' }}
-						</div>
-					</div>
-					<div class="row hidden-div">
-						<div class="col-sm-3">MSISDN</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="msisdn">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->MSISDN : '' }}
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-3">NAME_MASK</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="name_mask">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->NAME_MASK : '' }}
-						</div>
-					</div>
-					<div class="row hidden-div">
-						<div class="col-sm-3">CUSTOMER_SUBTYPE</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="customer_subtype">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->CUSTOMER_SUBTYPE : '' }}
-						</div>
-					</div>
-					<div class="row hidden-div">
-						<div class="col-sm-3">TOT_BILL_AMOUNT</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="tot_bill_amount">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->TOT_BILL_AMOUNT : '' }}
-						</div>
-					</div>
-					<div class="row hidden-div">
-						<div class="col-sm-3">TOTAL_REVENUE</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="total_revenue">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->TOTAL_REVENUE : '' }}
-						</div>
-					</div>
-					<div class="row hidden-div">
-						<div class="col-sm-3">DEVICE_TYPE</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="device_type">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->DEVICE_TYPE : '' }}
-						</div>
-					</div>
-					<div class="row hidden-div">
-						<div class="col-sm-3">VOL_BROADBAND</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="vol_broadband">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->VOL_BROADBAND : '' }}
-						</div>
-					</div>
-					<div class="row hidden-div">
-						<div class="col-sm-3">VOL_BROADBAND_PACKAGE</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="vol_broadband_package">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->VOL_BROADBAND_PACKAGE : '' }}
-						</div>
-					</div>
-					<div class="row hidden-div">
-						<div class="col-sm-3">CI</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="ci">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->CI : '' }}
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-3">KABUPATEN</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="kabupaten">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->KABUPATEN : '' }}
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-3">LONGITUDE</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="longitude">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->LONGITUDE : '' }}
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-3">LATITUDE</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="latitude">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->LATITUDE : '' }}
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-3">ODP1</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="odp1">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->ODP1 : '' }}
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-3">ODP2</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="odp2">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->ODP2 : '' }}
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-3">ODP3</div>
-						<div class="col-sm-1"> : </div>
-						<div class="" id="odp3">
-							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->ODP3 : '' }}
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<form class="form-horizontal">
-					@csrf
-					<input type="hidden" class="@error('id') is-invalid @enderror" name="id" id="id">
-					@error('id')
-					<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ 'Please fetch data first!' }}</p>
-					@enderror
-					<div class="form-group">
-						<label for="status_call" class="col-sm-3 control-label">Status Call</label>
-						<div class="col-sm-9">
-							<select class="form-control @error('status_call') is-invalid @enderror" name="status_call" id="status_call" tabindex="-1" required="required" style="width:100%;">
-							</select>
+<div class="row">
+    <div class="col-md-12">
+      <div class="row mailbox-header">
+        <div class="col-md-8">
+        </div>
+        <div class="col-md-4">
+          <form action="#" method="POST">
+            <div class="input-group text-right">
+              <span class="input-group-btn">
+                <button type="button" form="formCall" class="btn btn-danger" id="resetBtn"
+                  data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Reset <i
+                    class="fa fa-refresh"></i></button>
+                <button type="submit" form="formCall" class="btn btn-success" id="saveBtn"
+                  data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Save <i
+                    class="fa fa-save"></i></button>
+              </span>
+            </div><!-- Input Group -->
+          </form>
+        </div>
+      </div>
+      <form id="formCall" method="POST" action="/agent/save">
+          @csrf
+          <input type="hidden" class="@error('dapros_id') is-invalid @enderror" name="dapros_id" id="dapros_id"
+            {{ isset($datas['dapros_information']) ? 'value='.$datas['dapros_information']->id : '' }}>
+          @error('dapros_id')
+          <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+              aria-label="Close"><span aria-hidden="true">×</span></button>{{ 'Please fetch data first!' }}</p>
+          @enderror
+          {{-- @if ($datas['data_is_return'])
+          <input type="hidden" name="data_is_return" value="1">
+          @endif --}}
+      <div class="panel panel-white">
+        <div class="panel-body">
+          <div class="weather-widget">
+            <div class="row">
+              <div class="col-md-3">
+                  <legend>Cust Info</legend>
+                  <ul class="list-unstyled weather-info">
+                    <li>MSISDN MASK <span class="pull-right"><b id="msisdn_mask">{{ isset($datas['dapros_information']) ? $datas['dapros_information']->MSISDN_MASK : '' }}</b></span></li>
+                    <li>NAME MASK <span class="pull-right"><b id="name_mask">{{ isset($datas['dapros_information']) ? $datas['dapros_information']->NAME_MASK : '' }}</b></span></li>
+                    <li>KABUPATEN <span class="pull-right"><b id="kabupaten">{{ isset($datas['dapros_information']) ? $datas['dapros_information']->KABUPATEN : '' }}</b></span></li>
+                    <li>LONGITUDE <span class="pull-right"><b id="longitude">{{ isset($datas['dapros_information']) ? $datas['dapros_information']->LONGITUDE : '' }}</b></span></li>
+                    <li>LATITUDE <span class="pull-right"><b id="latitude">{{ isset($datas['dapros_information']) ? $datas['dapros_information']->LATITUDE : '' }}</b></span></li>
+                    <li>ODP1 <span class="pull-right"><b id="odp1">{{ isset($datas['dapros_information']) ? $datas['dapros_information']->ODP1 : '' }}</b></span></li>
+                    <li>ODP2 <span class="pull-right"><b id="odp2">{{ isset($datas['dapros_information']) ? $datas['dapros_information']->ODP2 : '' }}</b></span></li>
+                    <li>ODP3 <span class="pull-right"><b id="odp3">{{ isset($datas['dapros_information']) ? $datas['dapros_information']->ODP3 : '' }}</b></span></li>
+                  </ul>
+                </div>
+              <div class="col-md-7">
+                  <legend>Cust Interaction</legend>
+                  <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <select class="form-control @error('status_call') is-invalid @enderror input-sm" name="status_call" data-placeholder="Status Call"
+                                    id="status_call" tabindex="-1" required="required" style="width:100%;">
+                                    </select>
 
-							@error('status_call')
-							<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-							@enderror
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="status_detail" class="col-sm-3 control-label">Status Detail</label>
-						<div class="col-sm-9">
-							<select class="form-control  @error('status_detail') is-invalid @enderror" name="status_detail" id="status_detail" tabindex="-1" required="required" style="width:100%;">
-							</select>
+                                    @error('status_call')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-7">
+                                    <select class="form-control  @error('status_detail') is-invalid @enderror" name="status_detail" data-placeholder="Reason Call"
+                                      id="status_detail" tabindex="-1" required="required" style="width:100%;">
+                                    </select>
 
-							@error('status_detail')
-							<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-							@enderror
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="status_detail_reason" class="col-sm-3 control-label">Detail Reason</label>
-						<div class="col-sm-9">
-							<select class="form-control  @error('status_detail_reason') is-invalid @enderror" name="status_detail_reason" id="status_detail_reason" tabindex="-1" required="required" style="width:100%;">
-							</select>
+                                    @error('status_detail')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <select class="form-control  @error('status_detail_reason') is-invalid @enderror"
+                                    name="status_detail_reason" id="status_detail_reason" tabindex="-1" required="required" data-placeholder="Detail Reason Call"
+                                    style="width:100%;">
+                                    </select>
 
-							@error('status_detail_reason')
-							<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-							@enderror
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="" class="col-sm-3 control-label">Appointment Management</label>
-						<div class="col-sm-9">
-							<div class="input-group m-b-sm">
-								<span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
-								<input type="text" class="form-control date-picker  @error('am_date') is-invalid @enderror" name="am_date" id="am_date" value="">
-								<span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
-								<input type="text" class="form-control time-picker  @error('am_time') is-invalid @enderror" name="am_time" id="am_time" value="" autocomplete="off">
-							</div>
+                                    @error('status_detail_reason')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control  @error('input_k_kontak') is-invalid @enderror" name="input_k_kontak" placeholder="Insert K-Contact"
+                                    id="input_k_kontak" rows="2" style="resize: none;" autocomplete="off"></textarea>
+                                    @error('input_k_kontak')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control @error('input_cp_marshanda') is-invalid @enderror" placeholder="Contact Person"
+                                      id="input_cp_marshanda" name="input_cp_marshanda" autocomplete="off">
+                                    @error('input_cp_marshanda')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control @error('input_an_pemasangan') is-invalid @enderror" placeholder="Atas Nama Pemasangan"
+                                      id="input_an_pemasangan" name="input_an_pemasangan" autocomplete="off">
+                                    @error('input_an_pemasangan')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="input-group m-b-sm">
+                                      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                                      <input type="text" class="form-control date-picker  @error('am_date') is-invalid @enderror" placeholder="Manja Pemasangan"
+                                        name="am_date" id="am_date" autocomplete="off">
+                                      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
+                                      <input type="text" class="form-control time-picker  @error('am_time') is-invalid @enderror"
+                                        name="am_time" id="am_time" autocomplete="off">
+                                    </div>
 
-							@error('am_date')
-							<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-							@enderror
-							@error('am_time')
-							<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-							@enderror
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="" class="col-sm-3 control-label">Follow Up Call</label>
-						<div class="col-sm-9">
-							<div class="input-group m-b-sm">
-								<span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
-								<input type="text" class="form-control date-picker  @error('fu_date') is-invalid @enderror" name="fu_date" id="fu_date" autocomplete="off" value="">
-								<span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
-								<input type="text" class="form-control time-picker  @error('fu_time') is-invalid @enderror" name="fu_time" id="fu_time" autocomplete="off" value="">
-							</div>
+                                    @error('am_date')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                    @error('am_time')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control  @error('input_alamat_pemasangan') is-invalid @enderror" placeholder="Alamat Pemasangan"
+                                      name="input_alamat_pemasangan" id="input_alamat_pemasangan" rows="2" style="resize: none;"
+                                      autocomplete="off"></textarea>
+                                    @error('input_alamat_pemasangan')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group m-b-sm">
+                                      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                                      <input type="text" class="form-control date-picker  @error('fu_date') is-invalid @enderror" placeholder="Follow Up Date"
+                                        name="fu_date" id="fu_date" autocomplete="off">
+                                      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
+                                      <input type="text" class="form-control time-picker  @error('fu_time') is-invalid @enderror"
+                                        name="fu_time" id="fu_time" autocomplete="off">
+                                    </div>
 
-							@error('fu_date')
-							<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-							@enderror
-							@error('fu_time')
-							<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-							@enderror
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="c_information" class="col-sm-3 control-label">Information</label>
-						<div class="col-sm-9">
-							<textarea class="form-control  @error('c_information') is-invalid @enderror" name="c_information" id="c_information" rows="3" style="resize: none;" required="required" autocomplete="off"></textarea>
-							@error('c_information')
-							<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-							@enderror
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="col-md-3">
-				<form class="form-horizontal">
-					<div class="form-group">
-						<label for="status_tapping" class="col-sm-3 control-label">Status Tapping</label>
-						<div class="col-sm-9">
-							<select class="form-control  @error('status_tapping') is-invalid @enderror" name="status_tapping" id="status_tapping" tabindex="-1" required="required" style="width:100%;">
-							</select>
+                                    @error('fu_date')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                    @error('fu_time')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-control  @error('regional') is-invalid @enderror" name="regional" id="regional" data-placeholder="Regional"
+                                      tabindex="-1" style="width:100%;">
+                                    </select>
 
-							@error('status_tapping')
-							<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-							@enderror
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="t_information" class="col-sm-3 control-label">Information</label>
-						<div class="col-sm-9">
-							<textarea class="form-control  @error('t_information') is-invalid @enderror" name="t_information" id="t_information" rows="3" style="resize: none;" required="required" autocomplete="off"></textarea>
-							@error('t_information')
-							<p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-							@enderror
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+                                    @error('regional')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-8">
+                                    <select class="form-control  @error('witel') is-invalid @enderror" name="witel" id="witel" tabindex="-1" data-placeholder="Witel"
+                                      style="width:100%;">
+                                    </select>
+
+                                    @error('witel')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <select class="form-control  @error('paket') is-invalid @enderror" name="paket" id="paket" tabindex="-1" data-placeholder="Paket Berlangganan"
+                                      style="width:100%;">
+                                    </select>
+
+                                    @error('paket')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control @error('input_email') is-invalid @enderror" id="input_email" placeholder="Email Pelanggan"
+                                      name="input_email" autocomplete="off">
+                                    @error('input_email')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <select class="form-control  @error('via_by') is-invalid @enderror" name="via_by" id="via_by" data-placeholder="Dihubungi Via"
+                                      tabindex="-1" style="width:100%;">
+                                      <option></option>
+                                      <option value="Telpon">Telpon</option>
+                                      <option value="Whatsapp">Whatsapp</option>
+                                      <option value="Email">Email</option>
+                                    </select>
+
+                                    @error('via_by')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Information">Information</label>
+                                <textarea class="form-control  @error('information') is-invalid @enderror" name="information"
+                                  id="information" rows="4" style="resize: none;" required="required" autocomplete="off"></textarea>
+                                @error('information')
+                                <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                    aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+
+              </div>
+              <div class="col-md-2">
+                <legend>Tapping Form</legend>
+                <form action="/qco/save" method="POST" id="formTapping" class="form-horizontal">
+                  @csrf
+                  <input type="hidden" class="@error('dapros_id') is-invalid @enderror" name="dapros_id" id="dapros_id"
+                    {{ isset($datas['dapros_information']) ? 'value='.$datas['dapros_information']->id : '' }}>
+                  @error('dapros_id')
+                  <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                      aria-label="Close"><span aria-hidden="true">×</span></button>{{ 'Please fetch data first!' }}</p>
+                  @enderror
+                  {{-- @if ($datas['data_is_return'])
+                  <input type="hidden" name="data_is_return" value="1">
+                  @endif --}}
+                <div class="form-group">
+                    <label for="Information">Tapping Information</label>
+                    <textarea class="form-control  @error('information') is-invalid @enderror" name="information"
+                      id="t_information" rows="12" style="resize: none;" required="required" autocomplete="off"></textarea>
+                    @error('information')
+                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="Information">Tapping Status</label>
+                    <select class="form-control  @error('status_tapping') is-invalid @enderror" name="status_tapping"
+                      id="status_tapping" tabindex="-1" required="required" style="width:100%;">
+                    </select>
+
+                    @error('status_tapping')
+                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                    @enderror
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </form>
+  </div><!-- Row -->
 <script src="{{ asset('plugins/select2/js/select2.min.js') }}" defer></script>
 <script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" defer></script>
 <script src="{{ asset('plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" defer></script>
@@ -468,15 +484,15 @@
 	    chain7();
 	    //$('#resetBtn').click();
 	    $("#id").val('{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->id : '' }}');
-	    
-	    
-	    
+
+
+
 	    $("#am_date").val('{{ isset($datas['dapros_stastics']->call_am_datetime) ? date('Y-m-d', strtotime($datas['dapros_stastics']->call_am_datetime)) : '' }}');
 	    $("#am_time").val('{{ isset($datas['dapros_stastics']->call_am_datetime) ? date('H:i:s', strtotime($datas['dapros_stastics']->call_am_datetime)) : '' }}');
 	    $("#fu_date").val('{{ isset($datas['dapros_stastics']->call_fu_datetime) ? date('Y-m-d', strtotime($datas['dapros_stastics']->call_fu_datetime)) : '' }}');
 	    $("#fu_time").val('{{ isset($datas['dapros_stastics']->call_fu_datetime) ? date('H:i:s', strtotime($datas['dapros_stastics']->call_fu_datetime)) : '' }}');
 	    $("#c_information").val('{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->call_information : '' }}');
-	    
+
 	    $("#t_information").val('{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->tapping_information : '' }}');
 	});
 	// On Change Events
