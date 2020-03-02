@@ -426,8 +426,8 @@
 	       //data: $( this ).serialize(),
 	       success: function(data){
 
-	        var spanTitles = ['approved_daily', 'return_daily', 'returntoagree_daily', 'returntodecline_daily'];
-	        var valueTitles = ['approved_daily', 'return_daily', 'returntoagree_daily', 'returntodecline_daily'];;
+	        var spanTitles = ['unconsume_daily', 'consumed_daily', 'approved_daily', 'return_daily', 'returntoagree_daily', 'returntodecline_daily'];
+	        var valueTitles = ['unconsume_daily', 'consumed_daily', 'approved_daily', 'return_daily', 'returntoagree_daily', 'returntodecline_daily'];
 	        for (var i = 0; i < spanTitles.length; i++) {
 	          $("#" + spanTitles[i]).html(data[valueTitles[i]]);
 	        }
