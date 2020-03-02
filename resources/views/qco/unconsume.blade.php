@@ -45,7 +45,7 @@
 							<td>{{ $data->call_consume_datetime }}</td>
 							<td>{{ $user->name }}</td>
 							<td>
-								<a href="/qco/retapping/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="fa fa-phone"></i></a>
+								<a href="/qco/retapping/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="icon-earphones-alt"></i></a>
 							</td>
 						</tr>
 						@php

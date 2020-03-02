@@ -48,26 +48,26 @@ class AgentController extends Controller
     public function consume($param)
     {
     	switch ($param) {
-    		case 'all':
+    		case 'all': // Semua yang di consume
     			$qWhere = "`call_status_id` > 0";
     			break;
     		case 'agree':
-    			$qWhere = "`call_status_detail_id` = 1";
+    			$qWhere = "`call_status_detail_id` = 1 AND data_condition != 'returned to agent'";
     			break;
     		case 'follow_up':
-    			$qWhere = "`call_status_detail_id` = 2";
+    			$qWhere = "`call_status_detail_id` = 2 AND data_condition != 'returned to agent'";
     			break;
     		case 'decline':
-    			$qWhere = "`call_status_detail_id` = 3";
+    			$qWhere = "`call_status_detail_id` = 3 AND data_condition != 'returned to agent'";
     			break;
     		case 'not_contacted':
-    			$qWhere = "`call_status_id` = 2";
+    			$qWhere = "`call_status_id` = 2 AND data_condition != 'returned to agent'";
     			break;
             case 'contacted':
-                $qWhere = "`call_status_id` = 1";
+                $qWhere = "`call_status_id` = 1 AND data_condition != 'returned to agent'";
                 break;
     		case 'return':
-                $qWhere = "`tapping_status_id` = 2";
+                $qWhere = "`tapping_status_id` = 2 AND data_condition = 'returned to agent'";
                 break;
             case 'approved':
                 $qWhere = "`tapping_status_id` = 1";
@@ -93,7 +93,7 @@ class AgentController extends Controller
     }
     public function unconsume()
     {
-        $qWhere = "`call_status_id` = 0";
+        $qWhere = "`call_status_id` = 0"; // Semua yang udah pernag ke get oleh agent namun belum pernah di lakukan interaksi
         $datas = _dapros_statistics::whereRaw($qWhere)
                ->where('call_agent_username', auth()->user()->username)
                ->orderBy('call_consume_datetime', 'desc')
@@ -257,13 +257,13 @@ class AgentController extends Controller
             'fu_time' => 'required_if:status_detail,2|nullable',
             
             'input_k_kontak' => 'required_if:status_detail,1|nullable',
-            'input_cp_marshanda' => 'required_if:status_detail,1|nullable',
+            'input_cp_marshanda' => 'required_if:status_detail,1|nullable|regex:/(0)[0-9]/',
             'input_an_pemasangan' => 'required_if:status_detail,1|nullable',
             'regional' => 'required_if:status_detail,1|nullable',
             'witel' => 'required_if:status_detail,1|nullable',
             'paket' => 'required_if:status_detail,1|nullable',
             'input_alamat_pemasangan' => 'required_if:status_detail,1|nullable',
-            'input_email' => 'required_if:status_detail,1|nullable',
+            'input_email' => 'required_if:status_detail,1|nullable|email',
             'via_by' => 'required_if:status_detail,1|nullable'
         ], $messages);
 
@@ -306,6 +306,12 @@ class AgentController extends Controller
     	}
         #Bila data return jangan di tambah attempts nya
         if (null !== $request->input('data_is_return') AND $request->input('data_is_return') == 1) {
+            if ( $request->input('status_detail') == 1 OR  $request->input('status_detail') == 3 ) {
+                $value_data_condition = 'returned to qco';
+            }
+            else{
+                $value_data_condition = 'returned to agent';
+            }
             # Post ke Dapros_statistics dg status INSERT INTO ... ON DUPLICATE KEY UPDATE ...
             $statistics_dapros = _dapros_statistics::updateOrCreate(
                 ['dapros_id' => $request->input('dapros_id')],
@@ -331,7 +337,7 @@ class AgentController extends Controller
                     ,'call_email' => $call->call_email
                     ,'call_via_by' => $call->call_via_by
 
-                    , 'data_condition' => 'returned to qco'
+                    , 'data_condition' => $value_data_condition
                 ]
             )->first();
         }
@@ -402,16 +408,16 @@ class AgentController extends Controller
             DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` > 0 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0) AS `consumed_daily`"),
             DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() AND data_condition != 'returned to agent' THEN 1 ELSE 0 END), 0)  AS `c_daily`"),
             DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() AND data_condition != 'returned to agent' THEN 1 ELSE 0 END), 0)  AS `agree_daily`"),
-            DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 2 THEN 1 ELSE 0 END), 0)  AS `fu_daily`"),
+            DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 2 AND data_condition != 'returned to agent'  THEN 1 ELSE 0 END), 0)  AS `fu_daily`"),
             DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 3 AND DATE(`call_consume_datetime`) = CURDATE() AND data_condition != 'returned to agent' THEN 1 ELSE 0 END), 0)  AS `decline_daily`"),
-            DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` = 2 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `nc_daily`"),
+            DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` = 2 AND DATE(`call_consume_datetime`) = CURDATE() AND data_condition != 'returned to agent'  THEN 1 ELSE 0 END), 0)  AS `nc_daily`"),
             DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `approved_daily`"),
             DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 AND data_condition = 'returned to agent' AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `return_daily`"),
             DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 1 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco' AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntoagree_daily`"), // Belum kebikin countingnya
             DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 3 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco' AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntodecline_daily`") // Belum kebikin countingnya
             )->where([
                 ['call_agent_username', auth()->user()->username]
-            ])->whereRaw('DATE(updated_at) >= curdate()')->first();
+            ])->whereRaw('DATE(call_consume_datetime) >= curdate()')->first();
         return $data;
     }
 

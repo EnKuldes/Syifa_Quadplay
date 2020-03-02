@@ -13,14 +13,14 @@
 		<div class="row clearfix">
 			<div class="col-md-6">
 				<div class="col-sm-12 col-md-12">
-					<div class="row">
+					<div class="row hidden-div">
 						<div class="col-sm-3">BRAND</div>
 						<div class="col-sm-1"> : </div>
 						<div class="" id="brand">
 							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->BRAND : '' }}
 						</div>
 					</div>
-					<div class="row">
+					<div class="row hidden-div">
 						<div class="col-sm-3">ROW_NUM</div>
 						<div class="col-sm-1"> : </div>
 						<div class="" id="row_num">
@@ -34,7 +34,7 @@
 							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->MSISDN_MASK : '' }}
 						</div>
 					</div>
-					<div class="row">
+					<div class="row hidden-div">
 						<div class="col-sm-3">MSISDN</div>
 						<div class="col-sm-1"> : </div>
 						<div class="" id="msisdn">
@@ -48,49 +48,49 @@
 							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->NAME_MASK : '' }}
 						</div>
 					</div>
-					<div class="row">
+					<div class="row hidden-div">
 						<div class="col-sm-3">CUSTOMER_SUBTYPE</div>
 						<div class="col-sm-1"> : </div>
 						<div class="" id="customer_subtype">
 							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->CUSTOMER_SUBTYPE : '' }}
 						</div>
 					</div>
-					<div class="row">
+					<div class="row hidden-div">
 						<div class="col-sm-3">TOT_BILL_AMOUNT</div>
 						<div class="col-sm-1"> : </div>
 						<div class="" id="tot_bill_amount">
 							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->TOT_BILL_AMOUNT : '' }}
 						</div>
 					</div>
-					<div class="row">
+					<div class="row hidden-div">
 						<div class="col-sm-3">TOTAL_REVENUE</div>
 						<div class="col-sm-1"> : </div>
 						<div class="" id="total_revenue">
 							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->TOTAL_REVENUE : '' }}
 						</div>
 					</div>
-					<div class="row">
+					<div class="row hidden-div">
 						<div class="col-sm-3">DEVICE_TYPE</div>
 						<div class="col-sm-1"> : </div>
 						<div class="" id="device_type">
 							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->DEVICE_TYPE : '' }}
 						</div>
 					</div>
-					<div class="row">
+					<div class="row hidden-div">
 						<div class="col-sm-3">VOL_BROADBAND</div>
 						<div class="col-sm-1"> : </div>
 						<div class="" id="vol_broadband">
 							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->VOL_BROADBAND : '' }}
 						</div>
 					</div>
-					<div class="row">
+					<div class="row hidden-div">
 						<div class="col-sm-3">VOL_BROADBAND_PACKAGE</div>
 						<div class="col-sm-1"> : </div>
 						<div class="" id="vol_broadband_package">
 							{{ isset($datas['dapros_information']) ? $datas['dapros_information']->VOL_BROADBAND_PACKAGE : '' }}
 						</div>
 					</div>
-					<div class="row">
+					<div class="row hidden-div">
 						<div class="col-sm-3">CI</div>
 						<div class="col-sm-1"> : </div>
 						<div class="" id="ci">
@@ -259,6 +259,7 @@
 <script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" defer></script>
 <script src="{{ asset('plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" defer></script>
 <script type="text/javascript">
+	$('.hidden-div').hide();
 	// Func Chaining
 	function chain1() {
 		$.ajaxSetup({
@@ -367,6 +368,86 @@
 	     	$("#status_tapping").val('{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->tapping_status_id : '' }}').trigger('change');
 	     });
 	}
+	// Func Chaining
+	function chain5() {
+		$.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});
+		$.ajax({
+	       type:"post",
+	       url:'/agent/regional',
+	       //data: {},
+	       success: function(data){
+
+	       	var ahtml = '<option></option>';
+	       	for (var i = 0; i < data.length; i++) {
+	       		ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['regional_desc']+"</option>"
+	       	}
+	        $('#regional').html(ahtml);
+	       },
+	        error : function(data) {
+
+	        console.log("error chain4");
+	        }
+	     }).done(function(){
+
+	     });
+	}
+	function chain6(id) {
+		$.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});
+		$.ajax({
+	       type:"post",
+	       url:'/agent/witel',
+	       data: {'id':id},
+	       success: function(data){
+	       	var ahtml = '<option></option>';
+	       	for (var i = 0; i < data.length; i++) {
+	       		ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['witel_desc']+"</option>"
+	       	}
+	        $('#witel').html(ahtml);
+
+	       },
+	        error : function(data) {
+
+	        console.log("error chain3");
+
+	        }
+	     }).done(function(){
+
+	     });
+	}
+	function chain7() {
+		$.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});
+		$.ajax({
+	       type:"post",
+	       url:'/agent/paket',
+	       data: {'skill':'Quadplay'},
+	       success: function(data){
+
+	       	var ahtml = '<option></option>';
+	       	for (var i = 0; i < data.length; i++) {
+	       		ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['paket_desc']+"</option>"
+	       	}
+	        $('#paket').html(ahtml);
+	       },
+	        error : function(data) {
+
+	        console.log("error chain4");
+	        }
+	     }).done(function(){
+
+	     });
+	}
 
 	// Document Ready
 	$(document).ready(function() {
@@ -383,6 +464,8 @@
 	    });
 	    chain1();
 	    chain4();
+	    chain5();
+	    chain7();
 	    //$('#resetBtn').click();
 	    $("#id").val('{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->id : '' }}');
 	    
@@ -409,6 +492,13 @@
 	    if (id != "" && id != null)
 	    {
 	      chain3(id);
+	    }
+	  });
+	$("#regional").change(function() {
+	    var id = $(this).val();
+	    if (id != "" && id != null)
+	    {
+	      chain6(id);
 	    }
 	  });
 	// Button On Click

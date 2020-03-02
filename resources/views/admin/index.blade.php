@@ -200,7 +200,7 @@
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-success" form="formForUploadDapros">Submit</button>
+				<button type="submit" class="btn btn-success" form="formForUploadDapros" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing" onclick="$(this).button('loading');">Submit</button>
 			</div>
 		</div>
 	</div>

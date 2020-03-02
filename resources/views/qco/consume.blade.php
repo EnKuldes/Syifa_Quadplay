@@ -15,11 +15,13 @@
 							<th>#</th>
 							<th>MSISDN MASK</th>
 							<th>NAME MASK</th>
+							<th>TAPPING STATUS</th>
 							<th>CALL STATUS</th> {{-- disini 3 biji aja lgs dari call sampe detail reason call --}}
-							<th>INFORMATION</th>
-							<th>ATTEMPTS</th>
-							<th>CONSUMED</th>
-							<th>AGENT</th>
+							<th>CALL INFORMATION</th>
+							<th>CALL ATTEMPTS</th>
+							<th>CALL CONSUMED</th>
+							<th>CALL AGENT</th>
+							<th>TAPPING INFORMATION</th>
 							<th>ACTIONS</th>
 						</tr>
 					</thead>
@@ -43,19 +45,32 @@
 								$label_color = "danger";
 							}
 							$user = $data->call_agent;
+
+							$tapping_status = $data->tapping_status;
+							if ($tapping_status->id == 1) {
+								$label_color1 = "success";
+							}
+							elseif ($tapping_status->id == 2 ) {
+								$label_color1 = "warning";
+							}
+							else{
+								$label_color1 = "danger";
+							}
 							@endphp
 							<th scope="row">{{ $idx }}</th>
 							<td>{{ $customer_information->MSISDN_MASK }}</td>
 							<td>{{ $customer_information->NAME_MASK }}</td>
+							<td><span class="label label-{{ $label_color1 }}">{{ $tapping_status->value_tapping_status }}</span> </td>
 							<td><span class="label label-{{ $label_color }}">{{ $call_status_detail->value_call_status_detail }}</span> </td>
 							<td>{{ $data->call_information }}</td>
 							<td>{{ $data->call_attempts }}</td>
 							<td>{{ $data->call_consume_datetime }}</td>
 							<td>{{ $user->name }}</td>
+							<td>{{ $data->tapping_information }}</td>
 							<td>
 								<button type="button" class="btn btn-default btn-xs" onclick="view_data({{ $data->id }})" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="icon-magnifier"></i></button>
 								@if ( ($call_status_detail->id == 1) AND (/*($data->data_condition == '-') OR */($data->data_condition == 'returned to qco')) )
-								<a href="/qco/retapping/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="fa fa-phone"></i></a>
+								<a href="/qco/retapping/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="icon-earphones-alt"></i></a>
 								@endif
 							</td>
 						</tr>
@@ -92,12 +107,12 @@
 				<div class="row">
 					<div class="col-lg-12">
 						
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">BRAND</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="brand"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">ROW_NUM</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="row_num"></div>
@@ -107,7 +122,7 @@
 							<div class="col-sm-1"> : </div>
 							<div class="" id="msisdn_mask"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">MSISDN</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="msisdn"></div>
@@ -117,37 +132,37 @@
 							<div class="col-sm-1"> : </div>
 							<div class="" id="name_mask"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">CUSTOMER_SUBTYPE</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="customer_subtype"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">TOT_BILL_AMOUNT</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="tot_bill_amount"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">TOTAL_REVENUE</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="total_revenue"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">DEVICE_TYPE</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="device_type"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">VOL_BROADBAND</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="vol_broadband"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">VOL_BROADBAND_PACKAGE</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="vol_broadband_package"></div>
 						</div>
-						<div class="row">
+						<div class="row hidden-div">
 							<div class="col-sm-4">CI</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="ci"></div>
@@ -200,8 +215,25 @@
 							<div class="col-sm-1"> : </div>
 							<div class="" id="detail_reason_status_call"></div>
 						</div>
+						{{-- Input dari Agent Start --}}
 						<div class="row">
-							<div class="col-sm-4">AM</div>
+							<div class="col-sm-4">K-Kontak</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="k_kontak"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">CP Marshanda</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="cp_marshanda"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">A.N Pemasangan</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="an_pemasangan"></div>
+						</div>
+						{{-- Input dari Agent End --}}
+						<div class="row">
+							<div class="col-sm-4">Manja</div>
 							<div class="col-sm-1"> : </div>
 							<div class="" id="am_call"></div>
 						</div>
@@ -210,6 +242,39 @@
 							<div class="col-sm-1"> : </div>
 							<div class="" id="fu_call"></div>
 						</div>
+						{{-- Input dari Agent Start --}}
+						<div class="row">
+							<div class="col-sm-4">Regional</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="regional"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">Witel</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="witel"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">Paket</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="paket"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">Alamat Pemasangan</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="alamat_pemasangan"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">Email</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="email"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">Via by</div>
+							<div class="col-sm-1"> : </div>
+							<div class="" id="via_by"></div>
+						</div>
+
+						{{-- Input dari Agent End --}}
 						<div class="row">
 							<div class="col-sm-4">Call Information</div>
 							<div class="col-sm-1"> : </div>
@@ -262,6 +327,7 @@
 
 </div>
 <script type="text/javascript" defer>
+	$('.hidden-div').hide();
 	function view_data(id) {
 		//$(this).button('loading');
 		$.ajaxSetup({
@@ -274,8 +340,8 @@
 			url:'/qco/view',
 			data: {'id': id},
 			success: function(data){
-				var valueCallTitles = ['status_call', 'reason_status_call', 'detail_reason_status_call', 'am_call', 'fu_call', 'information_call', 'attempts_call', 'agent_call', 'consume_call', 'status_tapping', 'information_tapping', 'agent_tapping', 'consume_tapping'];
-				var labelCallTitles = ['status_call', 'reason_status_call', 'detail_reason_status_call', 'am_call', 'fu_call', 'information_call', 'attempts_call', 'agent_call', 'consume_call', 'status_tapping', 'information_tapping', 'agent_tapping', 'consume_tapping'];
+				var valueCallTitles = ['status_call', 'reason_status_call', 'detail_reason_status_call', 'am_call', 'fu_call', 'information_call', 'attempts_call', 'agent_call', 'consume_call', 'status_tapping', 'information_tapping', 'agent_tapping', 'consume_tapping', 'k_kontak', 'cp_marshanda', 'an_pemasangan', 'regional', 'witel', 'paket', 'alamat_pemasangan', 'email', 'via_by'];
+				var labelCallTitles = ['status_call', 'reason_status_call', 'detail_reason_status_call', 'am_call', 'fu_call', 'information_call', 'attempts_call', 'agent_call', 'consume_call', 'status_tapping', 'information_tapping', 'agent_tapping', 'consume_tapping', 'k_kontak', 'cp_marshanda', 'an_pemasangan', 'regional', 'witel', 'paket', 'alamat_pemasangan', 'email', 'via_by'];
 				var valueDaprosTitles = ['BRAND','ROW_NUM','MSISDN_MASK','MSISDN','NAME_MASK','CUSTOMER_SUBTYPE','TOT_BILL_AMOUNT','TOTAL_REVENUE','DEVICE_TYPE','VOL_BROADBAND','VOL_BROADBAND_PACKAGE','CI','KABUPATEN','LONGITUDE','LATITUDE','ODP1','ODP2','ODP3'];
 				var labelDaprosTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
 				for (var i = 0; i < labelCallTitles.length; i++) {
