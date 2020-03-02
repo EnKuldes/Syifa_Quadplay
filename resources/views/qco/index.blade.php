@@ -251,7 +251,7 @@
             </div>
             <div class="col-md-12">
                 <div class="timeline-options list-unstyled weather-days text-center">
-                    <a href="/qco/unconsume"><i class="icon-basket-loaded"></i> Unconsume (<span id="unconsumed_daily">{{ $counting['unconsumed_daily'] }}</span>)</a>
+                    <a href="/qco/unconsume"><i class="icon-basket-loaded"></i> Unconsume (<span id="unconsume_daily">{{ $counting['unconsume_daily'] }}</span>)</a>
                     <a href="/qco/consume/all"><i class="icon-earphones"></i> Consume (<span id="consumed_daily">{{ $counting['consumed_daily'] }}</span>)</a>
                     <a href="/qco/consume/approved"><i class="icon-like"></i> Approved (<span id="approved_daily">{{ $counting['approved_daily'] }}</span>)</a>
                     <a href="/qco/consume/return"><i class="icon-dislike"></i> Return (<span id="return_daily">{{ $counting['return_daily'] }}</span>)</a>
