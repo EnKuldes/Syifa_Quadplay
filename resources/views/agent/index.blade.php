@@ -44,31 +44,21 @@
       <div class="panel-body">
         <div class="weather-widget">
           <div class="row">
-            <div class="col-md-1">
-              <ul class="list-unstyled weather-info">
-                <li>MSISDN MASK</li>
-                <li>NAME MASK</li>
-                <li>KABUPATEN</span></li>
-                <li>LONGITUDE</li>
-                <li>LATITUDE</li>
-                <li>ODP1</li>
-                <li>ODP2</li>
-                <li>ODP3</li>
-              </ul>
-            </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
+                <legend>Cust Info</legend>
                 <ul class="list-unstyled weather-info">
-                  <li><b id="msisdn_mask">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->MSISDN_MASK : '' }}</b></span></li>
-                  <li><b id="name_mask">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->NAME_MASK : '' }}</b></span></li>
-                  <li><b id="kabupaten">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->KABUPATEN : '' }}</b></span></li>
-                  <li><b id="longitude">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->LONGITUDE : '' }}</b></span></li>
-                  <li><b id="latitude">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->LATITUDE : '' }}</b></span></li>
-                  <li><b id="odp1">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->ODP1 : '' }}</b></span></li>
-                  <li><b id="odp2">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->ODP2 : '' }}</b></span></li>
-                  <li><b id="odp3">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->ODP3 : '' }}</b></span></li>
+                  <li>MSISDN MASK <span class="pull-right"><b id="msisdn_mask">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->MSISDN_MASK : '' }}</b></span></li>
+                  <li>NAME MASK <span class="pull-right"><b id="name_mask">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->NAME_MASK : '' }}</b></span></li>
+                  <li>KABUPATEN <span class="pull-right"><b id="kabupaten">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->KABUPATEN : '' }}</b></span></li>
+                  <li>LONGITUDE <span class="pull-right"><b id="longitude">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->LONGITUDE : '' }}</b></span></li>
+                  <li>LATITUDE <span class="pull-right"><b id="latitude">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->LATITUDE : '' }}</b></span></li>
+                  <li>ODP1 <span class="pull-right"><b id="odp1">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->ODP1 : '' }}</b></span></li>
+                  <li>ODP2 <span class="pull-right"><b id="odp2">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->ODP2 : '' }}</b></span></li>
+                  <li>ODP3 <span class="pull-right"><b id="odp3">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->ODP3 : '' }}</b></span></li>
                 </ul>
               </div>
             <div class="col-md-4">
+                <legend>Cust Interaction</legend>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-5">
@@ -158,6 +148,7 @@
                     </div>
             </div>
             <div class="col-md-4">
+                <legend>&nbsp;</legend>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-12">
