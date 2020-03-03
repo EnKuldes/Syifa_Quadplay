@@ -13,20 +13,18 @@
 					<tr>
 						<th>Action</th>
 						<th>No</th>
-						<th>BRAND</th>
-						<th>ROW_NUM</th>
 						<th>MSISDN_MASK</th>
-						<th>MSISDN</th>
 						<th>NAME_MASK</th>
-						<th>CUSTOMER_SUBTYPE</th>
 						<th>KABUPATEN</th>
+						<th>LONGITUDE</th>
+						<th>LATITUDE</th>
 						<th>ODP1</th>
 						<th>ODP2</th>
 						<th>ODP3</th>
 						<th>Call Status</th>
 						<th>Status Detail</th>
 						<th>Detail Reason</th>
-						<th>Appointment Management</th>
+						<th>Manja</th>
 						<th>Follow Up Date</th>
 						<th>Call Information</th>
 						<th>Call Attempts</th>
@@ -72,13 +70,11 @@
                                      ,--}}
 			{ data: 'action', name: 'action' }
 			, { data: 'i', name: 'i' }
-			, { data: 'brand', name: 'BRAND' }
-            , { data: 'row_number', name: 'ROW_NUM' }
-            , { data: 'msisdn_mask', name: 'MSISDN_MASK' }
-            , { data: 'msisdn', name: 'MSISDN' }
+			, { data: 'msisdn_mask', name: 'MSISDN_MASK' }
             , { data: 'name_mask', name: 'NAME_MASK' }
-            , { data: 'customer_subtype', name: 'CUSTOMER_SUBTYPE' }
             , { data: 'kabupaten', name: 'KABUPATEN' }
+            , { data: 'longitude', name: 'LONGITUDE' }
+            , { data: 'latitude', name: 'LATITUDE' }
             , { data: 'odp1', name: 'ODP1' }
             , { data: 'odp2', name: 'ODP2' }
             , { data: 'odp3', name: 'ODP3' }

@@ -26,31 +26,38 @@ class DaprosExport implements FromCollection, WithHeadings
 	public function headings(): array
     {
         return [
-            'brand',
-            'row_number',
             'msisdn_mask',
-            'msisdn',
             'name_mask',
-            'customer_subtype',
             'kabupaten',
+            'longitude',
+            'latitude',
             'odp1',
             'odp2',
             'odp3',
+            'call status',
+            'detail',
+            'reason',
+            'k_kontak',
+            'cp',
+            'atas nama',
             'am_datetime',
             'fu_datetime',
-            'call_information',
-            'call_attempts',
-            'call_agent',
-            'call_consume',
-            'tapping_information',
-            'tapping_agent_username',
-            'tapping_consume',
-            'call_status',
-            'call_status_detail',
-            'call_status_detail_reason',
-            'call_agent_name',
-            'tapping_status',
-            'tapping_agent_name',
+            'regional',
+            'witel',
+            'paket',
+            'alamat pemasangan',
+            'email',
+            'via by',
+            'call info',
+            'call attempts',
+            'agent call',
+            'agent call name',
+            'consumed',
+            'status tapping',
+            'tapping info',
+            'agent tapping',
+            'agent tapping name',
+            'tapping consumed',
         ];
     }
 
@@ -64,9 +71,48 @@ class DaprosExport implements FromCollection, WithHeadings
 		->leftJoin('users as ua', 'ds.call_agent_username', '=', 'ua.username')
 		->leftJoin('_tapping_statuses as ts', 'ds.tapping_status_id', '=', 'ts.id')
 		->leftJoin('users as uq', 'ds.tapping_agent_username', '=', 'uq.username')
-		->select('da.BRAND as brand' , 'da.ROW_NUM as row_number' , 'da.MSISDN_MASK as msisdn_mask' , 'da.MSISDN as msisdn' , 'da.NAME_MASK as name_mask' , 'da.CUSTOMER_SUBTYPE as customer_subtype' , 'da.KABUPATEN as kabupaten' , 'da.ODP1 as odp1' , 'da.ODP2 as odp2' , 'da.ODP3 as odp3' , 'ds.call_am_datetime as am_datetime' , 'ds.call_fu_datetime as fu_datetime' , 'ds.call_information as call_information' , 'ds.call_attempts as call_attempts' , 'ds.call_agent_username as call_agent' , 'ds.call_consume_datetime as call_consume' , 'ds.tapping_information as tapping_information' , 'ds.tapping_agent_username as tapping_agent_username' , 'ds.tapping_consume_datetime as tapping_consume' , 'cs.value_call_status as call_status' , 'sd.value_call_status_detail as call_status_detail' , 'dr.value_call_status_detail_reason as call_status_detail_reason' , 'ua.name as call_agent_name' , 'ts.value_tapping_status as tapping_status' , 'uq.name as tapping_agent_name')
+        ->leftJoin('_regionals as r', 'r.id', '=', 'ds.call_regional')
+        ->leftJoin('_witels as w', 'w.id', '=', 'ds.call_witel')
+        ->leftJoin('_pakets as p', 'p.id', '=', 'ds.call_paket')
+		->select('da.MSISDN_MASK as msisdn_mask'
+            , 'da.NAME_MASK as name_mask'
+            , 'da.KABUPATEN as kabupaten'
+            , 'da.LONGITUDE as longitude' 
+            , 'da.LATITUDE as latitude'
+            , 'da.ODP1 as odp1'
+            , 'da.ODP2 as odp2'
+            , 'da.ODP3 as odp3'
+            , 'cs.value_call_status as "call status"'
+            , 'sd.value_call_status_detail as detail'
+            , 'dr.value_call_status_detail_reason as reason'
+            
+            , 'ds.call_input_k_kontak as k_kontak'
+            , 'ds.call_input_cp_marshanda as cp'
+            , 'ds.call_input_an_pemasangan as "atas nama"'
+
+            , 'ds.call_am_datetime as am_datetime'
+            , 'ds.call_fu_datetime as fu_datetime'
+            
+            , 'r.regional_desc as regional'
+            , 'w.witel_desc as witel'
+            , 'p.paket_desc as paket'
+            , 'ds.call_alamat_pemasangan as "alamat pemasangan"'
+            , 'ds.call_email as email'
+            , 'ds.call_via_by as "via by"'
+
+            , 'ds.call_information as "call info"'
+            , 'ds.call_attempts as "call attempts"'
+            , 'ds.call_agent_username as "agent call"'
+            , 'ua.name as "agent call name"'
+            , 'ds.call_consume_datetime as consumed'
+            , 'ts.value_tapping_status as "status tapping"'
+            , 'ds.tapping_information as "tapping info"'
+            , 'ds.tapping_agent_username as agent tapping'
+            , 'uq.name as "agent tapping name"'
+            , 'ds.tapping_consume_datetime as "tapping consumed"')
 		->orderBy('ds.created_at', 'asc')
-		->whereBetween('ds.created_at', array($this->from_date, $this->to_date))
+		//->whereBetween('DATE(ds.created_at)', array($this->from_date, $this->to_date))
+        ->whereRaw('DATE(ds.created_at) between ? and ?', array($this->from_date, $this->to_date))
 		->get();
 	}
 }
