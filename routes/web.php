@@ -75,6 +75,7 @@ Route::get('/admin', 'AdminController@index')->name('admin_index');
 Route::get('/admin/report', 'AdminController@report')->name('admin_report');
 Route::get('/admin/get_dapros_data', 'AdminController@get_dapros_data');
 Route::post('/admin/download_report', 'AdminController@download_report');
+Route::post('/admin/activity', 'AdminController@countActivityAgent');
 // Page Console
 Route::get('/admin/console/users', 'AdminController@console_users')->name('admin_console');
 Route::get('/admin/console/resources', 'AdminController@console_resources')->name('admin_console');

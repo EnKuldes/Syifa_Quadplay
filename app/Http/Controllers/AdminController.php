@@ -697,4 +697,24 @@ class AdminController extends Controller
         return response()->json(true);
         //return response()->json($request->id);
     }
+
+    # Function buat Counting Activity Agent
+    public function countActivityAgent()
+    {
+        $data = $this->countingActivity();
+        return response()->json($data, 200);
+    }
+    protected function countingActivity()
+    {
+        $data = _dapros_statistics::select(
+            DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` > 0 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0) AS `consumed_daily`"),
+            DB::raw("IFNULL(SUM(CASE WHEN `call_status_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() AND data_condition != 'returned to agent' THEN 1 ELSE 0 END), 0)  AS `c_daily`"),
+            DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() AND data_condition != 'returned to agent' THEN 1 ELSE 0 END), 0)  AS `agree_daily`"),
+            DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 1 AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `approved_daily`"),
+            DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 AND data_condition = 'returned to agent' AND DATE(`call_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `return_daily`"),
+            )->where([
+                // Kosong
+            ])->whereRaw('DATE(created_at) >= curdate()')->first();
+        return $data;
+    }
 }
