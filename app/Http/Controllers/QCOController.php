@@ -89,6 +89,18 @@ class QCOController extends Controller
     {
     	#mencari data yang available
         try {
+            // Check if agent have unsonsume data first
+            $have_unconsume = _dapros_statistics::where([
+                ['tapping_status_id', null]
+                , ['tapping_agent_username', auth()->user()->username]
+            ])->first();
+            if ($have_unconsume) {
+                $data['message'] = 'You still have an uncosume data.';
+                $data['alert-title'] = 'Error';
+                $data['alert-class'] = 'warning';
+                return response()->json($data);
+            }
+
             $data = _dapros_statistics::where([
                                     ['tapping_agent_username',NULL],
                                     ['call_status_detail_reason_id',1]
@@ -97,6 +109,7 @@ class QCOController extends Controller
                                 ->firstOrFail();
 
             $data->tapping_agent_username = auth()->user()->username;
+            $data->tapping_consume_datetime = now();
             $updateResult = $data->save();
             # Memastikan bahwa save berhasil memperbaharui data
             if (! $updateResult) {
@@ -305,6 +318,7 @@ class QCOController extends Controller
     {
     	$data = _dapros_statistics::select(
             DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` is null THEN 1 ELSE 0 END), 0)  AS `unconsume_daily`"),
+            DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` is not null THEN 1 ELSE 0 END), 0)  AS `consumed_daily`"),
 			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 1 AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `approved_daily`"),
             DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 AND data_condition = 'returned to agent' AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `return_daily`"),
             DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 1 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco' AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntoagree_daily`"), // Belum kebikin countingnya

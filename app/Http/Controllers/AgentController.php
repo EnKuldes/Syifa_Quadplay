@@ -137,7 +137,19 @@ class AgentController extends Controller
     {
     	#mencari data yang available
         try {
-            $data = _dapros::where('data_available','available')
+    		// Check if agent have unsonsume data first
+        	$have_unconsume = _dapros_statistics::where([
+				['call_status_id', 0]
+				, ['call_agent_username', auth()->user()->username]
+			])->first();
+			if ($have_unconsume) {
+				$data['message'] = 'You still have an uncosume data.';
+	            $data['alert-title'] = 'Error';
+	            $data['alert-class'] = 'warning';
+	            return response()->json($data);
+			}
+			
+        	$data = _dapros::where('data_available','available')
                                 ->inRandomOrder()
                                 ->firstOrFail();
             $data->data_available = "in use";
