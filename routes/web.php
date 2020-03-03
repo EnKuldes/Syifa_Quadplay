@@ -85,6 +85,9 @@ Route::get('/admin/console/get_detail_call_list', 'AdminController@get_detail_ca
 Route::get('/admin/console/get_detail_reason_list', 'AdminController@get_detail_reason_list')->name('admin_list_resources');
 Route::get('/admin/console/get_status_tapping_list', 'AdminController@get_status_tapping_list')->name('admin_list_resources');
 Route::get('/admin/console/get_users_list', 'AdminController@get_users_list')->name('admin_list_resources');
+Route::get('/admin/console/get_witel_list', 'AdminController@get_witel_list')->name('admin_list_resources');
+Route::get('/admin/console/get_skill_list', 'AdminController@get_skill_list')->name('admin_list_resources');
+Route::get('/admin/console/get_paket_list', 'AdminController@get_paket_list')->name('admin_list_resources');
 // Ambil informasi User by ID
 Route::post('/admin/console/get_users_list', 'AdminController@get_users_list')->name('admin_get_user');
 // JSON List All Resources ke Select2
@@ -92,6 +95,10 @@ Route::post('/admin/console/get_status_call_list_options', 'AdminController@list
 Route::post('/admin/console/get_detail_call_list_options', 'AdminController@list_all_options_status_detail_call')->name('admin_list_option_resources');
 Route::post('/admin/console/get_detail_reason_list_options', 'AdminController@list_all_options_status_detail_reason_call')->name('admin_list_option_resources');
 Route::post('/admin/console/get_status_tapping_list_options', 'AdminController@list_all_options_tapping_status')->name('admin_list_option_resources');
+Route::post('/admin/console/get_witel_list_options', 'AdminController@list_all_options_witel')->name('admin_list_option_resources');
+Route::post('/admin/console/get_regional_list_options', 'AdminController@list_all_options_regional')->name('admin_list_option_resources');
+Route::post('/admin/console/get_skill_list_options', 'AdminController@list_all_options_skill')->name('admin_list_option_resources');
+Route::post('/admin/console/get_paket_list_options', 'AdminController@list_all_options_paket')->name('admin_list_option_resources');
 
 //Route::post('/admin/console/get_role_list_options', 'AdminController@list_all_options_tapping_status')->name('admin_list_option_resources');
 Route::post('/admin/console/get_role_list_options', function () {
@@ -107,6 +114,10 @@ Route::post('/admin/console/save_status_call', 'AdminController@save_status_call
 Route::post('/admin/console/save_status_detail_call', 'AdminController@save_status_detail_call')->name('admin_save_resources');
 Route::post('/admin/console/save_status_detail_reason_call', 'AdminController@save_status_detail_reason_call')->name('admin_save_resources');
 Route::post('/admin/console/save_tapping_status', 'AdminController@save_tapping_status')->name('admin_save_resources');
+Route::post('/admin/console/save_regional', 'AdminController@save_regional')->name('admin_save_resources');
+Route::post('/admin/console/save_witel', 'AdminController@save_witel')->name('admin_save_resources');
+Route::post('/admin/console/save_skill', 'AdminController@save_skill')->name('admin_save_resources');
+Route::post('/admin/console/save_paket', 'AdminController@save_paket')->name('admin_save_resources');
 Route::post('/admin/console/save_user', 'AdminController@save_user')->name('admin_save_resources');
 Route::post('/admin/console/import_users', 'AdminController@import_users')->name('admin_save_resources');
 Route::post('/admin/console/import_dapros', 'AdminController@import_dapros')->name('admin_save_resources');

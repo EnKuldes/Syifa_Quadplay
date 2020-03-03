@@ -186,6 +186,43 @@ class AdminController extends Controller
         }
         return datatables()->of($datas)->toJson();
     }
+    public function get_witel_list($value='')
+    {
+        $datas = DB::table('_witels')
+        ->leftJoin('_regionals', '_regionals.id', '=', '_witels.id_regional')
+        ->select('_witels.id', '_witels.witel_desc', '_regionals.regional_desc', '_witels.is_enabled')->get();
+        $datas->map(function ($datas, $i) {
+            $datas->status = $datas->is_enabled == 1 ? 'Enable' : 'Disable';
+            $datas->action = '<button type="button" class="btn btn-default " onclick="modifyWitel('.$datas->id.')"><i class="fa fa-wrench"></i> </button>';
+            $datas->i = ++$i;
+            return $datas;
+        });
+        return datatables()->of($datas)->toJson();
+    }
+    public function get_skill_list($value='')
+    {
+        $datas = DB::table('_skills')
+        ->select('id', 'skill_desc', 'is_enabled')->get();
+        $datas->map(function ($datas, $i) {
+            $datas->status = $datas->is_enabled == 1 ? 'Enable' : 'Disable';
+            $datas->action = '<button type="button" class="btn btn-default " onclick="modifySkill('.$datas->id.')"><i class="fa fa-wrench"></i> </button>';
+            $datas->i = ++$i;
+            return $datas;
+        });
+        return datatables()->of($datas)->toJson();
+    }
+    public function get_paket_list($value='')
+    {
+        $datas = DB::table('_pakets')
+        ->select('id', 'paket_desc', 'skill', 'is_enabled')->get();
+        $datas->map(function ($datas, $i) {
+            $datas->status = $datas->is_enabled == 1 ? 'Enable' : 'Disable';
+            $datas->action = '<button type="button" class="btn btn-default " onclick="modifyPaket('.$datas->id.')"><i class="fa fa-wrench"></i> </button>';
+            $datas->i = ++$i;
+            return $datas;
+        });
+        return datatables()->of($datas)->toJson();
+    }
     // List All Option dari semua Resources ke JSON untuk Select2
     public function list_all_options_status_call(Request $request)
     {
@@ -193,6 +230,9 @@ class AdminController extends Controller
         if ( request()->ajax() ) {
             if (!empty($request->id)) {
                 $datas->addSelect('is_enabled')->where('id', '=', $request->id);
+            }
+            else{
+                $datas->where('is_enabled', '=', '1');
             }
         }
         $datas = $datas->get();
@@ -205,6 +245,9 @@ class AdminController extends Controller
             if (!empty($request->id)) {
                 $datas->addSelect('is_enabled', 'id_call_status')->where('id', '=', $request->id);
             }
+            else{
+                $datas->where('is_enabled', '=', '1');
+            }
         }
         $datas = $datas->get();
         return response()->json($datas);
@@ -216,6 +259,9 @@ class AdminController extends Controller
             if (!empty($request->id)) {
                 $datas->addSelect('is_enabled', 'id_call_status_detail')->where('id', '=', $request->id);
             }
+            else{
+                $datas->where('is_enabled', '=', '1');
+            }
         }
         $datas = $datas->get();
         return response()->json($datas);
@@ -226,6 +272,65 @@ class AdminController extends Controller
         if ( request()->ajax() ) {
             if (!empty($request->id)) {
                 $datas->addSelect('is_enabled')->where('id', '=', $request->id);
+            }
+            else{
+                $datas->where('is_enabled', '=', '1');
+            }
+        }
+        $datas = $datas->get();
+        return response()->json($datas);
+    }
+    public function list_all_options_regional(Request $request)
+    {
+        $datas = DB::table('_regionals')->select('id', 'regional_desc');
+        if ( request()->ajax() ) {
+            if (!empty($request->id)) {
+                $datas->addSelect('is_enabled')->where('id', '=', $request->id);
+            }
+            else{
+                $datas->where('is_enabled', '=', '1');
+            }
+        }
+        $datas = $datas->get();
+        return response()->json($datas);
+    }
+    public function list_all_options_witel(Request $request)
+    {
+        $datas = DB::table('_witels')->select('id', 'witel_desc');
+        if ( request()->ajax() ) {
+            if (!empty($request->id)) {
+                $datas->addSelect('is_enabled', 'id_regional')->where('id', '=', $request->id);
+            }
+            else{
+                $datas->where('is_enabled', '=', '1');
+            }
+        }
+        $datas = $datas->get();
+        return response()->json($datas);
+    }
+    public function list_all_options_skill(Request $request)
+    {
+        $datas = DB::table('_skills')->select('id', 'skill_desc');
+        if ( request()->ajax() ) {
+            if (!empty($request->id)) {
+                $datas->addSelect('is_enabled')->where('id', '=', $request->id);
+            }
+            else{
+                $datas->where('is_enabled', '=', '1');
+            }
+        }
+        $datas = $datas->get();
+        return response()->json($datas);
+    }
+    public function list_all_options_paket(Request $request)
+    {
+        $datas = DB::table('_pakets')->select('id', 'paket_desc');
+        if ( request()->ajax() ) {
+            if (!empty($request->id)) {
+                $datas->addSelect('is_enabled', 'skill')->where('id', '=', $request->id);
+            }
+            else{
+                $datas->where('is_enabled', '=', '1');
             }
         }
         $datas = $datas->get();
@@ -334,6 +439,114 @@ class AdminController extends Controller
         $model->updateOrInsert(
             ['id' => $request->id],
             ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
+        );
+        if ($model) {
+            return response()->json(true);
+        }
+        else{
+            return response()->json(false);
+        }
+    }
+    public function save_regional(Request $request)
+    {
+        $model = DB::table('_regionals');
+        /*if(request()->ajax()){
+            if(!empty($request->id)){
+                $model->updateOrInsert(
+                    ['id' => $request->id],
+                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
+                );
+            }
+            else{
+                $model->insert(
+                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
+                );
+            }
+        }*/
+        $model->updateOrInsert(
+            ['id' => $request->id],
+            ['regional_desc' => $request->input_regional, 'is_enabled' => $request->input_status]
+        );
+        if ($model) {
+            return response()->json(true);
+        }
+        else{
+            return response()->json(false);
+        }
+    }
+    public function save_witel(Request $request)
+    {
+        $model = DB::table('_witels');
+        /*if(request()->ajax()){
+            if(!empty($request->id)){
+                $model->updateOrInsert(
+                    ['id' => $request->id],
+                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
+                );
+            }
+            else{
+                $model->insert(
+                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
+                );
+            }
+        }*/
+        $model->updateOrInsert(
+            ['id' => $request->id],
+            ['witel_desc' => $request->input_witel, 'id_regional' => $request->select_regional, 'is_enabled' => $request->input_status]
+        );
+        if ($model) {
+            return response()->json(true);
+        }
+        else{
+            return response()->json(false);
+        }
+    }
+    public function save_skill(Request $request)
+    {
+        $model = DB::table('_skills');
+        /*if(request()->ajax()){
+            if(!empty($request->id)){
+                $model->updateOrInsert(
+                    ['id' => $request->id],
+                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
+                );
+            }
+            else{
+                $model->insert(
+                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
+                );
+            }
+        }*/
+        $model->updateOrInsert(
+            ['id' => $request->id],
+            ['skill_desc' => $request->input_skill, 'is_enabled' => $request->input_status]
+        );
+        if ($model) {
+            return response()->json(true);
+        }
+        else{
+            return response()->json(false);
+        }
+    }
+    public function save_paket(Request $request)
+    {
+        $model = DB::table('_pakets');
+        /*if(request()->ajax()){
+            if(!empty($request->id)){
+                $model->updateOrInsert(
+                    ['id' => $request->id],
+                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
+                );
+            }
+            else{
+                $model->insert(
+                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
+                );
+            }
+        }*/
+        $model->updateOrInsert(
+            ['id' => $request->id],
+            ['paket_desc' => $request->input_paket, 'skill' => $request->select_skill, 'is_enabled' => $request->input_status]
         );
         if ($model) {
             return response()->json(true);

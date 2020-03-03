@@ -308,6 +308,19 @@ class DatabaseSeeder extends Seeder
         );
         DB::table('_pakets')->insert($listPaket);
 
+        // Insert ke Tabel Skill
+        $listSkill = array(
+        	array(
+        		'id' => 1,
+	            'skill_desc' => 'Quadplay',
+	        ),
+	        array(
+        		'id' => 2,
+	            'skill_desc' => 'Regional',
+	        )
+        );
+        DB::table('_skills')->insert($listSkill);
+
         // Insert ke Dapros
         /*$dataDapros = array(
         	array('BRAND' => '748439', 'ROW_NUM' => '62811320***', 'MSISDN_MASK' => '62811320790', 'MSISDN' => 'YETT*************', 'NAME_MASK' => 'YETTY PUSPITAWATI', 'CUSTOMER_SUBTYPE' => 'kartuHALO', 'TOT_BILL_AMOUNT' => '322630', 'TOTAL_REVENUE' => '185130', 'DEVICE_TYPE' => 'SMARTPHONE', 'VOL_BROADBAND' => '11555488768', 'VOL_BROADBAND_PACKAGE' => '11555488768', 'CI' => '20301', 'KABUPATEN' => 'KOTA SURABAYA', 'LONGITUDE' => '11.269.446', 'LATITUDE' => '-726.407', 'ODP1' => 'ODP-TDS-FBB/20', 'ODP2' => '0', 'ODP3' => 'ODP-TDS-FBB/21'),
