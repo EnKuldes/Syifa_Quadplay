@@ -10,7 +10,7 @@
 				<div class="panel-control">
 					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalForStatusCall" onclick="goToTop()"><i class="fa fa-plus"></i></button>
 				</div>
-				
+
 			</div>
 			<div class="panel-body">
 				<div class="table-responsive">
@@ -21,13 +21,13 @@
 								<th>Call Status</th>
 								<th>Status</th>
 								<th>Action</th>
-								
+
 							</tr>
 						</thead>
 						<tbody>
 
 						</tbody>
-					</table>  
+					</table>
 				</div>
 			</div>
 		</div>
@@ -50,13 +50,13 @@
 								<th>Detail Call</th>
 								<th>Status</th>
 								<th>Action</th>
-								
+
 							</tr>
 						</thead>
 						<tbody>
 
 						</tbody>
-					</table>  
+					</table>
 				</div>
 			</div>
 		</div>
@@ -79,13 +79,13 @@
 								<th>Detail Reason</th>
 								<th>Status</th>
 								<th>Action</th>
-								
+
 							</tr>
 						</thead>
 						<tbody>
 
 						</tbody>
-					</table>  
+					</table>
 				</div>
 			</div>
 		</div>
@@ -93,27 +93,28 @@
 	<div class="col-md-12 col-lg-6">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Console Status Tapping</h3>
+				<h3 class="panel-title">Console Witel</h3>
 				<div class="panel-control">
-					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalForTappingStatus" onclick="goToTop();"><i class="fa fa-plus"></i></button>
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalForWitel" onclick="goToTop();"><i class="fa fa-plus"></i></button>
 				</div>
 			</div>
 			<div class="panel-body">
 				<div class="table-responsive">
-					<table id="console_status_tappings" class="display table" style="width: 100%; cellspacing: 0;">
+					<table id="console_witels" class="display table" style="width: 100%; cellspacing: 0;">
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>Tapping Status</th>
+								<th>Witel</th>
+								<th>Regional</th>
 								<th>Status</th>
 								<th>Action</th>
-								
+
 							</tr>
 						</thead>
 						<tbody>
 
 						</tbody>
-					</table>  
+					</table>
 				</div>
 			</div>
 		</div>
@@ -135,47 +136,46 @@
 										<th>Regional</th>
 										<th>Status</th>
 										<th>Action</th>
-										
+
 									</tr>
 								</thead>
 								<tbody>
-		
+
 								</tbody>
-							</table>  
+							</table>
 						</div>
 					</div>
 				</div>
 			</div> --}}
-	<div class="col-md-12 col-lg-6">
+	<div class="col-md-4 col-lg-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Console Witel</h3>
+				<h3 class="panel-title">Console Status Tapping</h3>
 				<div class="panel-control">
-					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalForWitel" onclick="goToTop();"><i class="fa fa-plus"></i></button>
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalForTappingStatus" onclick="goToTop();"><i class="fa fa-plus"></i></button>
 				</div>
 			</div>
 			<div class="panel-body">
 				<div class="table-responsive">
-					<table id="console_witels" class="display table" style="width: 100%; cellspacing: 0;">
+					<table id="console_status_tappings" class="display table" style="width: 100%; cellspacing: 0;">
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>Witel</th>
-								<th>Regional</th>
+								<th>Tapping Status</th>
 								<th>Status</th>
 								<th>Action</th>
-								
+
 							</tr>
 						</thead>
 						<tbody>
 
 						</tbody>
-					</table>  
+					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-12 col-lg-6">
+	<div class="col-md-4 col-lg-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Console Skill</h3>
@@ -192,18 +192,18 @@
 								<th>Skill</th>
 								<th>Status</th>
 								<th>Action</th>
-								
+
 							</tr>
 						</thead>
 						<tbody>
 
 						</tbody>
-					</table>  
+					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-12 col-lg-6">
+	<div class="col-md-4 col-lg-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Console Paket</h3>
@@ -221,13 +221,13 @@
 								<th>Skill</th>
 								<th>Status</th>
 								<th>Action</th>
-								
+
 							</tr>
 						</thead>
 						<tbody>
 
 						</tbody>
-					</table>  
+					</table>
 				</div>
 			</div>
 		</div>
@@ -505,7 +505,7 @@
 		});
 
 		get_list_resources_options();
-	
+
 	});
 	function get_list_resources_options() {
 		// Reinsiasi
@@ -529,7 +529,7 @@
 	        error : function(data) {
 	        }
 	     }).done(function(){
-			
+
 	     });
 	    $.ajax({
 	       type:"post",
@@ -760,7 +760,7 @@
 	        error : function(data) {
 	        }
 	     }).done(function(){
-			
+
 	     });
 		goToTop();
 		$('#modalForStatusCall').modal('show');
@@ -790,7 +790,7 @@
 	        error : function(data) {
 	        }
 	     }).done(function(){
-			
+
 	     });
 		goToTop();
 		$('#modalForDetailCall').modal('show');
@@ -820,7 +820,7 @@
 	        error : function(data) {
 	        }
 	     }).done(function(){
-			
+
 	     });
 		goToTop();
 		$('#modalForDetailReason').modal('show');
@@ -848,7 +848,7 @@
 	        error : function(data) {
 	        }
 	     }).done(function(){
-			
+
 	     });
 		goToTop();
 		$('#modalForTappingStatus').modal('show');
@@ -878,7 +878,7 @@
 	        error : function(data) {
 	        }
 	     }).done(function(){
-			
+
 	     });
 		goToTop();
 		$('#modalForWitel').modal('show');
@@ -906,7 +906,7 @@
 	        error : function(data) {
 	        }
 	     }).done(function(){
-			
+
 	     });
 		goToTop();
 		$('#modalForSkill').modal('show');
@@ -936,7 +936,7 @@
 	        error : function(data) {
 	        }
 	     }).done(function(){
-			
+
 	     });
 	    goToTop();
 		$('#modalForPaket').modal('show');
@@ -1163,7 +1163,7 @@
 		$('#select_call_status_detail').empty().trigger("change");
 		$('#select_regional').empty().trigger("change");
 		$('#select_skill').empty().trigger("change");
-     } 
+     }
     // Go To Top of Page
     function goToTop() {
     	$('html, body').animate({ scrollTop: 0 }, 'fast');
