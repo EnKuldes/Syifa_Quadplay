@@ -96,7 +96,8 @@ class AdminController extends Controller
         }
         $datas = $datas->get();
         $datas->map(function ($datas, $i) {
-            $datas->action = '<button type="button" class="btn btn-default " onclick="modifyDataConsume('.$datas->id.')"><i class="fa fa-wrench"></i> </button>';
+            //$datas->action = '<button type="button" class="btn btn-default " onclick="modifyDataConsume('.$datas->id.')"><i class="fa fa-wrench"></i> </button>';
+            $datas->action = '<a href="/admin/console/data-consume/'.$datas->id.'" class="btn btn-default "><i class="fa fa-wrench"></i> </a>';
             $datas->i = ++$i;
             //$datas->action = null;
             return $datas;
@@ -653,6 +654,17 @@ class AdminController extends Controller
             else{
                 $call->call_fu_datetime =  null;
             }
+            // Input Agent
+            $call->call_input_k_kontak = $request->input('input_k_kontak');
+            $call->call_input_cp_marshanda = $request->input('input_cp_marshanda');
+            $call->call_input_an_pemasangan = $request->input('input_an_pemasangan');
+            $call->call_regional = $request->input('regional');
+            $call->call_witel = $request->input('witel');
+            $call->call_paket = $request->input('paket');
+            $call->call_alamat_pemasangan = $request->input('input_alamat_pemasangan');
+            $call->call_email = $request->input('input_email');
+            $call->call_via_by = $request->input('via_by');
+
             $call->call_information = $request->c_information;
             $call->save();
         }
@@ -684,6 +696,18 @@ class AdminController extends Controller
         $ds->call_status_detail_reason_id = $request->status_detail_reason;
         $ds->call_am_datetime = $call->call_am_datetime;
         $ds->call_fu_datetime =  $call->call_fu_datetime;
+        
+        // Input Agent
+        $ds->call_input_k_kontak = $request->input('input_k_kontak');
+        $ds->call_input_cp_marshanda = $request->input('input_cp_marshanda');
+        $ds->call_input_an_pemasangan = $request->input('input_an_pemasangan');
+        $ds->call_regional = $request->input('regional');
+        $ds->call_witel = $request->input('witel');
+        $ds->call_paket = $request->input('paket');
+        $ds->call_alamat_pemasangan = $request->input('input_alamat_pemasangan');
+        $ds->call_email = $request->input('input_email');
+        $ds->call_via_by = $request->input('via_by');
+
         $ds->call_information = $request->c_information;
         $ds->tapping_status_id = $request->status_tapping;
         $ds->tapping_information = $request->t_information;

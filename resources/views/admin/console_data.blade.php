@@ -21,8 +21,10 @@
           </form>
         </div>
       </div>
-      <form id="formCall" method="POST" action="/agent/save">
+      <form id="formCall">
           @csrf
+          <input type="hidden" class="@error('id') is-invalid @enderror" name="id" id="id"
+            {{ isset($datas['dapros_stastics']) ? 'value='.$datas['dapros_stastics']->id : '' }}>
           <input type="hidden" class="@error('dapros_id') is-invalid @enderror" name="dapros_id" id="dapros_id"
             {{ isset($datas['dapros_information']) ? 'value='.$datas['dapros_information']->id : '' }}>
           @error('dapros_id')
@@ -88,7 +90,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <textarea class="form-control  @error('input_k_kontak') is-invalid @enderror" name="input_k_kontak" placeholder="Insert K-Contact"
-                                    id="input_k_kontak" rows="2" style="resize: none;" autocomplete="off"></textarea>
+                                    id="input_k_kontak" rows="2" style="resize: none;" autocomplete="off">{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->call_input_k_kontak : '' }}</textarea>
                                     @error('input_k_kontak')
                                     <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
                                         aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
@@ -96,7 +98,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <input type="text" class="form-control @error('input_cp_marshanda') is-invalid @enderror" placeholder="Contact Person"
-                                      id="input_cp_marshanda" name="input_cp_marshanda" autocomplete="off">
+                                      id="input_cp_marshanda" name="input_cp_marshanda" autocomplete="off" value="{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->call_input_cp_marshanda : '' }}">
                                     @error('input_cp_marshanda')
                                     <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
                                         aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
@@ -104,7 +106,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <input type="text" class="form-control @error('input_an_pemasangan') is-invalid @enderror" placeholder="Atas Nama Pemasangan"
-                                      id="input_an_pemasangan" name="input_an_pemasangan" autocomplete="off">
+                                      id="input_an_pemasangan" name="input_an_pemasangan" autocomplete="off" value="{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->call_input_an_pemasangan : '' }}">
                                     @error('input_an_pemasangan')
                                     <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
                                         aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
@@ -114,10 +116,10 @@
                                     <div class="input-group m-b-sm">
                                       <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
                                       <input type="text" class="form-control date-picker  @error('am_date') is-invalid @enderror" placeholder="Manja Pemasangan"
-                                        name="am_date" id="am_date" autocomplete="off">
+                                        name="am_date" id="am_date" autocomplete="off" value="{{ isset($datas['dapros_stastics']) ? date('Y-m-d', strtotime($datas['dapros_stastics']->call_am_datetimedate)) : '' }}">
                                       <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
                                       <input type="text" class="form-control time-picker  @error('am_time') is-invalid @enderror"
-                                        name="am_time" id="am_time" autocomplete="off">
+                                        name="am_time" id="am_time" autocomplete="off" value="{{ isset($datas['dapros_stastics']) ? date('H:i:s', strtotime($datas['dapros_stastics']->call_am_datetimedate)) : '' }}">
                                     </div>
 
                                     @error('am_date')
@@ -132,7 +134,7 @@
                                 <div class="col-md-12">
                                     <textarea class="form-control  @error('input_alamat_pemasangan') is-invalid @enderror" placeholder="Alamat Pemasangan"
                                       name="input_alamat_pemasangan" id="input_alamat_pemasangan" rows="2" style="resize: none;"
-                                      autocomplete="off"></textarea>
+                                      autocomplete="off">{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->call_alamat_pemasangan : '' }}</textarea>
                                     @error('input_alamat_pemasangan')
                                     <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
                                         aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
@@ -148,10 +150,10 @@
                                     <div class="input-group m-b-sm">
                                       <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
                                       <input type="text" class="form-control date-picker  @error('fu_date') is-invalid @enderror" placeholder="Follow Up Date"
-                                        name="fu_date" id="fu_date" autocomplete="off">
+                                        name="fu_date" id="fu_date" autocomplete="off" value="{{ isset($datas['dapros_stastics']) ? date('Y-m-d', strtotime($datas['dapros_stastics']->call_fu_datetime)) : '' }}">
                                       <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
                                       <input type="text" class="form-control time-picker  @error('fu_time') is-invalid @enderror"
-                                        name="fu_time" id="fu_time" autocomplete="off">
+                                        name="fu_time" id="fu_time" autocomplete="off" value="{{ isset($datas['dapros_stastics']) ? date('H:i:s', strtotime($datas['dapros_stastics']->call_fu_datetime)) : '' }}">
                                     </div>
 
                                     @error('fu_date')
@@ -195,7 +197,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <input type="text" class="form-control @error('input_email') is-invalid @enderror" id="input_email" placeholder="Email Pelanggan"
-                                      name="input_email" autocomplete="off">
+                                      name="input_email" autocomplete="off" value="{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->call_email : '' }}">
                                     @error('input_email')
                                     <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
                                         aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
@@ -218,8 +220,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="Information">Information</label>
-                                <textarea class="form-control  @error('information') is-invalid @enderror" name="information"
-                                  id="information" rows="4" style="resize: none;" required="required" autocomplete="off"></textarea>
+                                <textarea class="form-control  @error('information') is-invalid @enderror" name="c_information"
+                                  id="c_information" rows="4" style="resize: none;" required="required" autocomplete="off"></textarea>
                                 @error('information')
                                 <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
                                     aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
@@ -232,21 +234,21 @@
               </div>
               <div class="col-md-2">
                 <legend>Tapping Form</legend>
-                <form action="/qco/save" method="POST" id="formTapping" class="form-horizontal">
-                  @csrf
+                <form id="formTapping" class="form-horizontal">
+                  {{-- @csrf
                   <input type="hidden" class="@error('dapros_id') is-invalid @enderror" name="dapros_id" id="dapros_id"
                     {{ isset($datas['dapros_information']) ? 'value='.$datas['dapros_information']->id : '' }}>
                   @error('dapros_id')
                   <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
                       aria-label="Close"><span aria-hidden="true">×</span></button>{{ 'Please fetch data first!' }}</p>
                   @enderror
-                  {{-- @if ($datas['data_is_return'])
+                  @if ($datas['data_is_return'])
                   <input type="hidden" name="data_is_return" value="1">
                   @endif --}}
                 <div class="form-group">
                     <label for="Information">Tapping Information</label>
-                    <textarea class="form-control  @error('information') is-invalid @enderror" name="information"
-                      id="t_information" rows="12" style="resize: none;" required="required" autocomplete="off"></textarea>
+                    <textarea class="form-control  @error('information') is-invalid @enderror" name="t_information"
+                      id="t_information" rows="12" style="resize: none;" required="required" autocomplete="off">{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->tapping_information : '' }}</textarea>
                     @error('information')
                     <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
                         aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
@@ -408,7 +410,7 @@
 	        console.log("error chain4");
 	        }
 	     }).done(function(){
-
+        $("#regional").val('{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->call_regional : '' }}').trigger('change');
 	     });
 	}
 	function chain6(id) {
@@ -435,7 +437,7 @@
 
 	        }
 	     }).done(function(){
-
+        $("#witel").val('{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->call_witel : '' }}').trigger('change');
 	     });
 	}
 	function chain7() {
@@ -461,7 +463,7 @@
 	        console.log("error chain4");
 	        }
 	     }).done(function(){
-
+        $("#paket").val('{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->call_paket : '' }}').trigger('change');
 	     });
 	}
 
@@ -494,6 +496,7 @@
 	    $("#c_information").val('{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->call_information : '' }}');
 
 	    $("#t_information").val('{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->tapping_information : '' }}');
+      $("#via_by").val('{{ isset($datas['dapros_stastics']) ? $datas['dapros_stastics']->call_via_by : '' }}').trigger('change');
 	});
 	// On Change Events
 	$("#status_call").change(function() {
