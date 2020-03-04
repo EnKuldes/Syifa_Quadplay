@@ -100,13 +100,17 @@ Route::post('/admin/console/get_witel_list_options', 'AdminController@list_all_o
 Route::post('/admin/console/get_regional_list_options', 'AdminController@list_all_options_regional')->name('admin_list_option_resources');
 Route::post('/admin/console/get_skill_list_options', 'AdminController@list_all_options_skill')->name('admin_list_option_resources');
 Route::post('/admin/console/get_paket_list_options', 'AdminController@list_all_options_paket')->name('admin_list_option_resources');
+Route::post('/admin/console/get_leader_list_options', 'AdminController@list_all_options_user')->name('admin_list_option_resources');
 
 //Route::post('/admin/console/get_role_list_options', 'AdminController@list_all_options_tapping_status')->name('admin_list_option_resources');
 Route::post('/admin/console/get_role_list_options', function () {
 	$datas = array( 
 		['id'=>'Agent', 'value_role'=>'Agent'],
 		['id'=>'QCO', 'value_role'=>'QCO'],
-		['id'=>'Inputter', 'value_role'=>'Inputter']
+		['id'=>'Inputter', 'value_role'=>'Inputter'],
+    ['id'=>'Supervisor', 'value_role'=>'Supervisor'],
+    ['id'=>'Team Leader', 'value_role'=>'Team Leader'],
+    ['id'=>'Support', 'value_role'=>'Support'],
 	);
     return response()->json($datas);
 })->name('admin_list_option_resources');

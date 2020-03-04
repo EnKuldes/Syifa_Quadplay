@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('divisi');
             $table->string('level');
             $table->string('skill')->nullable()->default('-');
-            $table->string('leader');
+            $table->string('leader')->nullable()->default('-');
             $table->string('email')->nullable()->default('-');
             $table->string('handphone')->nullable()->default('-');
             $table->rememberToken();

@@ -21,24 +21,12 @@
 						<th>Name</th>
 						<th>Username</th>
 						<th>Role</th>
-						{{-- <th>Leader</th> --}}
+						<th>Skill</th>
+						<th>Leader</th>
 						<th>Status</th>
-						{{-- <th>Last updated at</th> --}}
 						<th>Action</th>
 					</tr>
 				</thead>
-				{{-- <tfoot>
-					<tr>
-						<th>No</th>
-						<th>Name</th>
-						<th>Username</th>
-						<th>Role</th>
-						<th>Leader</th> 
-						<th>Status</th>
-						<th>Last updated at</th>
-						<th>Action</th>
-					</tr>
-				</tfoot>--}}
 				<tbody>
 					
 				</tbody>
@@ -70,6 +58,18 @@
 							<option></option>
 						</select>
 					</div>
+					<div class="form-group">
+						<label for="select_skill_value">Skill</label>
+						<select class="form-control" id="select_skill_value" name="select_skill_value" style="width: 100%;">
+							<option></option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="select_leader_value">Leader</label>
+						<select class="form-control" id="select_leader_value" name="select_leader_value" style="width: 100%;">
+							<option></option>
+						</select>
+					</div>
 					{{-- <div class="form-group">
 																<label for="input_call_status">Leader</label>
 																<input type="text" class="form-control" id="input_call_status" name="input_call_status" placeholder="Enter Call Status">
@@ -97,7 +97,8 @@
 			</div>
 			<div class="modal-body">
 				<form id="formForUploadUsers" method="post" action="/admin/console/import_users" enctype="multipart/form-data">
-					{{ csrf_field() }}
+					{{-- csrf_field() --}}
+					@csrf
 					<div class="form-group">
 						<label for="file"></label>
 						<input type="file" name="file" id="file" required="required" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
@@ -157,6 +158,52 @@
 		}).done(function(){
 
 		});
+		// Skill Select2
+		$.ajax({
+			type:"post",
+			url:'/admin/console/get_skill_list_options',
+	       //data: {},
+	       success: function(data){
+
+	       	var list_options = [];
+	       	for (var i = 0; i < data.length; i++) {
+	       		option = {id: data[i]['skill_desc'], text: data[i]['skill_desc']};
+	       		list_options.push(option);
+	       	}
+	        //$('#select_role_value').html(ahtml);
+	        $("#select_skill_value").select2({
+	        	dropdownParent: $("#modalForUser")
+	        	, data: list_options
+	        });
+	    },
+	    error : function(data) {
+	    }
+		}).done(function(){
+
+		});
+		// Leader Select2
+		$.ajax({
+			type:"post",
+			url:'/admin/console/get_leader_list_options',
+	       //data: {},
+	       success: function(data){
+
+	       	var list_options = [];
+	       	for (var i = 0; i < data.length; i++) {
+	       		option = {id: data[i]['username'], text: data[i]['name']};
+	       		list_options.push(option);
+	       	}
+	        //$('#select_role_value').html(ahtml);
+	        $("#select_leader_value").select2({
+	        	dropdownParent: $("#modalForUser")
+	        	, data: list_options
+	        });
+	    },
+	    error : function(data) {
+	    }
+		}).done(function(){
+
+		});
 
 		@if(Session::has('sukses'))
 		notificationScript("success", "Success", "Successfully save data.");
@@ -180,7 +227,8 @@
 		, { data: 'name', name: 'name' }
 		, { data: 'username', name: 'username' }
 		, { data: 'level', name: 'level' }
-		{{-- , { data: 'leader', name: 'leader' } --}}
+		, { data: 'skill', name: 'skill' }
+		, { data: 'leader', name: 'leader' } 
 		, { data: 'status', name: 'status' }
 		{{-- , { data: 'updated_at', name: 'updated_at' } --}}
 		, { data: 'action', name: 'action' }
@@ -262,6 +310,10 @@
 	       		form.elements["input_username"].value = data[i]['username']
 	       		form.elements["select_role_value"].value = data[i]['level']
 	       		form.elements["select_role_value"].dispatchEvent(new Event('change'));
+	       		form.elements["select_skill_value"].value = data[i]['skill']
+	       		form.elements["select_skill_value"].dispatchEvent(new Event('change'));
+	       		form.elements["select_leader_value"].value = data[i]['leader']
+	       		form.elements["select_leader_value"].dispatchEvent(new Event('change'));
 	       		form.elements["input_status"].value = data[i]['is_enabled']
 	       		form.elements["input_status"].dispatchEvent(new Event('change'));
 	       	}

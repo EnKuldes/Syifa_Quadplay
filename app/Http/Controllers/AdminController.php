@@ -167,7 +167,7 @@ class AdminController extends Controller
     public function get_users_list(Request $request)
     {
         $datas = DB::table('users')
-        ->select('id', 'name', 'username', 'level', 'leader', 'is_enabled', 'updated_at')
+        ->select('id', 'name', 'username', 'level', 'skill', 'leader', 'is_enabled', 'updated_at')
         ->where('level', '!=', 'Admin');
         if ( request()->ajax() ) {
             if (!empty($request->id)) {
@@ -333,6 +333,23 @@ class AdminController extends Controller
             }
             else{
                 $datas->where('is_enabled', '=', '1');
+            }
+        }
+        $datas = $datas->get();
+        return response()->json($datas);
+    }
+    public function list_all_options_user(Request $request)
+    {
+        $datas = DB::table('users')->select('username', 'name');
+        if ( request()->ajax() ) {
+            if (!empty($request->id)) {
+                $datas->addSelect('is_enabled')->where('id', '=', $request->id);
+            }
+            else{
+                $datas->where([
+                    ['is_enabled', '=', '1']
+                    //, ['level', '=', 'Team Leader']
+                ])->whereRaw('level in ("Team Leader", "Supervisor")');
             }
         }
         $datas = $datas->get();
@@ -562,7 +579,7 @@ class AdminController extends Controller
         $model = DB::table('users');
         $model->updateOrInsert(
             ['id' => $request->id],
-            ['name' => $request->input_name, 'username' => $request->input_username, 'level' => $request->select_role_value, 'divisi' => 'Offering', 'is_enabled' => $request->input_status, 'password' => bcrypt('infomedia2020'), 'leader' =>'']
+            ['name' => $request->input_name, 'username' => $request->input_username, 'level' => $request->select_role_value, 'skill' => $request->select_skill_value, 'divisi' => 'Offering', 'is_enabled' => $request->input_status, 'password' => bcrypt('infomedia2020'), 'leader' =>$request->select_leader_value]
         );
         if ($model) {
             return response()->json(true);
@@ -713,6 +730,9 @@ class AdminController extends Controller
         $ds->tapping_information = $request->t_information;
         $ds->ever_be_returned = $ebr_value;
         $ds->data_condition = $dc_value;
+        // Add Modified by Admin
+        $ds->modified_by = auth()->user()->username;
+
         $save_status = $ds->save();
         # Memastikan bahwa save berhasil memperbaharui data
         if (! $save_status) {
