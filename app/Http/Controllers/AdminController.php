@@ -360,23 +360,13 @@ class AdminController extends Controller
     public function save_status_call(Request $request)
     {
         $model = DB::table('_call_statuses');
-        /*if(request()->ajax()){
-            if(!empty($request->id)){
-                $model->updateOrInsert(
-                    ['id' => $request->id],
-                    ['value_call_status' => $request->input_call_status, 'is_enabled' => $request->input_status]
-                );
-            }
-            else{
-                $model->insert(
-                    ['value_call_status' => $request->input_call_status, 'is_enabled' => $request->input_status]
-                );
-            }
-        }*/
         $model->updateOrInsert(
             ['id' => $request->id],
             ['value_call_status' => $request->input_call_status, 'is_enabled' => $request->input_status]
         );
+        // Affect ke chaining lainnya yang menunjuk ke sini: Reason dan Detail terkena pengaruhnya
+        $affect1 = DB::table('_call_status_details')->where('id_call_status', $request->id)->update(['is_enabled' => $request->input_status]);
+        $affect2 = DB::table('_call_status_detail_reasons')->whereRaw('id_call_status_detail IN (SELECT id FROM _call_status_details WHERE id_call_status = ?)', array($request->id))->update(['is_enabled' => $request->input_status]);
         if ($model) {
             return response()->json(true);
         }
@@ -388,23 +378,13 @@ class AdminController extends Controller
     public function save_status_detail_call(Request $request)
     {
         $model = DB::table('_call_status_details');
-        /*if(request()->ajax()){
-            if(!empty($request->id)){
-                $model->updateOrInsert(
-                    ['id' => $request->id],
-                    ['value_call_status_detail' => $request->input_call_status_detail, 'is_enabled' => $request->input_status, 'id_call_status' => $request->select_call_status]
-                );
-            }
-            else{
-                $model->insert(
-                    ['value_call_status_detail' => $request->input_call_status_detail, 'is_enabled' => $request->input_status, 'id_call_status' => $request->select_call_status]
-                );
-            }
-        }*/
         $model->updateOrInsert(
             ['id' => $request->id],
             ['value_call_status_detail' => $request->input_call_status_detail, 'is_enabled' => $request->input_status, 'id_call_status' => $request->select_call_status]
         );
+        // Affect ke chaining lainnya yang menunjuk ke sini: Status dan Detail terkena pengaruhnya
+        //$affect1 = DB::table('_call_statuses')->whereRaw('id IN (SELECT id_call_status FROM _call_status_details WHERE id = ?)', array($request->id))->update(['is_enabled' => $request->input_status]);
+        $affect2 = DB::table('_call_status_detail_reasons')->whereRaw('id_call_status_detail = ?', array($request->id))->update(['is_enabled' => $request->input_status]);
         if ($model) {
             return response()->json(true);
         }
@@ -415,23 +395,13 @@ class AdminController extends Controller
     public function save_status_detail_reason_call(Request $request)
     {
         $model = DB::table('_call_status_detail_reasons');
-        /*if(request()->ajax()){
-            if(!empty($request->id)){
-                $model->updateOrInsert(
-                    ['id' => $request->id],
-                    ['value_call_status_detail_reason' => $request->input_call_status_detail_reason, 'is_enabled' => $request->input_status, 'id_call_status_detail' => $request->select_call_status_detail]
-                );
-            }
-            else{
-                $model->insert(
-                    ['value_call_status_detail_reason' => $request->input_call_status_detail_reason, 'is_enabled' => $request->input_status, 'id_call_status_detail' => $request->select_call_status_detail]
-                );
-            }
-        }*/
         $model->updateOrInsert(
             ['id' => $request->id],
             ['value_call_status_detail_reason' => $request->input_call_status_detail_reason, 'is_enabled' => $request->input_status, 'id_call_status_detail' => $request->select_call_status_detail]
         );
+        // Affect ke chaining lainnya yang menunjuk ke sini: Status dan Reason terkena pengaruhnya
+        //$affect1 = DB::table('_call_statuses')->whereRaw('id IN (SELECT id_call_status FROM _call_status_details WHERE id IN (SELECT id_call_status_detail FROM _call_status_detail_reasons WHERE id = ?))', array($request->id))->update(['is_enabled' => $request->input_status]);
+        //$affect2 = DB::table('_call_status_details')->whereRaw('id IN (SELECT id_call_status_detail FROM _call_status_detail_reasons WHERE id = ?)', array($request->id))->update(['is_enabled' => $request->input_status]);
         if ($model) {
             return response()->json(true);
         }
@@ -442,19 +412,6 @@ class AdminController extends Controller
     public function save_tapping_status(Request $request)
     {
         $model = DB::table('_tapping_statuses');
-        /*if(request()->ajax()){
-            if(!empty($request->id)){
-                $model->updateOrInsert(
-                    ['id' => $request->id],
-                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
-                );
-            }
-            else{
-                $model->insert(
-                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
-                );
-            }
-        }*/
         $model->updateOrInsert(
             ['id' => $request->id],
             ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
@@ -469,19 +426,6 @@ class AdminController extends Controller
     public function save_regional(Request $request)
     {
         $model = DB::table('_regionals');
-        /*if(request()->ajax()){
-            if(!empty($request->id)){
-                $model->updateOrInsert(
-                    ['id' => $request->id],
-                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
-                );
-            }
-            else{
-                $model->insert(
-                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
-                );
-            }
-        }*/
         $model->updateOrInsert(
             ['id' => $request->id],
             ['regional_desc' => $request->input_regional, 'is_enabled' => $request->input_status]
@@ -496,19 +440,6 @@ class AdminController extends Controller
     public function save_witel(Request $request)
     {
         $model = DB::table('_witels');
-        /*if(request()->ajax()){
-            if(!empty($request->id)){
-                $model->updateOrInsert(
-                    ['id' => $request->id],
-                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
-                );
-            }
-            else{
-                $model->insert(
-                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
-                );
-            }
-        }*/
         $model->updateOrInsert(
             ['id' => $request->id],
             ['witel_desc' => $request->input_witel, 'id_regional' => $request->select_regional, 'is_enabled' => $request->input_status]
@@ -523,19 +454,6 @@ class AdminController extends Controller
     public function save_skill(Request $request)
     {
         $model = DB::table('_skills');
-        /*if(request()->ajax()){
-            if(!empty($request->id)){
-                $model->updateOrInsert(
-                    ['id' => $request->id],
-                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
-                );
-            }
-            else{
-                $model->insert(
-                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
-                );
-            }
-        }*/
         $model->updateOrInsert(
             ['id' => $request->id],
             ['skill_desc' => $request->input_skill, 'is_enabled' => $request->input_status]
@@ -550,23 +468,12 @@ class AdminController extends Controller
     public function save_paket(Request $request)
     {
         $model = DB::table('_pakets');
-        /*if(request()->ajax()){
-            if(!empty($request->id)){
-                $model->updateOrInsert(
-                    ['id' => $request->id],
-                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
-                );
-            }
-            else{
-                $model->insert(
-                    ['value_tapping_status' => $request->input_tapping_status, 'is_enabled' => $request->input_status]
-                );
-            }
-        }*/
         $model->updateOrInsert(
             ['id' => $request->id],
             ['paket_desc' => $request->input_paket, 'skill' => $request->select_skill, 'is_enabled' => $request->input_status]
         );
+        // Affect ke chaining lainnya yang menunjuk ke sini: Skill
+        //$affect1 = DB::table('_skills')->whereRaw('skill_desc = ?', array($request->select_skill))->update(['is_enabled' => $request->input_status]);
         if ($model) {
             return response()->json(true);
         }
