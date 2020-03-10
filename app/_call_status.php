@@ -20,10 +20,24 @@ class _call_status extends Model
     {
         return $this->hasMany('App\_dapros_statistics', 'call_status_id', 'id');
     }
+    public function dapros_statistics_regional()
+    {
+        return $this->hasMany('App\_dapros_statistics_regional', 'call_status_id', 'id');
+    }
 
     # Relasi antara Tabel _call_status dengan _call || One To Many Relationship
     public function call()
     {
         return $this->hasMany('App\_call', 'call_status_id', 'id');
+    }
+    public function call_regional()
+    {
+        return $this->hasMany('App\_call_regional', 'call_status_id', 'id');
+    }
+
+    # Relasi antara Tabel _call_status dengan _call_status_detaul || One To Many Relationship Inverse 
+    public function skill()
+    {
+        return $this->belongsTo('App\_skill', 'id_skill');
     }
 }

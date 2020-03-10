@@ -18,10 +18,18 @@ class _regional extends Model
     {
         return $this->hasMany('App\_dapros_statistics', 'call_regional', 'id');
     }
+    public function dapros_statistics_regional()
+    {
+        return $this->hasMany('App\_dapros_statistics_regional', 'call_regional', 'id');
+    }
     
     # Relasi antara Tabel _call_status dengan _call || One To Many Relationship
     public function call()
     {
         return $this->hasMany('App\_call', 'call_regional', 'id');
+    }
+    public function call_regional()
+    {
+        return $this->hasMany('App\_call_regional', 'call_regional', 'id');
     }
 }

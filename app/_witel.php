@@ -18,10 +18,18 @@ class _witel extends Model
     {
         return $this->hasMany('App\_dapros_statistics', 'call_witel', 'id');
     }
+    public function dapros_statistics_regional()
+    {
+        return $this->hasMany('App\_dapros_statistics_regional', 'call_witel', 'id');
+    }
     
     # Relasi antara Tabel _call_status dengan _call || One To Many Relationship
     public function call()
     {
         return $this->hasMany('App\_call', 'call_witel', 'id');
+    }
+    public function call_regional()
+    {
+        return $this->hasMany('App\_call_regional', 'call_witel', 'id');
     }
 }

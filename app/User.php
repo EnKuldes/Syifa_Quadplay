@@ -43,6 +43,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\_dapros_statistics', 'call_agent_username', 'username');
     }
+    public function users_regional()
+    {
+        return $this->hasMany('App\_dapros_statistics_regional', 'call_agent_username', 'username');
+    }
     /*public function dapros_statistics_tappings()
     {
         return $this->hasMany('App\_dapros_statistics', 'tapping_agent_username', 'username');
@@ -54,6 +58,21 @@ class User extends Authenticatable
     public function tappings()
     {
         return $this->hasMany('App\_tapping', 'tapping_agent_username', 'username');
+    }
+    public function calls_regional()
+    {
+        return $this->hasMany('App\_call', 'call_agent_username', 'username');
+    }
+    public function tappings_regional()
+    {
+        return $this->hasMany('App\_tapping', 'tapping_agent_username', 'username');
+    }
+
+    # Get Skill
+    public function getSkill()
+    {
+        $data = _skill::select('id' , 'skill_desc')->where('skill_desc', '=', $this->skill)->first();
+        return $data->id;
     }
 
 }

@@ -13,4 +13,8 @@ class _tapping_status extends Model
     {
         return $this->hasMany('App\_dapros_statistics', 'tapping_status_id', 'id');
     }
+    public function dapros_statistics_regional()
+    {
+        return $this->hasMany('App\_dapros_statistics_regional', 'tapping_status_id', 'id');
+    }
 }
