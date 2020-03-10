@@ -18,6 +18,7 @@
 						<thead>
 							<tr>
 								<th>No</th>
+								<th>Skill</th>
 								<th>Call Status</th>
 								<th>Status</th>
 								<th>Action</th>
@@ -46,6 +47,7 @@
 						<thead>
 							<tr>
 								<th>No</th>
+								<th>Skill</th>
 								<th>Call Status</th>
 								<th>Detail Call</th>
 								<th>Status</th>
@@ -75,6 +77,7 @@
 						<thead>
 							<tr>
 								<th>No</th>
+								<th>Skill</th>
 								<th>Detail Call</th>
 								<th>Detail Reason</th>
 								<th>Status</th>
@@ -628,6 +631,7 @@
 		},
 		columns: [
 		{ data: 'i', name: 'i' }
+		, { data: 'skill_desc', name: 'skill_desc' }
 		, { data: 'value_call_status', name: 'value_call_status' }
 		, { data: 'status', name: 'status' }
 		, { data: 'action', name: 'action' }
@@ -644,6 +648,7 @@
 		},
 		columns: [
 		{ data: 'i', name: 'i' }
+		, { data: 'skill_desc', name: 'skill_desc' }
 		, { data: 'value_call_status', name: 'value_call_status' }
 		, { data: 'value_call_status_detail', name: 'value_call_status_detail' }
 		, { data: 'status', name: 'status' }
@@ -661,6 +666,7 @@
 		},
 		columns: [
 		{ data: 'i', name: 'i' }
+		, { data: 'skill_desc', name: 'skill_desc' }
 		, { data: 'value_call_status_detail', name: 'value_call_status_detail' }
 		, { data: 'value_call_status_detail_reason', name: 'value_call_status_detail_reason' }
 		, { data: 'status', name: 'status' }

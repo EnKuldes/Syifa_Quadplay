@@ -16,12 +16,22 @@ class DatabaseSeeder extends Seeder
         // Insert ke Tabel Users
         $dataUsers = array(
         	array(
-	            'name' => 'Tes Agent',
+	            'name' => 'Tes Agent Quadplay',
 	            'username' => '111111',
 	            'password' => bcrypt('111111'),
 	            'divisi' => 'Offering',
 	            'level' => 'Agent',
 	            'skill' => 'Quadplay',
+	            'leader' => '',
+	            'email' => 'email@dummy.com',
+	            'handphone' => '08111111111',
+	        ),array(
+	            'name' => 'Tes Agent Regional',
+	            'username' => '111112',
+	            'password' => bcrypt('111112'),
+	            'divisi' => 'Offering',
+	            'level' => 'Agent',
+	            'skill' => 'Regional',
 	            'leader' => '',
 	            'email' => 'email@dummy.com',
 	            'handphone' => '08111111111',
@@ -61,18 +71,36 @@ class DatabaseSeeder extends Seeder
 
         // Insert ke Tabel Status Call
         $listStatusCall = array(
+        	// Skill Quadplay
         	array(
 	        	'id' => 1,
 	            'value_call_status' => 'Contacted',
+	            'id_skill' => 1,
 	        ),array(
 	        	'id' => 2,
 	            'value_call_status' => 'Not Contacted',
+	            'id_skill' => 1,
+	        )
+	        // Skill Regional
+	        ,array(
+	        	'id' => 3,
+	            'value_call_status' => 'Contacted',
+	            'id_skill' => 2,
+	        ),array(
+	        	'id' => 4,
+	            'value_call_status' => 'Not Contacted',
+	            'id_skill' => 2,
+	        ),array(
+	        	'id' => 5,
+	            'value_call_status' => 'Not Call',
+	            'id_skill' => 2,
 	        )
         );
         DB::table('_call_statuses')->insert($listStatusCall);
 
         // Insert ke Tabel Detail Status Call
         $listDetalStatusCall = array(
+        	// Skill Quadplay
         	array(
 				'id' => 1,
 	            'value_call_status_detail' => 'Agree',
@@ -114,11 +142,82 @@ class DatabaseSeeder extends Seeder
 	            'value_call_status_detail' => 'Telepon Tidak Diangkat - RNA',
 	            'id_call_status' => 2,
 	        )
+	        // Skill Regional
+	        ,array(
+	        	'id' => 11,
+	            'value_call_status_detail' => 'Agree',
+	            'id_call_status' => 3,
+	        ),array(
+	        	'id' => 12,
+	            'value_call_status_detail' => 'Follow Up',
+	            'id_call_status' => 3,
+	        ),array(
+	        	'id' => 13,
+	            'value_call_status_detail' => 'Decline',
+	            'id_call_status' => 3,
+	        ),array(
+	        	'id' => 14,
+	            'value_call_status_detail' => 'Call Rejected',
+	            'id_call_status' => 4,
+	        ),array(
+	        	'id' => 15,
+	            'value_call_status_detail' => 'Fax - Modem',
+	            'id_call_status' => 4,
+	        ),array(
+	        	'id' => 16,
+	            'value_call_status_detail' => 'Invalid Phone Number',
+	            'id_call_status' => 4,
+	        ),array(
+	        	'id' => 17,
+	            'value_call_status_detail' => 'Line Busy',
+	            'id_call_status' => 4,
+	        ),array(
+	        	'id' => 18,
+	            'value_call_status_detail' => 'Mail Box - Memo',
+	            'id_call_status' => 4,
+	        ),array(
+	        	'id' => 19,
+	            'value_call_status_detail' => 'Telepon Tidak Diangkat - RNA',
+	            'id_call_status' => 4,
+	        ),array(
+	        	'id' => 20,
+	            'value_call_status_detail' => 'Telepon Tulalit',
+	            'id_call_status' => 5,
+	        ),array(
+	        	'id' => 21,
+	            'value_call_status_detail' => 'Telepon Isolir',
+	            'id_call_status' => 5,
+	        ),array(
+	        	'id' => 22,
+	            'value_call_status_detail' => 'Sudah Agree Ad On Use Tv',
+	            'id_call_status' => 5,
+	        ),array(
+	        	'id' => 23,
+	            'value_call_status_detail' => 'Sudah Agree Produk Lain',
+	            'id_call_status' => 5,
+	        ),array(
+	        	'id' => 24,
+	            'value_call_status_detail' => 'Sudah Indihome 10Mbps',
+	            'id_call_status' => 5,
+	        ),array(
+	        	'id' => 25,
+	            'value_call_status_detail' => 'Pelanggan Divisi Enterprise',
+	            'id_call_status' => 5,
+	        ),array(
+	        	'id' => 26,
+	            'value_call_status_detail' => 'Tidak Ada Penawaran',
+	            'id_call_status' => 5,
+	        ),array(
+	        	'id' => 27,
+	            'value_call_status_detail' => 'Pelanggan DBS',
+	            'id_call_status' => 5,
+	        )
         );
 		DB::table('_call_status_details')->insert($listDetalStatusCall);
 
         // Insert ke Tabel Reason Detail Status Call
         $listReasonDetailStatusCall = array(
+        	// Skill Quadplay
         	array(
 				'id' => 1,
 	            'value_call_status_detail_reason' => 'Bersedia Berlanggan',
@@ -183,6 +282,116 @@ class DatabaseSeeder extends Seeder
 	        	'id' => 16,
 	            'value_call_status_detail_reason' => '-',
 	            'id_call_status_detail' => 10,
+	        )
+	        // Skill Regional
+	        ,array(
+	        	'id' => 17,
+	            'value_call_status_detail_reason' => 'Bersedia Berlangganan',
+	            'id_call_status_detail' => 11,
+	        ),array(
+	        	'id' => 18,
+	            'value_call_status_detail_reason' => 'In Progress',
+	            'id_call_status_detail' => 12,
+	        ),array(
+	        	'id' => 19,
+	            'value_call_status_detail_reason' => 'Tidak Bertemu PIC',
+	            'id_call_status_detail' => 12,
+	        ),array(
+	        	'id' => 20,
+	            'value_call_status_detail_reason' => 'Layanan dan Produk Tidak Memuaskan',
+	            'id_call_status_detail' => 13,
+	        ),array(
+	        	'id' => 21,
+	            'value_call_status_detail_reason' => 'Pelanggan Hendak Cabut Fastel',
+	            'id_call_status_detail' => 13,
+	        ),array(
+	        	'id' => 22,
+	            'value_call_status_detail_reason' => 'Pelanggan Melakukan Efisiensi',
+	            'id_call_status_detail' => 13,
+	        ),array(
+	        	'id' => 23,
+	            'value_call_status_detail_reason' => 'Produk Tidak Pernah Digunakan',
+	            'id_call_status_detail' => 13,
+	        ),array(
+	        	'id' => 24,
+	            'value_call_status_detail_reason' => 'Sudah Menggunakan Provider Lain',
+	            'id_call_status_detail' => 13,
+	        ),array(
+	        	'id' => 25,
+	            'value_call_status_detail_reason' => 'Salah Sambung',
+	            'id_call_status_detail' => 13,
+	        ),array(
+	        	'id' => 26,
+	            'value_call_status_detail_reason' => 'Sudah Menggunakan Indihome',
+	            'id_call_status_detail' => 13,
+	        ),array(
+	        	'id' => 27,
+	            'value_call_status_detail_reason' => 'Tarif Mahal',
+	            'id_call_status_detail' => 13,
+	        ),array(
+	        	'id' => 28,
+	            'value_call_status_detail_reason' => 'Reject Up Front',
+	            'id_call_status_detail' => 13,
+	        ),array(
+	        	'id' => 29,
+	            'value_call_status_detail_reason' => 'Reject Up Front Lansia',
+	            'id_call_status_detail' => 13,
+	        ),array(
+	        	'id' => 30,
+	            'value_call_status_detail_reason' => '-',
+	            'id_call_status_detail' => 14,
+	        ),array(
+	        	'id' => 31,
+	            'value_call_status_detail_reason' => '-',
+	            'id_call_status_detail' => 15,
+	        ),array(
+	        	'id' => 32,
+	            'value_call_status_detail_reason' => '-',
+	            'id_call_status_detail' => 16,
+	        ),array(
+	        	'id' => 33,
+	            'value_call_status_detail_reason' => '-',
+	            'id_call_status_detail' => 17,
+	        ),array(
+	        	'id' => 34,
+	            'value_call_status_detail_reason' => '-',
+	            'id_call_status_detail' => 18,
+	        ),array(
+	        	'id' => 35,
+	            'value_call_status_detail_reason' => '-',
+	            'id_call_status_detail' => 19,
+	        ),array(
+	        	'id' => 36,
+	            'value_call_status_detail_reason' => '-',
+	            'id_call_status_detail' => 20,
+	        ),array(
+	        	'id' => 37,
+	            'value_call_status_detail_reason' => '-',
+	            'id_call_status_detail' => 21,
+	        ),array(
+	        	'id' => 38,
+	            'value_call_status_detail_reason' => '-',
+	            'id_call_status_detail' => 22,
+	        ),array(
+	        	'id' => 39,
+	            'value_call_status_detail_reason' => '-',
+	            'id_call_status_detail' => 23,
+	        ),array(
+	        	'id' => 40,
+	            'value_call_status_detail_reason' => '-',
+	            'id_call_status_detail' => 24,
+	        ),array(
+	        	'id' => 41,
+	            'value_call_status_detail_reason' => '-',
+	            'id_call_status_detail' => 25,
+	        ),array(
+	        	'id' => 42,
+	            'value_call_status_detail_reason' => '-',
+	            'id_call_status_detail' => 26,
+	        ),array(
+	        	'id' => 43,
+	            'value_call_status_detail_reason' => '-',
+	            'id_call_status_detail' => 27,
 	        )
         );
         DB::table('_call_status_detail_reasons')->insert($listReasonDetailStatusCall);
@@ -304,6 +513,56 @@ class DatabaseSeeder extends Seeder
         		'id' => 2,
 	            'paket_desc' => 'New Entry 380K',
 	            'skill' => 'Quadplay',
+	        ),
+	        array(
+        		'id' => 3,
+	            'paket_desc' => 'Paket IH Fit Regular 3p Paket Fit - Non Benefit dengan speed 10 Mbps - Rp. 330.000',
+	            'skill' => 'Regional',
+	        ),
+	        array(
+        		'id' => 4,
+	            'paket_desc' => 'Paket IH Fit Regular 3p Paket Fit - Non Benefit dengan speed 20 Mbps - Rp. 365.000',
+	            'skill' => 'Regional',
+	        ),
+	        array(
+        		'id' => 5,
+	            'paket_desc' => 'Paket IH Fit Regular 3p Paket Fit - Non Benefit dengan speed 30 Mbps - Rp. 450.000',
+	            'skill' => 'Regional',
+	        ),
+	        array(
+        		'id' => 6,
+	            'paket_desc' => 'Paket IH Fit Regular 3p Paket Fit - Non Benefit dengan speed 40 Mbps - Rp. 530.000',
+	            'skill' => 'Regional',
+	        ),
+	        array(
+        		'id' => 7,
+	            'paket_desc' => 'Paket IH Fit Regular 3p Paket Fit - Non Benefit dengan speed 50 Mbps - Rp. 595.000',
+	            'skill' => 'Regional',
+	        ),
+	        array(
+        		'id' => 8,
+	            'paket_desc' => 'Paket IH Phoenix Regular 2P Paket Phoenix dengan speed 10 Mbps - Rp. 280.000',
+	            'skill' => 'Regional',
+	        ),
+	        array(
+        		'id' => 9,
+	            'paket_desc' => 'Paket IH Phoenix Regular 2P Paket Phoenix dengan speed 20 Mbps - Rp. 345.000',
+	            'skill' => 'Regional',
+	        ),
+	        array(
+        		'id' => 10,
+	            'paket_desc' => 'Paket IH Phoenix Regular 2P Paket Phoenix dengan speed 50 Mbps - Rp. 575.000',
+	            'skill' => 'Regional',
+	        ),
+	        array(
+        		'id' => 11,
+	            'paket_desc' => 'Paket IH Phoenix Regular 2P Paket Phoenix dengan speed 100 Mbps - Rp. 935.000',
+	            'skill' => 'Regional',
+	        ),
+	        array(
+        		'id' => 12,
+	            'paket_desc' => 'Paket IH Kuota IH Kuota 5 Gb Free Trial 3 Bulan - Harga Normal Rp. 50.000',
+	            'skill' => 'Regional',
 	        )
         );
         DB::table('_pakets')->insert($listPaket);
