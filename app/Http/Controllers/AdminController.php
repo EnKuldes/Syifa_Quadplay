@@ -8,11 +8,15 @@ use App\_dapros;
 use App\_dapros_statistics;
 use App\_call;
 use App\_tapping;
+use App\_paket;
+use App\_call_status;
+use App\_call_status_detail;
 
 // Laravel Excel
 use App\Exports\DaprosExport;
 use App\Imports\UsersImport;
 use App\Imports\DaprosImport;
+use App\Imports\DaprosRegionalImport;
 use Maatwebsite\Excel\Facades\Excel;
 //use App\Http\Controllers\Controller;
 
@@ -117,7 +121,8 @@ class AdminController extends Controller
     public function get_status_call_list($value='')
     {
         $datas = DB::table('_call_statuses')
-        ->select('id', 'value_call_status', 'is_enabled')->get();
+        ->leftJoin('_skills', '_skills.id', '=', '_call_statuses.id_skill')
+        ->select('_call_statuses.id', '_call_statuses.value_call_status', '_skills.skill_desc', '_call_statuses.is_enabled')->get();
         $datas->map(function ($datas, $i) {
             $datas->status = $datas->is_enabled == 1 ? 'Enable' : 'Disable';
             $datas->action = '<button type="button" class="btn btn-default " onclick="modifyCallStatus('.$datas->id.')"><i class="fa fa-wrench"></i> </button>';
@@ -130,7 +135,8 @@ class AdminController extends Controller
     {
         $datas = DB::table('_call_status_details')
         ->leftJoin('_call_statuses', '_call_statuses.id', '=', '_call_status_details.id_call_status')
-        ->select('_call_status_details.id', '_call_statuses.value_call_status', '_call_status_details.value_call_status_detail', '_call_status_details.is_enabled')->get();
+        ->leftJoin('_skills', '_skills.id', '=', '_call_statuses.id_skill')
+        ->select('_call_status_details.id', '_call_statuses.value_call_status', '_call_status_details.value_call_status_detail', '_skills.skill_desc', '_call_status_details.is_enabled')->get();
         $datas->map(function ($datas, $i) {
             $datas->status = $datas->is_enabled == 1 ? 'Enable' : 'Disable';
             $datas->action = '<button type="button" class="btn btn-default " onclick="modifyDetailCall('.$datas->id.')"><i class="fa fa-wrench"></i> </button>';
@@ -143,7 +149,9 @@ class AdminController extends Controller
     {
         $datas = DB::table('_call_status_detail_reasons')
         ->leftJoin('_call_status_details', '_call_status_details.id', '=', '_call_status_detail_reasons.id_call_status_detail')
-        ->select('_call_status_detail_reasons.id', '_call_status_detail_reasons.value_call_status_detail_reason', '_call_status_details.value_call_status_detail', '_call_status_detail_reasons.is_enabled')->get();
+        ->leftJoin('_call_statuses', '_call_statuses.id', '=', '_call_status_details.id_call_status')
+        ->leftJoin('_skills', '_skills.id', '=', '_call_statuses.id_skill')
+        ->select('_call_status_detail_reasons.id', '_call_status_detail_reasons.value_call_status_detail_reason', '_call_status_details.value_call_status_detail', '_skills.skill_desc', '_call_status_detail_reasons.is_enabled')->get();
         $datas->map(function ($datas, $i) {
             $datas->status = $datas->is_enabled == 1 ? 'Enable' : 'Disable';
             $datas->action = '<button type="button" class="btn btn-default " onclick="modifyReasonDetail('.$datas->id.')"><i class="fa fa-wrench"></i> </button>';
@@ -454,10 +462,25 @@ class AdminController extends Controller
     public function save_skill(Request $request)
     {
         $model = DB::table('_skills');
+        $skill_old = DB::table('_skills')->where('id', $request->id)->first();
         $model->updateOrInsert(
             ['id' => $request->id],
             ['skill_desc' => $request->input_skill, 'is_enabled' => $request->input_status]
         );
+        // Affect ke chaining lainnya yang menunjuk ke sini: Paket
+        $updateDetails = [
+            'is_enabled' => $request->input_status,
+            'skill' => $request->input_skill
+        ];
+        $affect1 = DB::table('_pakets')->where('skill', $skill_old->skill_desc)->update($updateDetails);
+        $affect2 = DB::table('users')->where('skill', $skill_old->skill_desc)->update(['skill' => $request->input_skill]);
+        /*$affect1 = DB::table('_pakets')->select('id', 'paket_desc', 'skill', 'is_enabled')->where('skill', $request->input_skill)->get();
+        foreach ($affect1 as $key) {
+            $paket = _paket::find($key->id);
+            $paket->is_enabled = $request->input_status;
+            $paket->skill = $request->input_skill;
+            $paket->save();
+        }*/
         if ($model) {
             return response()->json(true);
         }
