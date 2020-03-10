@@ -10,55 +10,107 @@
 		<div class="panel-body">
 			<div class="col-lg-12 col-md-12">
 				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>MSISDN MASK</th>
-							<th>NAME MASK</th>
-							<th>CALL STATUS</th> {{-- disini 3 biji aja lgs dari call sampe detail reason call --}}
-							<th>INFORMATION</th>
-							<th>ATTEMPTS</th>
-							<th>CONSUMED</th>
-							<th>AGENT</th>
-							<th>ACTIONS</th>
-						</tr>
-					</thead>
-					<tbody>
-						@if (count($datas) > 0)
-						@php
-						$idx = $datas->firstItem();
-						@endphp
-						@foreach ($datas as $data)
-						<tr>
+					@if (Auth::User()->getSkill() == 1)
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>MSISDN MASK</th>
+								<th>NAME MASK</th>
+								<th>CALL STATUS</th>
+								<th>INFORMATION</th>
+								<th>ATTEMPTS</th>
+								<th>CONSUMED</th>
+								<th>AGENT</th>
+								<th>ACTIONS</th>
+							</tr>
+						</thead>
+						<tbody>
+							@if (count($datas) > 0)
 							@php
-							$customer_information = $data->dapros;
-							$call_status_detail = "Uncosumed";
-							$label_color = "danger";
-							$user = $data->call_agent;
+							$idx = $datas->firstItem();
 							@endphp
-							<th scope="row">{{ $idx }}</th>
-							<td>{{ $customer_information->MSISDN_MASK }}</td>
-							<td>{{ $customer_information->NAME_MASK }}</td>
-							<td><span class="label label-{{ $label_color }}">{{ $call_status_detail }}</span> </td>
-							<td>{{ $data->call_information }}</td>
-							<td>{{ $data->call_attempts }}</td>
-							<td>{{ $data->call_consume_datetime }}</td>
-							<td>{{ $user->name }}</td>
-							<td>
-								<a href="/agent/workspace/recall/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="fa fa-phone"></i></a>
-							</td>
-						</tr>
-						@php
-						$idx++;
-						@endphp
-						@endforeach
-						@else
-						{{-- Kosong --}}
-						<tr>
-							<th colspan="11" rowspan="1" headers="" scope="row">No datas found.</th>
-						</tr>
-						@endif
-					</tbody>
+							@foreach ($datas as $data)
+							<tr>
+								@php
+								$customer_information = $data->dapros;
+								$call_status_detail = "Uncosumed";
+								$label_color = "danger";
+								$user = $data->call_agent;
+								@endphp
+								<th scope="row">{{ $idx }}</th>
+								<td>{{ $customer_information->MSISDN_MASK }}</td>
+								<td>{{ $customer_information->NAME_MASK }}</td>
+								<td><span class="label label-{{ $label_color }}">{{ $call_status_detail }}</span> </td>
+								<td>{{ $data->call_information }}</td>
+								<td>{{ $data->call_attempts }}</td>
+								<td>{{ $data->call_consume_datetime }}</td>
+								<td>{{ $user->name }}</td>
+								<td>
+									<a href="/agent/workspace/recall/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="fa fa-phone"></i></a>
+								</td>
+							</tr>
+							@php
+							$idx++;
+							@endphp
+							@endforeach
+							@else
+							{{-- Kosong --}}
+							<tr>
+								<th colspan="11" rowspan="1" headers="" scope="row">No datas found.</th>
+							</tr>
+							@endif
+						</tbody>
+					@elseif (Auth::User()->getSkill() == 2)
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>POTS</th>
+                                <th>NAME CUSTOMER</th>
+								<th>CALL STATUS</th>
+								<th>INFORMATION</th>
+								<th>ATTEMPTS</th>
+								<th>CONSUMED</th>
+								<th>AGENT</th>
+								<th>ACTIONS</th>
+							</tr>
+						</thead>
+						<tbody>
+							@if (count($datas) > 0)
+							@php
+							$idx = $datas->firstItem();
+							@endphp
+							@foreach ($datas as $data)
+							<tr>
+								@php
+								$customer_information = $data->dapros;
+								$call_status_detail = "Uncosumed";
+								$label_color = "danger";
+								$user = $data->call_agent;
+								@endphp
+								<th scope="row">{{ $idx }}</th>
+								<td>{{ $customer_information->pots }}</td>
+								<td>{{ $customer_information->nama_customer }}</td>
+								<td><span class="label label-{{ $label_color }}">{{ $call_status_detail }}</span> </td>
+								<td>{{ $data->call_information }}</td>
+								<td>{{ $data->call_attempts }}</td>
+								<td>{{ $data->call_consume_datetime }}</td>
+								<td>{{ $user->name }}</td>
+								<td>
+									<a href="/agent/workspace/recall/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="fa fa-phone"></i></a>
+								</td>
+							</tr>
+							@php
+							$idx++;
+							@endphp
+							@endforeach
+							@else
+							{{-- Kosong --}}
+							<tr>
+								<th colspan="11" rowspan="1" headers="" scope="row">No datas found.</th>
+							</tr>
+							@endif
+						</tbody>
+					@endif
 				</table>
 			</div>
 		</div>
