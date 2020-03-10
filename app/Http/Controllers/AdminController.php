@@ -550,7 +550,8 @@ class AdminController extends Controller
     {
         // validasi
         $this->validate($request, [
-            'file' => 'required|mimes:csv,xls,xlsx'
+            //'file' => 'required|mimes:csv,xls,xlsx'
+            'file' => 'required|mimes:xls,xlsx'
         ]);
  
         // menangkap file excel
@@ -563,7 +564,12 @@ class AdminController extends Controller
         $file->move('file_user',$nama_file);
  
         // import data
-        Excel::import(new DaprosImport, public_path('/file_user/'.$nama_file));
+        if ($request->select_skill == 1) {
+            Excel::import(new DaprosImport, public_path('/file_user/'.$nama_file));
+        }
+        elseif ($request->select_skill == 2) {
+            Excel::import(new DaprosRegionalImport, public_path('/file_user/'.$nama_file));
+        }
  
         // notifikasi dengan session
 
