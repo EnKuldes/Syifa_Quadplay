@@ -96,7 +96,7 @@
                                     aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <input type="text" class="form-control @error('input_pstn') is-invalid @enderror" placeholder="PSTN"
                                   id="input_pstn" name="input_pstn" autocomplete="off">
                                 @error('input_pstn')
@@ -104,7 +104,7 @@
                                     aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <input type="text" class="form-control @error('input_dial_to') is-invalid @enderror" placeholder="Dial To"
                                   id="input_dial_to" name="input_dial_to" autocomplete="off">
                                 @error('input_dial_to')
@@ -247,7 +247,7 @@
                     <a href="/agent/consume/follow_up"><i class="icon-refresh"></i> Follow Up (<span id="fu_daily">{{ $counting['fu_daily'] }}</span>)</a>
                     <a href="/agent/consume/decline"><i class="icon-close"></i> Decline (<span id="decline_daily">{{ $counting['decline_daily'] }}</span>)</a>
                     <a href="/agent/consume/not_contacted"><i class="icon-user-unfollow"></i> Not Contacted (<span id="nc_daily">{{ $counting['nc_daily'] }}</span>)</a>
-                    <a href="/agent/consume/not_call"><i class="icon-call-end"></i> Not Call (<span id="ncl_daily">{{ $counting['ncl_daily'] }}</span>)</a>
+                    <a href="/agent/consume/not_call"><i class="icon-ban"></i> Not Call (<span id="ncl_daily">{{ $counting['ncl_daily'] }}</span>)</a>
                     <a href="/agent/consume/approved"><i class="icon-like"></i> Approved (<span id="approved_daily">{{ $counting['approved_daily'] }}</span>)</a>
                     <a href="/agent/consume/return"><i class="icon-dislike"></i> Return (<span id="return_daily">{{ $counting['return_daily'] }}</span>)</a>
                     <a href="/agent/consume/returntoagree"><i class="icon-action-undo"></i><i class="icon-like"></i> Retrun to Agree (<span id="returntoagree_daily">{{ $counting['returntoagree_daily'] }}</span>)</a>
