@@ -5,17 +5,27 @@
 <div class="row">
   <div class="col-md-12">
     <div class="row mailbox-header">
-      <div class="col-md-1">
-        <form id="get-data-form">
+      <div class="col-md-4">
+        <form class="form-inline" id="get-data-form">
           @csrf
-          <button type="submit" class="btn btn-success btn-block"
-            data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing Order"><i
-              class="fa fa-download"></i> Get Data</button>
+          <div class="form-group">
+            <label class="sr-only" for="select_data_skill">Source Data</label>
+            <select class="form-control  @error('select_data_skill') is-invalid @enderror" name="select_data_skill"
+            id="select_data_skill" tabindex="-1" required="required" style="width:100%;">
+          </select>
+
+          @error('select_data_skill')
+          <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+            @enderror
+          </div>
+
+          <button type="submit" class="btn btn-success "
+          data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing Order"><i
+          class="fa fa-download"></i> Get Data</button>
         </form>
       </div>
-      <div class="col-md-7">
-      </div>
-      <div class="col-md-4">
+      <div class="col-md-4 col-md-offset-4">
         <form action="#" method="POST">
           <div class="input-group text-right">
             <span class="input-group-btn">
@@ -38,7 +48,8 @@
           <div class="row">
             <div class="col-md-3">
               <legend>Cust Info</legend>
-              <ul class="list-unstyled weather-info">
+              {{-- Cust Info Quadplay --}}
+              <ul class="list-unstyled weather-info field-1">
                 <li>MSISDN MASK <span class="pull-right"><b id="msisdn_mask">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->MSISDN_MASK : '' }}</b></span></li>
                 <li>NAME MASK <span class="pull-right"><b id="name_mask">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->NAME_MASK : '' }}</b></span></li>
                 <li>KABUPATEN <span class="pull-right"><b id="kabupaten">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->KABUPATEN : '' }}</b></span></li>
@@ -48,171 +59,219 @@
                 <li>ODP2 <span class="pull-right"><b id="odp2">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->ODP2 : '' }}</b></span></li>
                 <li>ODP3 <span class="pull-right"><b id="odp3">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->ODP3 : '' }}</b></span></li>
               </ul>
+              {{-- Cust Info Regional --}}
+              <ul class="list-unstyled weather-info field-2">
+                <li>POTS <span class="pull-right"><b id="pots">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->pots : '' }}</b></span></li>
+                <li>WITEL <span class="pull-right"><b id="witel_information">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->witel : '' }}</b></span></li>
+                <li>NAMA CUSTOMER <span class="pull-right"><b id="nama_customer">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->nama_customer : '' }}</b></span></li>
+                <li>KLASIFIKASI REVENUE <span class="pull-right"><b id="klasifikasi_revenue">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->klasifikasi_revenue : '' }}</b></span></li>
+                <li>PRIORITAS 1 <span class="pull-right"><b id="prioritas_1">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->prioritas_1 : '' }}</b></span></li>
+                <li>PRIORITAS 2 <span class="pull-right"><b id="prioritas_2">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->prioritas_2 : '' }}</b></span></li>
+                <li>PRIORITAS 3 <span class="pull-right"><b id="prioritas_3">{{ isset($counting['details_dapros']) ? $counting['details_dapros']->prioritas_3 : '' }}</b></span></li>
+              </ul>
             </div>
             <div class="col-md-7">
                 <legend>Cust Interaction</legend>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label for="input_k_kontak" class="control-label">K-Kontak</label>
-                                    <textarea class="form-control  @error('input_k_kontak') is-invalid @enderror" name="input_k_kontak"
-                                      id="input_k_kontak" rows="2" style="resize: none;" autocomplete="off"
-                                      readonly>{{ isset($counting['details_call']) ? $counting['details_call']->input_k_kontak : '' }}</textarea>
-                                    @error('input_k_kontak')
-                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="input_cp_marshanda" class="control-label">Contact Person</label>
-                                    <input type="text" class="form-control @error('input_cp_marshanda') is-invalid @enderror"
-                                      id="input_cp_marshanda" name="input_cp_marshanda" autocomplete="off" readonly
-                                      value="{{ isset($counting['details_call']) ? $counting['details_call']->input_cp_marshanda : '' }}">
-                                    @error('input_cp_marshanda')
-                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="input_an_pemasangan" class="control-label">Atas Nama</label>
-                                    <input type="text" class="form-control @error('input_an_pemasangan') is-invalid @enderror"
-                                      id="input_an_pemasangan" name="input_an_pemasangan" autocomplete="off" readonly
-                                      value="{{ isset($counting['details_call']) ? $counting['details_call']->input_an_pemasangan : '' }}">
-                                    @error('input_an_pemasangan')
-                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="manja" class="control-label">Manja</label>
-                                    <div class="input-group m-b-sm">
-                                      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
-                                      <input type="text" class="form-control date-picker  @error('am_date') is-invalid @enderror"
-                                        id="am_date" readonly
-                                        value="{{ isset($counting['details_call']) ? date('Y-m-d', strtotime($counting['details_call']->call_am_datetime)) : '' }}">
-                                      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
-                                      <input type="text" class="form-control time-picker  @error('am_time') is-invalid @enderror"
-                                        id="am_time" autocomplete="off" readonly
-                                        value="{{ isset($counting['details_call']) ? date('H:i:s', strtotime($counting['details_call']->call_am_datetime)) : '' }}">
-                                    </div>
-
-                                    @error('am_date')
-                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-                                    @enderror
-                                    @error('am_time')
-                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="input_alamat_pemasangan" class="control-label">Alamat Pemasangan</label>
-                                    <textarea class="form-control  @error('input_alamat_pemasangan') is-invalid @enderror"
-                                      name="input_alamat_pemasangan" id="input_alamat_pemasangan" rows="3" style="resize: none;"
-                                      autocomplete="off"
-                                      readonly>{{ isset($counting['details_call']) ? $counting['details_call']->input_alamat_pemasangan : '' }}</textarea>
-                                    @error('input_alamat_pemasangan')
-                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label for="input_alamat_pemasangan" class="control-label">Consumed at</label>
-                                    <div class="input-group m-b-sm">
-                                      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
-                                      <input type="text" class="form-control date-picker  @error('consumed_date') is-invalid @enderror"
-                                        id="consumed_date" readonly
-                                        value="{{ isset($counting['details_call']) ? date('Y-m-d', strtotime($counting['details_call']->call_consume_datetime)) : '' }}">
-                                      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
-                                      <input type="text" class="form-control time-picker  @error('consumed_time') is-invalid @enderror"
-                                        id="consumed_time" autocomplete="off" readonly
-                                        value="{{ isset($counting['details_call']) ? date('H:i:s', strtotime($counting['details_call']->call_consume_datetime)) : '' }}">
-                                    </div>
-
-                                    @error('consumed_date')
-                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-                                    @enderror
-                                    @error('consumed_time')
-                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="regional" class="control-label">Regional</label>
-                                    <input type="text" class="form-control @error('regional') is-invalid @enderror" id="regional"
-                                    name="regional" autocomplete="off" readonly
-                                    value="{{ isset($counting['details_call']) ? $counting['details_call']->regional : '' }}">
-
-                                  @error('regional')
-                                  <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                                      aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-                                  @enderror
-                                </div>
-                                <div class="col-md-8">
-                                    <label for="witel" class="control-label">Witel</label>
-                                    <input type="text" class="form-control @error('witel') is-invalid @enderror" id="witel" name="witel"
-                                      autocomplete="off" readonly
-                                      value="{{ isset($counting['details_call']) ? $counting['details_call']->witel : '' }}">
-
-                                    @error('witel')
-                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="col-md-8">
-                                    <label for="Paket" class="control-label">Paket</label>
-                                    <input type="text" class="form-control @error('paket') is-invalid @enderror" id="paket" name="paket"
-                                      autocomplete="off" readonly
-                                      value="{{ isset($counting['details_call']) ? $counting['details_call']->paket : '' }}">
-
-                                    @error('paket')
-                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="kontak_via" class="control-label">Kontak via</label>
-                                    <input type="text" class="form-control @error('via_by') is-invalid @enderror" id="via_by" name="via_by"
-                                      autocomplete="off" readonly
-                                      value="{{ isset($counting['details_call']) ? $counting['details_call']->via_by : '' }}">
-                                    @error('via_by')
-                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="email" class="control-label">Email</label>
-                                    <input type="text" class="form-control @error('input_email') is-invalid @enderror" id="input_email"
-                                      name="input_email" autocomplete="off" readonly
-                                      value="{{ isset($counting['details_call']) ? $counting['details_call']->input_email : '' }}">
-                                    @error('input_email')
-                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
+                  <form id="formInfoCall">
+                    <div class="row">
+                        <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="Information">Information / TIKOR</label>
-                                <textarea class="form-control  @error('information') is-invalid @enderror" id="c_information" rows="4"
-                                  style="resize: none;" required="required" autocomplete="off"
-                                  readonly>{{ isset($counting['details_call']) ? $counting['details_call']->call_information : '' }}</textarea>
-                                @error('information')
-                                <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
-                                    aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
-                                @enderror
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="input_k_kontak" class="control-label">K-Kontak</label>
+                                        <textarea class="form-control  @error('input_k_kontak') is-invalid @enderror" name="input_k_kontak"
+                                          id="input_k_kontak" rows="2" style="resize: none;" autocomplete="off"
+                                          readonly>{{ isset($counting['details_call']) ? $counting['details_call']->input_k_kontak : '' }}</textarea>
+                                        @error('input_k_kontak')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    {{-- Field Quadplay --}}
+                                    <div class="col-md-12 field-1">
+                                        <label for="input_cp_marshanda" class="control-label">Contact Person</label>
+                                        <input type="text" class="form-control @error('input_cp_marshanda') is-invalid @enderror"
+                                          id="input_cp_marshanda" name="input_cp_marshanda" autocomplete="off" readonly
+                                          value="{{ isset($counting['details_call']) ? $counting['details_call']->input_cp_marshanda : '' }}">
+                                        @error('input_cp_marshanda')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-12 field-1">
+                                        <label for="input_an_pemasangan" class="control-label">Atas Nama</label>
+                                        <input type="text" class="form-control @error('input_an_pemasangan') is-invalid @enderror"
+                                          id="input_an_pemasangan" name="input_an_pemasangan" autocomplete="off" readonly
+                                          value="{{ isset($counting['details_call']) ? $counting['details_call']->input_an_pemasangan : '' }}">
+                                        @error('input_an_pemasangan')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    {{-- END --}}
+
+                                    {{-- Field Regional --}}
+                                    <div class="col-md-6 field-2">
+                                        <label for="input_pstn" class="control-label">PSTN</label>
+                                        <input type="text" class="form-control @error('input_pstn') is-invalid @enderror"
+                                          id="input_pstn" name="input_pstn" autocomplete="off" readonly
+                                          value="{{ isset($counting['details_call']) ? $counting['details_call']->input_pstn : '' }}">
+                                        @error('input_pstn')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6 field-2">
+                                        <label for="input_dial_to" class="control-label">Dial To</label>
+                                        <input type="text" class="form-control @error('input_dial_to') is-invalid @enderror"
+                                          id="input_dial_to" name="input_dial_to" autocomplete="off" readonly
+                                          value="{{ isset($counting['details_call']) ? $counting['details_call']->input_dial_to : '' }}">
+                                        @error('input_dial_to')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-12 field-2">
+                                        <label for="input_nama_pelanggan" class="control-label">Nama Pelanggan</label>
+                                        <input type="text" class="form-control @error('input_nama_pelanggan') is-invalid @enderror"
+                                          id="input_nama_pelanggan" name="input_nama_pelanggan" autocomplete="off" readonly
+                                          value="{{ isset($counting['details_call']) ? $counting['details_call']->input_nama_pelanggan : '' }}">
+                                        @error('input_nama_pelanggan')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    {{-- END --}}
+
+                                    <div class="col-md-12">
+                                        <label for="manja" class="control-label">Manja</label>
+                                        <div class="input-group m-b-sm">
+                                          <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                                          <input type="text" class="form-control date-picker  @error('am_date') is-invalid @enderror"
+                                            id="am_date" readonly
+                                            value="{{ isset($counting['details_call']) ? date('Y-m-d', strtotime($counting['details_call']->call_am_datetime)) : '' }}">
+                                          <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
+                                          <input type="text" class="form-control time-picker  @error('am_time') is-invalid @enderror"
+                                            id="am_time" autocomplete="off" readonly
+                                            value="{{ isset($counting['details_call']) ? date('H:i:s', strtotime($counting['details_call']->call_am_datetime)) : '' }}">
+                                        </div>
+
+                                        @error('am_date')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                        @error('am_time')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="input_alamat_pemasangan" class="control-label">Alamat Pemasangan</label>
+                                        <textarea class="form-control  @error('input_alamat_pemasangan') is-invalid @enderror"
+                                          name="input_alamat_pemasangan" id="input_alamat_pemasangan" rows="3" style="resize: none;"
+                                          autocomplete="off"
+                                          readonly>{{ isset($counting['details_call']) ? $counting['details_call']->input_alamat_pemasangan : '' }}</textarea>
+                                        @error('input_alamat_pemasangan')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="input_alamat_pemasangan" class="control-label">Consumed at</label>
+                                        <div class="input-group m-b-sm">
+                                          <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                                          <input type="text" class="form-control date-picker  @error('consumed_date') is-invalid @enderror"
+                                            id="consumed_date" readonly
+                                            value="{{ isset($counting['details_call']) ? date('Y-m-d', strtotime($counting['details_call']->call_consume_datetime)) : '' }}">
+                                          <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
+                                          <input type="text" class="form-control time-picker  @error('consumed_time') is-invalid @enderror"
+                                            id="consumed_time" autocomplete="off" readonly
+                                            value="{{ isset($counting['details_call']) ? date('H:i:s', strtotime($counting['details_call']->call_consume_datetime)) : '' }}">
+                                        </div>
+
+                                        @error('consumed_date')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                        @error('consumed_time')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="regional" class="control-label">Regional</label>
+                                        <input type="text" class="form-control @error('regional') is-invalid @enderror" id="regional"
+                                        name="regional" autocomplete="off" readonly
+                                        value="{{ isset($counting['details_call']) ? $counting['details_call']->regional : '' }}">
+
+                                      @error('regional')
+                                      <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                          aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                      @enderror
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label for="witel" class="control-label">Witel</label>
+                                        <input type="text" class="form-control @error('witel') is-invalid @enderror" id="witel" name="witel"
+                                          autocomplete="off" readonly
+                                          value="{{ isset($counting['details_call']) ? $counting['details_call']->witel : '' }}">
+
+                                        @error('witel')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label for="Paket" class="control-label">Paket</label>
+                                        <input type="text" class="form-control @error('paket') is-invalid @enderror" id="paket" name="paket"
+                                          autocomplete="off" readonly
+                                          value="{{ isset($counting['details_call']) ? $counting['details_call']->paket : '' }}">
+
+                                        @error('paket')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="kontak_via" class="control-label">Kontak via</label>
+                                        <input type="text" class="form-control @error('via_by') is-invalid @enderror" id="via_by" name="via_by"
+                                          autocomplete="off" readonly
+                                          value="{{ isset($counting['details_call']) ? $counting['details_call']->via_by : '' }}">
+                                        @error('via_by')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="email" class="control-label">Email</label>
+                                        <input type="text" class="form-control @error('input_email') is-invalid @enderror" id="input_email"
+                                          name="input_email" autocomplete="off" readonly
+                                          value="{{ isset($counting['details_call']) ? $counting['details_call']->input_email : '' }}">
+                                        @error('input_email')
+                                        <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                            aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Information">Information / TIKOR</label>
+                                    <textarea class="form-control  @error('information') is-invalid @enderror" id="c_information" rows="4"
+                                      style="resize: none;" required="required" autocomplete="off"
+                                      readonly>{{ isset($counting['details_call']) ? $counting['details_call']->call_information : '' }}</textarea>
+                                    @error('information')
+                                    <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                  </form>
             </div>
             <div class="col-lg-2">
                 <legend>Tapping Form</legend>
@@ -224,6 +283,14 @@
                   <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
                       aria-label="Close"><span aria-hidden="true">×</span></button>{{ 'Please fetch data first!' }}</p>
                   @enderror
+                  {{-- Tag Data Skill Quadplay atau Regional --}}
+                  <input type="hidden" class="@error('data_skill') is-invalid @enderror" name="data_skill" id="data_skill"
+                    {{ isset($counting['data_skill']) ? 'value='.$counting['data_skill']->id : '' }}>
+                  @error('data_skill')
+                  <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
+                      aria-label="Close"><span aria-hidden="true">×</span></button>{{ 'Please fetch data first!' }}</p>
+                  @enderror
+                  {{-- Tag Data Return atau bukan --}}
                   @if ($counting['data_is_return'])
                   <input type="hidden" name="data_is_return" value="1">
                   @endif
@@ -251,12 +318,12 @@
             </div>
             <div class="col-md-12">
                 <div class="timeline-options list-unstyled weather-days text-center">
-                    <a href="/qco/unconsume"><i class="icon-basket-loaded"></i> Unconsume (<span id="unconsume_daily">{{ $counting['unconsume_daily'] }}</span>)</a>
-                    <a href="/qco/consume/all"><i class="icon-earphones"></i> Consume (<span id="consumed_daily">{{ $counting['consumed_daily'] }}</span>)</a>
-                    <a href="/qco/consume/approved"><i class="icon-like"></i> Approved (<span id="approved_daily">{{ $counting['approved_daily'] }}</span>)</a>
-                    <a href="/qco/consume/return"><i class="icon-dislike"></i> Return (<span id="return_daily">{{ $counting['return_daily'] }}</span>)</a>
-                    <a href="/qco/consume/returntoagree"><i class="icon-action-undo"></i><i class="icon-like"></i> Retrun to Agree (<span id="returntoagree_daily">{{ $counting['returntoagree_daily'] }}</span>)</a>
-                    <a href="/qco/consume/returntodecline"><i class="icon-action-undo"></i><i class="icon-dislike"></i> Return to Decline (<span id="returntodecline_daily">{{ $counting['returntodecline_daily'] }}</span>)</a>
+                    <a href="/qco/unconsume"><i class="icon-basket-loaded"></i> Unconsume (<span id="unconsume_daily">{{ $counting['data_quadplay']['unconsume_daily']+$counting['data_regional']['unconsume_daily'] }}</span>)</a>
+                    <a href="/qco/consume/all"><i class="icon-earphones"></i> Consume (<span id="consumed_daily">{{ $counting['data_quadplay']['consumed_daily']+$counting['data_regional']['consumed_daily'] }}</span>)</a>
+                    <a href="/qco/consume/approved"><i class="icon-like"></i> Approved (<span id="approved_daily">{{ $counting['data_quadplay']['approved_daily']+$counting['data_regional']['approved_daily'] }}</span>)</a>
+                    <a href="/qco/consume/return"><i class="icon-dislike"></i> Return (<span id="return_daily">{{ $counting['data_quadplay']['return_daily']+$counting['data_regional']['return_daily'] }}</span>)</a>
+                    <a href="/qco/consume/returntoagree"><i class="icon-action-undo"></i><i class="icon-like"></i> Retrun to Agree (<span id="returntoagree_daily">{{ $counting['data_quadplay']['returntoagree_daily']+$counting['data_regional']['returntoagree_daily'] }}</span>)</a>
+                    <a href="/qco/consume/returntodecline"><i class="icon-action-undo"></i><i class="icon-dislike"></i> Return to Decline (<span id="returntodecline_daily">{{ $counting['data_quadplay']['returntodecline_daily']+$counting['data_regional']['returntodecline_daily'] }}</span>)</a>
                 </div>
             </div>
           </div>
@@ -286,15 +353,31 @@
 	        $.ajax({
 		       type:"post",
 		       url:'/qco/data',
-		       //data: $( this ).serialize(),
+		       data: $( this ).serialize(),
 		       success: function(data){
 		       	if (data['message'] != null && data['message'] != '') {
 		       		notificationScript(data['alert-class'], data['alert-title'], data['message']);
 		       	}
 		       	else{
+              var valueTitles = [];
+              var labelTitles = [];
+              var valueTitles1 = [];
+              var labelTitles1 = [];
+              var valueTitles2 = [];
+              var labelTitles2 = [];
+              if ( $('#get-data-form #select_data_skill').val() == 1 ) {
+  			       	valueTitles = ['BRAND','ROW_NUM','MSISDN_MASK','MSISDN','NAME_MASK','CUSTOMER_SUBTYPE','TOT_BILL_AMOUNT','TOTAL_REVENUE','DEVICE_TYPE','VOL_BROADBAND','VOL_BROADBAND_PACKAGE','CI','KABUPATEN','LONGITUDE','LATITUDE','ODP1','ODP2','ODP3'];
+  			       	labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
+                valueTitles1 =['input_cp_marshanda', 'input_an_pemasangan', 'regional', 'witel', 'paket', 'input_email', 'via_by'];
+                labelTitles1 =['input_cp_marshanda', 'input_an_pemasangan', 'regional', 'witel', 'paket', 'input_email', 'via_by'];
+              }
+              else if( $('#get-data-form #select_data_skill').val() == 2 ){
+                valueTitles = ['pots','witel_information','nama_customer','klasifikasi_revenue','prioritas_1','prioritas_2','prioritas_3'];
+                labelTitles = ['pots','witel_information','nama_customer','klasifikasi_revenue','prioritas_1','prioritas_2','prioritas_3'];
+                valueTitles1 =['call_input_pstn', 'call_input_dial_to', 'call_input_nama_pelanggan', 'regional', 'witel', 'paket', 'input_email', 'via_by'];
+                labelTitles1 =['call_input_pstn', 'call_input_dial_to', 'call_input_nama_pelanggan', 'regional', 'witel', 'paket', 'input_email', 'via_by'];
+              }
 			       	{{-- Fill Dapros Details --}}
-			       	var valueTitles = ['BRAND','ROW_NUM','MSISDN_MASK','MSISDN','NAME_MASK','CUSTOMER_SUBTYPE','TOT_BILL_AMOUNT','TOTAL_REVENUE','DEVICE_TYPE','VOL_BROADBAND','VOL_BROADBAND_PACKAGE','CI','KABUPATEN','LONGITUDE','LATITUDE','ODP1','ODP2','ODP3'];
-			       	var labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
 			        for (var i = 0; i < labelTitles.length; i++) {
 			          $("#" + labelTitles[i]).html(data['details_dapros'][valueTitles[i]]);
 			        }
@@ -305,19 +388,19 @@
 			        $("#consumed_date").val(moment(data['details_call']['call_consume_datetime']).format("YYYY-M-D"));
 			        $("#consumed_time").val(moment(data['details_call']['call_consume_datetime']).format("H:m"));
 			        {{-- Fill Customer Interaction --}}
-			        var valueTitles1 =['input_cp_marshanda', 'input_an_pemasangan', 'regional', 'witel', 'paket', 'input_email', 'via_by'];
-			        var labelTitles1 =['input_cp_marshanda', 'input_an_pemasangan', 'regional', 'witel', 'paket', 'input_email', 'via_by'];
 			        for (var i = 0; i < valueTitles1.length; i++) {
 			          $("#" + labelTitles1[i]).val(data['details_call'][valueTitles1[i]]);
 			          console.log($("#" + labelTitles1[i]).val())
 			        }
-			        var valueTitles2 =['input_k_kontak', 'input_alamat_pemasangan'];
-			        var labelTitles2 =['input_k_kontak', 'input_alamat_pemasangan'];
+			        valueTitles2 =['input_k_kontak', 'input_alamat_pemasangan'];
+			        labelTitles2 =['input_k_kontak', 'input_alamat_pemasangan'];
 			        for (var i = 0; i < valueTitles2.length; i++) {
 			          $("#" + labelTitles2[i]).val(data['details_call'][valueTitles2[i]]);
 			        }
 			        {{-- Fill Dapros ID --}}
 			        $("#dapros_id").val(data['details_dapros']['id']);
+              {{-- Fill Skill Source Data --}}
+              $("#data_skill").val(data['data_skill']['id']);
 			        {{-- Refresh Form --}}
 			        notificationScript("success", "Success", "Success fetching Data");
 			    }
@@ -357,7 +440,14 @@
 	        $('#saveBtn').button('reset');
 	        notificationScript("success", "Success", "Successfully submit form.");
 	        $('#resetBtn').click();
-	        var labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
+          var labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3', 'pots','witel_information','nama_customer','klasifikasi_revenue','prioritas_1','prioritas_2','prioritas_3'];
+          /*if ( $('#get-data-form #select_data_skill').val() == 1 ) {
+            labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
+          }
+          else if( $('#get-data-form #select_data_skill').val() == 2 ){
+            labelTitles = ['pots','witel_information','nama_customer','klasifikasi_revenue','prioritas_1','prioritas_2','prioritas_3'];
+          }*/
+	        //var labelTitles = ['brand','row_num','msisdn_mask','msisdn','name_mask','customer_subtype','tot_bill_amount','total_revenue','device_type','vol_broadband','vol_broadband_package','ci','kabupaten','longitude','latitude','odp1','odp2','odp3'];
 	        for (var i = 0; i < labelTitles.length; i++) {
 	          $("#" + labelTitles[i]).html('');
 	        }
@@ -385,6 +475,21 @@
 
     });
 
+    // Onchange Events
+    $("#select_data_skill").change(function() {
+      var id = $(this).val();
+      if (id != "" && id != null)
+      {
+        if (id == 1) {
+          $('.field-1').show();
+          $('.field-2').hide();
+        }
+        else if (id == 2) {
+          $('.field-1').hide();
+          $('.field-2').show(); 
+        }
+      }
+    });
     // Func Chaining
 	function chain1() {
 		$.ajaxSetup({
@@ -412,6 +517,40 @@
 
 	     });
 	}
+  function chain2() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+         type:"post",
+         url:'/qco/skill_list',
+         //data: {},
+         success: function(data){
+
+          var ahtml = '<option></option>';
+          //var list_options = [];
+          for (var i = 0; i < data.length; i++) {
+            ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['skill_desc']+"</option>"
+            //option = {id: data[i]['id'], text: data[i]['skill_desc']};
+            //list_options.push(option);
+          }
+          $('#select_data_skill').html(ahtml);
+          /*$("#select_data_skill").select2({
+            //dropdownParent: $("#modalForPaket"), 
+            data: list_options
+          });*/
+          $('#select_data_skill').val(1).trigger('change');
+         },
+          error : function(data) {
+          }
+       }).done(function(){
+      /*$("#select_call_status_detail").select2({
+        dropdownParent: $("#modalForDetailReason")
+      });*/
+       });
+  }
 
 	// Func Counting
 	function activity() {
@@ -462,6 +601,7 @@
 	    	    	    	showMeridian: false
 	    	    	    });--}}
 	    chain1();
+      chain2();
 	    $('#resetBtn').click();
 	});
 	// Button On Click
@@ -471,7 +611,6 @@
 	    $("select").val('').trigger('change');
 
 	});
-
 </script>
 
 

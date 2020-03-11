@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use DB; // Untuk gunain Query 
 use App\_dapros;
 use App\_dapros_statistics;
+use App\_dapros_regional;
+use App\_dapros_statistics_regional;
 use App\_tapping_status;
 use App\_tapping;
 
@@ -33,6 +35,7 @@ class QCOController extends Controller
     public function index()
     {
     	$counting = $this->countingActivity();
+        $counting['data_is_return'] = false;
         return view('qco.index')->with('counting',$counting);
     }
     /**
@@ -85,23 +88,37 @@ class QCOController extends Controller
     /**
      * Mencari data
      */
-    public function getData()
+    public function getData(Request $request)
     {
     	#mencari data yang available
         try {
             // Check if agent have unsonsume data first
-            $have_unconsume = _dapros_statistics::where([
-                ['tapping_status_id', null]
-                , ['tapping_agent_username', auth()->user()->username]
-            ])->first();
+            if ($request->select_data_skill == 1) {
+                $have_unconsume = _dapros_statistics::where([
+                    ['tapping_status_id', null]
+                    , ['tapping_agent_username', auth()->user()->username]
+                ])->first();
+            }
+            elseif ($request->select_data_skill == 2) {
+                $have_unconsume = _dapros_statistics_regional::where([
+                    ['tapping_status_id', null]
+                    , ['tapping_agent_username', auth()->user()->username]
+                ])->first();
+            }
             if ($have_unconsume) {
                 $data['message'] = 'You still have an uncosume data.';
                 $data['alert-title'] = 'Error';
                 $data['alert-class'] = 'warning';
                 return response()->json($data);
             }
-
-            $data = _dapros_statistics::where([
+            // Change Model to use
+            if ($request->select_data_skill == 1) {
+                $dapros_statstics_model = _dapros_statistics::query();
+            }
+            elseif ($request->select_data_skill == 2) {
+                $dapros_statstics_model = _dapros_statistics_regional::query();
+            }
+            $data = $dapros_statstics_model->where([
                                     ['tapping_agent_username',NULL],
                                     ['call_status_detail_reason_id',1]
                                 ])
@@ -117,27 +134,53 @@ class QCOController extends Controller
             }
 
             # Ngambil value yang diperlukan saja
-            $datas['details_dapros'] = _dapros::where('id', $data->dapros_id)->firstOrFail();
-            //$datas['details_call'] = $data;
-            $details_call =[
-                'call_am_datetime' => $data->call_am_datetime,
-                //'fu_call' => $data->call_fu_datetime,
-                'call_information' => $data->call_information,
-                //'call_attempts' => $data->call_attempts,
-                'call_agent_username' => ($data->call_agent_username != null ? $data->call_agent->name : null),
-                'call_consume_datetime' => $data->call_consume_datetime,
+            if ($request->select_data_skill == 1) {
+                $datas['details_dapros'] = _dapros::where('id', $data->dapros_id)->firstOrFail();
+                //$datas['details_call'] = $data;
+                $details_call =[
+                    'call_am_datetime' => $data->call_am_datetime,
+                    //'fu_call' => $data->call_fu_datetime,
+                    'call_information' => $data->call_information,
+                    //'call_attempts' => $data->call_attempts,
+                    'call_agent_username' => ($data->call_agent_username != null ? $data->call_agent->name : null),
+                    'call_consume_datetime' => $data->call_consume_datetime,
 
-                'input_k_kontak' => $data->call_input_k_kontak ,
-                'input_cp_marshanda' => $data->call_input_cp_marshanda ,
-                'input_an_pemasangan' => $data->call_input_an_pemasangan ,
-                'regional' => ($data->call_regional != null ? $data->regional->regional_desc : null) ,
-                'witel' => ($data->call_witel != null ? $data->witel->witel_desc : null) ,
-                'paket' => ($data->call_paket != null ? $data->paket->paket_desc : null) ,
-                'input_alamat_pemasangan' => $data->call_alamat_pemasangan ,
-                'input_email' => $data->call_email ,
-                'via_by' => $data->call_via_by
-            ];
+                    'input_k_kontak' => $data->call_input_k_kontak ,
+                    'input_cp_marshanda' => $data->call_input_cp_marshanda ,
+                    'input_an_pemasangan' => $data->call_input_an_pemasangan ,
+                    'regional' => ($data->call_regional != null ? $data->regional->regional_desc : null) ,
+                    'witel' => ($data->call_witel != null ? $data->witel->witel_desc : null) ,
+                    'paket' => ($data->call_paket != null ? $data->paket->paket_desc : null) ,
+                    'input_alamat_pemasangan' => $data->call_alamat_pemasangan ,
+                    'input_email' => $data->call_email ,
+                    'via_by' => $data->call_via_by
+                ];
+            }
+            elseif ($request->select_data_skill == 2) {
+                $datas['details_dapros'] = _dapros_regional::where('id', $data->dapros_id)->firstOrFail();
+                //$datas['details_call'] = $data;
+                $details_call =[
+                    'call_am_datetime' => $data->call_am_datetime,
+                    //'fu_call' => $data->call_fu_datetime,
+                    'call_information' => $data->call_information,
+                    //'call_attempts' => $data->call_attempts,
+                    'call_agent_username' => ($data->call_agent_username != null ? $data->call_agent->name : null),
+                    'call_consume_datetime' => $data->call_consume_datetime,
+
+                    'input_k_kontak' => $data->call_input_k_kontak ,
+                    'input_pstn' => $data->call_input_pstn ,
+                    'input_dial_to' => $data->call_input_dial_to ,
+                    'input_nama_pelanggan' => $data->call_input_nama_pelanggan ,
+                    'regional' => ($data->call_regional != null ? $data->regional->regional_desc : null) ,
+                    'witel' => ($data->call_witel != null ? $data->witel->witel_desc : null) ,
+                    'paket' => ($data->call_paket != null ? $data->paket->paket_desc : null) ,
+                    'input_alamat_pemasangan' => $data->call_alamat_pemasangan ,
+                    'input_email' => $data->call_email ,
+                    'via_by' => $data->call_via_by
+                ];
+            }
             $datas['details_call'] = $details_call;
+            $datas['data_skill'] = ['id'=>$request->select_data_skill];
             
             // Return hasilnya
             return response()->json($datas);
@@ -307,6 +350,21 @@ class QCOController extends Controller
     	$data = _tapping_status::select('id','value_tapping_status')->where('is_enabled', '=', '1')->get();
         return response()->json($data);
     }
+    # Function buat select skill
+    public function list_all_options_skill(Request $request)
+    {
+        $datas = DB::table('_skills')->select('id', 'skill_desc');
+        if ( request()->ajax() ) {
+            if (!empty($request->id)) {
+                $datas->addSelect('is_enabled')->where('id', '=', $request->id);
+            }
+            else{
+                $datas->where('is_enabled', '=', '1');
+            }
+        }
+        $datas = $datas->get();
+        return response()->json($datas);
+    }
     # Function buat Counting Activity Agent
     public function countActivityAgent()
     {
@@ -316,7 +374,7 @@ class QCOController extends Controller
     # Func to count QCO activty
     protected function countingActivity()
     {
-    	$data = _dapros_statistics::select(
+    	$data_quadplay = _dapros_statistics::select(
             DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` is null THEN 1 ELSE 0 END), 0)  AS `unconsume_daily`"),
             DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` is not null THEN 1 ELSE 0 END), 0)  AS `consumed_daily`"),
 			DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 1 AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `approved_daily`"),
@@ -324,6 +382,15 @@ class QCOController extends Controller
             DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 1 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco' AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntoagree_daily`"), // Belum kebikin countingnya
             DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 3 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco' AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntodecline_daily`") // Belum kebikin countingnya
     		)->where('tapping_agent_username', auth()->user()->username)->whereRaw('DATE(tapping_consume_datetime) >= curdate()')->first();
+        $data_regional = _dapros_statistics_regional::select(
+            DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` is null THEN 1 ELSE 0 END), 0)  AS `unconsume_daily`"),
+            DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` is not null THEN 1 ELSE 0 END), 0)  AS `consumed_daily`"),
+            DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 1 AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `approved_daily`"),
+            DB::raw("IFNULL(SUM(CASE WHEN `tapping_status_id` = 2 AND data_condition = 'returned to agent' AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `return_daily`"),
+            DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 11 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco' AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntoagree_daily`"), // Belum kebikin countingnya
+            DB::raw("IFNULL(SUM(CASE WHEN `call_status_detail_id` = 13 AND `ever_be_returned` = 'yes' AND data_condition = 'returned to qco' AND DATE(`tapping_consume_datetime`) = CURDATE() THEN 1 ELSE 0 END), 0)  AS `returntodecline_daily`") // Belum kebikin countingnya
+            )->where('tapping_agent_username', auth()->user()->username)->whereRaw('DATE(tapping_consume_datetime) >= curdate()')->first();
+        $data =["data_quadplay"=>$data_quadplay, "data_regional"=>$data_regional];
     	return $data;
     }
 }

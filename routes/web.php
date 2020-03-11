@@ -63,6 +63,7 @@ Route::get('/qco/retapping/{id}', 'QCOController@retapping')->name('qco_retappin
 Route::post('/qco/view', 'QCOController@viewDataStatistics');
 # Chaining Select 1
 Route::post('/qco/status_tapping', 'QCOController@chain_tapping_call')->name('chain');
+Route::post('/qco/skill_list', 'QCOController@list_all_options_skill')->name('chain');
 # Counting Agent Tapping
 Route::post('/qco/activity', 'QCOController@countActivityAgent')->name('qco_activity');
 # Agebt view dan save data call
