@@ -4,15 +4,14 @@
 
 <div class="panel panel-white">
 	<div class="panel-heading">
-		Dashboard
 		<div class="panel-control">
 			<a href="javascript:void(0);" data-toggle="modal" data-target="#modalForUploadDapros" title="Upload" data-original-title="Upload Data Dapros"><i class="fa fa-upload"></i></a>
 			<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Refresh" class="panel-reload" data-original-title="Reload" onclick="count_activity();"><i class="icon-reload"></i></a>
 		</div>
 	</div>
 	<div class="panel-body">
+		<legend>Dashboard Quadplay</legend>
 		<div class="row">
-
 			<div class="col-lg-2 col-md-4 col-lg-offset-1">
 				<div class="panel info-box panel-white">
 					<div class="panel-body">
@@ -109,6 +108,104 @@
 				</div>
 			</div>
 		</div><!-- Row -->
+		<legend>Dashboard Regional</legend>
+		<div class="row">
+			<div class="col-lg-2 col-md-4 col-lg-offset-1">
+				<div class="panel info-box panel-white">
+					<div class="panel-body">
+						<div class="info-box-stats">
+							<p class="counter" id="consume_regional">0</p>
+							<span class="info-box-title">Today Consume</span>
+						</div>
+						<div class="info-box-icon">
+							<i class="icon-call-out"></i>
+						</div>
+						<div class="info-box-progress">
+							<div class="progress progress-xs progress-squared bs-n">
+								<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-4">
+				<div class="panel info-box panel-white">
+					<div class="panel-body">
+						<div class="info-box-stats">
+							<p class="counter" id="contacted_regional">0</p>
+							<span class="info-box-title">Contacted</span>
+						</div>
+						<div class="info-box-icon">
+							<i class="icon-user-following"></i>
+						</div>
+						<div class="info-box-progress">
+							<div class="progress progress-xs progress-squared bs-n">
+								<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-4">
+				<div class="panel info-box panel-white">
+					<div class="panel-body">
+						<div class="info-box-stats">
+							<p class="counter" id="agree_regional">0</p>
+							<span class="info-box-title">Agree</span>
+						</div>
+						<div class="info-box-icon">
+							<i class="icon-check"></i>
+						</div>
+						<div class="info-box-progress">
+							<div class="progress progress-xs progress-squared bs-n">
+								<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-4">
+				<div class="panel info-box panel-white">
+					<div class="panel-body">
+						<div class="info-box-stats">
+							<p class="counter" id="approved_regional">0</p>
+							<span class="info-box-title">Approved</span>
+						</div>
+						<div class="info-box-icon">
+							<i class="icon-like"></i>
+						</div>
+						<div class="info-box-progress">
+							<div class="progress progress-xs progress-squared bs-n">
+								<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-4">
+				<div class="panel info-box panel-white">
+					<div class="panel-body">
+						<div class="info-box-stats">
+							<p class="counter" id="return_regional">0</p>
+							<span class="info-box-title">Return</span>
+						</div>
+						<div class="info-box-icon">
+							<i class="icon-dislike"></i>
+						</div>
+						<div class="info-box-progress">
+							<div class="progress progress-xs progress-squared bs-n">
+								<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- Row -->
 	</div>
 </div>
 
@@ -122,6 +219,12 @@
 			<div class="modal-body">
 				<form id="formForUploadDapros" method="post" action="/admin/console/import_dapros" enctype="multipart/form-data">
 					{{ csrf_field() }}
+					<div class="form-group">
+						<label for="select_skill">Choose Source</label>
+						<select class="form-control" id="select_skill" name="select_skill" style="width: 100%;">
+							<option></option>
+						</select>
+					</div>
 					<div class="form-group">
 						<label for="file"></label>
 						<input type="file" name="file" id="file" required="required" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
@@ -141,12 +244,15 @@
 <script src="{{ asset('plugins/flot/jquery.flot.symbol.min.js') }}"></script>
 <script src="{{ asset('plugins/flot/jquery.flot.resize.min.js') }}"></script>
 <script src="{{ asset('plugins/flot/jquery.flot.tooltip.min.js') }}"></script>
+<script src="{{ asset('plugins/select2/js/select2.min.js') }}"></script>
 <script type="text/javascript" defer>
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		}
 	});
+	$.fn.select2.defaults.set("placeholder", "Please select option");
+	$.fn.select2.defaults.set("closeOnSelect", true);
 	function count_activity() {
 		$.ajax({
 	       type:"post",
@@ -176,6 +282,30 @@
 	}
 	$(document).ready(function() {
 		count_activity();
+		$.ajax({
+	       type:"post",
+	       url:'/admin/console/get_skill_list_options',
+	       //data: {},
+	       success: function(data){
+
+	       	//var ahtml = '<option></option>';
+	       	var list_options = [];
+	       	for (var i = 0; i < data.length; i++) {
+	       		//ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['value_call_status_detail']+"</option>"
+	       		option = {id: data[i]['id'], text: data[i]['skill_desc']};
+	       		list_options.push(option);
+	       	}
+	        //$('#select_call_status_detail').html(ahtml);
+	        $("#select_skill").select2({
+				dropdownParent: $("#modalForUploadDapros")
+				, data: list_options
+			});
+	       },
+	        error : function(data) {
+	        }
+	     }).done(function(){
+			
+	     });
 		@if(Session::has('sukses'))
 		notificationScript("success", "Success", "Successfully save data.");
 		@endif
