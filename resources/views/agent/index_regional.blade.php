@@ -123,10 +123,10 @@
                             <div class="col-md-12">
                                 <div class="input-group m-b-sm">
                                   <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
-                                  <input type="text" class="form-control date-picker  @error('am_date') is-invalid @enderror" placeholder="Manja Pemasangan"
+                                  <input type="text" class="form-control date-picker  @error('am_date') is-invalid @enderror" placeholder="Tanggal Pemasangan"
                                     name="am_date" id="am_date" autocomplete="off">
                                   <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
-                                  <input type="text" class="form-control time-picker  @error('am_time') is-invalid @enderror"
+                                  <input type="text" class="form-control time-picker  @error('am_time') is-invalid @enderror" placeholder="Jam Pemasangan"
                                     name="am_time" id="am_time" autocomplete="off">
                                 </div>
 
@@ -161,7 +161,7 @@
                               <input type="text" class="form-control date-picker  @error('fu_date') is-invalid @enderror" placeholder="Follow Up Date"
                                 name="fu_date" id="fu_date" autocomplete="off">
                               <span class="input-group-addon" id="basic-addon1"><i class="fa fa-clock-o"></i></span>
-                              <input type="text" class="form-control time-picker  @error('fu_time') is-invalid @enderror"
+                              <input type="text" class="form-control time-picker  @error('fu_time') is-invalid @enderror" placeholder="Follow Up Time"
                                 name="fu_time" id="fu_time" autocomplete="off">
                             </div>
 
