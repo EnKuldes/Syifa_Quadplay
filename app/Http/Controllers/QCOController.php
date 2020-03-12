@@ -67,23 +67,50 @@ class QCOController extends Controller
                 $qWhere = "";
                 break;
         }
-        $datas = _dapros_statistics::whereRaw($qWhere)
+        $datas['data_quadplay'] = _dapros_statistics::whereRaw($qWhere)
+               ->where('tapping_agent_username', auth()->user()->username)
+               ->orderBy('tapping_consume_datetime', 'desc')
+               ->orderBy('updated_at', 'desc')
+               ->paginate(5, ['*'], 'quadplay');
+       if ( $param == "returntoagree" ) {
+           $qWhere = "`tapping_status_id` = 2 and `data_condition` = 'returned to qco' and `call_status_detail_id` = 11";
+       }
+       elseif ( $param == "returntodecline" ) {
+           $qWhere = "`tapping_status_id` = 2 and `data_condition` = 'returned to qco' and `call_status_detail_id` = 13";
+       }
+       $datas['data_regional'] = _dapros_statistics_regional::whereRaw($qWhere)
+               ->where('tapping_agent_username', auth()->user()->username)
+               ->orderBy('tapping_consume_datetime', 'desc')
+               ->orderBy('updated_at', 'desc')
+               ->paginate(5, ['*'], 'regional');
+        //return response()->json($datas, 200);
+        /*$datas = _dapros_statistics::whereRaw($qWhere)
                ->where('tapping_agent_username', auth()->user()->username)
                ->orderBy('tapping_consume_datetime', 'desc')
                ->orderBy('updated_at', 'desc')
                ->paginate(5);
-        //return response()->json($datas, 200);
+        $datas->setPageName('quadplay');*/
+
+        // Dev Message
+        $datas['dev_message'] = false;
         return view('qco.consume')->with('datas',$datas);
     }
     public function unconsume()
     {
         $qWhere = "`tapping_status_id` is null";
-        $datas = _dapros_statistics::whereRaw($qWhere)
+        $datas['data_quadplay'] = _dapros_statistics::whereRaw($qWhere)
                ->where('tapping_agent_username', auth()->user()->username)
                ->orderBy('tapping_consume_datetime', 'desc')
                ->orderBy('updated_at', 'desc')
-               ->paginate(5);
+               ->paginate(5, ['*'], 'quadplay');
+       $datas['data_regional'] = _dapros_statistics_regional::whereRaw($qWhere)
+               ->where('tapping_agent_username', auth()->user()->username)
+               ->orderBy('tapping_consume_datetime', 'desc')
+               ->orderBy('updated_at', 'desc')
+               ->paginate(5, ['*'], 'regional');
         //return response()->json($datas, 200);
+        // Dev Message
+        $datas['dev_message'] = false;
         return view('qco.unconsume')->with('datas',$datas);
     }
     /**
@@ -297,49 +324,92 @@ class QCOController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function retapping($id)
+    public function retapping($data_skill, $id)
     {
         $counting = $this->countingActivity();
+        if ($data_skill == 1) {
+            $model_dapros_statistics = _dapros_statistics::query();
+            $model_dapros = _dapros::query();
+        }
+        elseif ($data_skill == 2) {
+            $model_dapros_statistics = _dapros_statistics_regional::query();
+            $model_dapros = _dapros_regional::query();
+        }
+        else{
+            abort(404);
+        }
 
-        $dataToRecall = _dapros_statistics::where([
+        //$dataToRecall = _dapros_statistics::where([
+        $dataToRecall = $model_dapros_statistics->where([
                             ['id', $id]/*,
                             ['data_condition', '=', 'returned to qco'],
                             ['ever_be_returned', '=', 'yes']*/
                         ])
                         ->whereRaw("(data_condition = 'returned to qco' AND ever_be_returned = 'yes' OR tapping_status_id is null)")
                         ->firstOrFail();
-        $details_call =[
-            'call_am_datetime' => $dataToRecall->call_am_datetime,
-            //'fu_call' => $dataToRecall->call_fu_datetime,
-            'call_information' => $dataToRecall->call_information,
-            //'call_attempts' => $dataToRecall->call_attempts,
-            'call_agent_username' => ($dataToRecall->call_agent_username != null ? $dataToRecall->call_agent->name : null),
-            'call_consume_datetime' => $dataToRecall->call_consume_datetime,
+        if ($data_skill == 1) {
+            $details_call =[
+                'call_am_datetime' => $dataToRecall->call_am_datetime,
+                //'fu_call' => $dataToRecall->call_fu_datetime,
+                'call_information' => $dataToRecall->call_information,
+                //'call_attempts' => $dataToRecall->call_attempts,
+                'call_agent_username' => ($dataToRecall->call_agent_username != null ? $dataToRecall->call_agent->name : null),
+                'call_consume_datetime' => $dataToRecall->call_consume_datetime,
 
-            'input_k_kontak' => $dataToRecall->call_input_k_kontak ,
-            'input_cp_marshanda' => $dataToRecall->call_input_cp_marshanda ,
-            'input_an_pemasangan' => $dataToRecall->call_input_an_pemasangan ,
-            'regional' => ($dataToRecall->call_regional != null ? $dataToRecall->regional->regional_desc : null) ,
-            'witel' => ($dataToRecall->call_witel != null ? $dataToRecall->witel->witel_desc : null) ,
-            'paket' => ($dataToRecall->call_paket != null ? $dataToRecall->paket->paket_desc : null) ,
-            'input_alamat_pemasangan' => $dataToRecall->call_alamat_pemasangan ,
-            'input_email' => $dataToRecall->call_email ,
-            'via_by' => $dataToRecall->call_via_by
-        ];
+                'input_k_kontak' => $dataToRecall->call_input_k_kontak ,
+                'input_cp_marshanda' => $dataToRecall->call_input_cp_marshanda ,
+                'input_an_pemasangan' => $dataToRecall->call_input_an_pemasangan ,
+                'regional' => ($dataToRecall->call_regional != null ? $dataToRecall->regional->regional_desc : null) ,
+                'witel' => ($dataToRecall->call_witel != null ? $dataToRecall->witel->witel_desc : null) ,
+                'paket' => ($dataToRecall->call_paket != null ? $dataToRecall->paket->paket_desc : null) ,
+                'input_alamat_pemasangan' => $dataToRecall->call_alamat_pemasangan ,
+                'input_email' => $dataToRecall->call_email ,
+                'via_by' => $dataToRecall->call_via_by
+            ];
+        }
+        elseif ($data_skill == 2) {
+            $details_call =[
+                'call_am_datetime' => $dataToRecall->call_am_datetime,
+                //'fu_call' => $dataToRecall->call_fu_datetime,
+                'call_information' => $dataToRecall->call_information,
+                //'call_attempts' => $dataToRecall->call_attempts,
+                'call_agent_username' => ($dataToRecall->call_agent_username != null ? $dataToRecall->call_agent->name : null),
+                'call_consume_datetime' => $dataToRecall->call_consume_datetime,
+
+                'input_k_kontak' => $dataToRecall->call_input_k_kontak ,
+                'input_pstn' => $dataToRecall->call_input_pstn ,
+                'input_dial_to' => $dataToRecall->call_input_dial_to ,
+                'input_nama_pelanggan' => $dataToRecall->call_input_nama_pelanggan ,
+                'regional' => ($dataToRecall->call_regional != null ? $dataToRecall->regional->regional_desc : null) ,
+                'witel' => ($dataToRecall->call_witel != null ? $dataToRecall->witel->witel_desc : null) ,
+                'paket' => ($dataToRecall->call_paket != null ? $dataToRecall->paket->paket_desc : null) ,
+                'input_alamat_pemasangan' => $dataToRecall->call_alamat_pemasangan ,
+                'input_email' => $dataToRecall->call_email ,
+                'via_by' => $dataToRecall->call_via_by
+            ];
+        }
         $counting['details_call'] = (object) $details_call;
         
         //$counting['details_call'] = $dataToRecall;
-        $counting['details_dapros'] = _dapros::where('id', $dataToRecall->dapros_id)->firstOrFail();
+        //$counting['details_dapros'] = _dapros::where('id', $dataToRecall->dapros_id)->firstOrFail();
+        $counting['details_dapros'] = $model_dapros->where('id', $dataToRecall->dapros_id)->firstOrFail();
         # Apakah data pernah di return atau data return?
         if ($dataToRecall->tapping_status_id == 2) {
             $counting['data_is_return'] = true;
         }
+        else{
+            $counting['data_is_return'] = false;
+        }
+        $counting['data_skill'] = (object) ['id'=>$data_skill];
 
         return view('qco.index')->with('counting',$counting);
     }
     # JSON response for view dapros_statistic
     public function viewDataStatistics(Request $request)
     {
+        if ( $request->data_skill == 2) { // Skill Regional
+           return $this->viewDataStatistics1($request);
+        }
         $data = _dapros_statistics::where('id', $request->input('id'))->firstOrFail();
         $details_dapros = _dapros::where('id', $data->dapros_id)->firstOrFail();
         $details_call = [

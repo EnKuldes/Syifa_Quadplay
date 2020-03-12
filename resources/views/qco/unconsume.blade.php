@@ -6,8 +6,16 @@
 	<div class="panel panel-white">
 		<div class="panel-heading clearfix">
 			<h4 class="panel-title">List Unconsume</h4>
+			<div class="panel-control">
+				<div class="form-group">
+					<label class="sr-only" for="select_data_skill">Source Data</label>
+					<select class="form-control  @error('select_data_skill') is-invalid @enderror" name="select_data_skill"
+					id="select_data_skill" tabindex="-1" required="required" style="width:100%;">
+				</select>
+				</div>
+			</div>
 		</div>
-		<div class="panel-body">
+		<div class="panel-body field-1">
 			<div class="col-lg-12 col-md-12">
 				<table class="table table-hover">
 					<thead>
@@ -24,11 +32,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						@if (count($datas) > 0)
+						@if (count($datas['data_quadplay']) > 0)
 						@php
-						$idx = $datas->firstItem();
+						$idx = $datas['data_quadplay']->firstItem();
 						@endphp
-						@foreach ($datas as $data)
+						@foreach ($datas['data_quadplay'] as $data)
 						<tr>
 							@php
 							$customer_information = $data->dapros;
@@ -45,7 +53,7 @@
 							<td>{{ $data->call_consume_datetime }}</td>
 							<td>{{ $user->name }}</td>
 							<td>
-								<a href="/qco/retapping/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="icon-earphones-alt"></i></a>
+								<a href="/qco/retapping/1/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="icon-earphones-alt"></i></a>
 							</td>
 						</tr>
 						@php
@@ -63,10 +71,71 @@
 			</div>
 		</div>
 
-		<div class="panel-footer">
-			{{ $datas->links() }}
+		<div class="panel-footer field-1">
+			{{ $datas['data_quadplay']->links() }}
 		</div>
 
+		<div class="panel-body field-2">
+			<div class="col-lg-12 col-md-12">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>POTS</th>
+							<th>NAME CUSTOMER</th>
+							<th>CALL STATUS</th>
+							<th>INFORMATION</th>
+							<th>ATTEMPTS</th>
+							<th>CONSUMED</th>
+							<th>AGENT</th>
+							<th>ACTIONS</th>
+						</tr>
+					</thead>
+					<tbody>
+						@if (count($datas['data_regional']) > 0)
+						@php
+						$idx = $datas['data_regional']->firstItem();
+						@endphp
+						@foreach ($datas['data_regional'] as $data)
+						<tr>
+							@php
+							$customer_information = $data->dapros;
+							$call_status_detail = "Uncosumed";
+							$label_color = "danger";
+							$user = $data->call_agent;
+							@endphp
+							<th scope="row">{{ $idx }}</th>
+							<td>{{ $customer_information->pots }}</td>
+							<td>{{ $customer_information->nama_customer }}</td>
+							<td><span class="label label-{{ $label_color }}">{{ $call_status_detail }}</span> </td>
+							<td>{{ $data->call_information }}</td>
+							<td>{{ $data->call_attempts }}</td>
+							<td>{{ $data->call_consume_datetime }}</td>
+							<td>{{ $user->name }}</td>
+							<td>
+								<a href="/qco/retapping/2/{{ $data->id }}" type="button" class="btn btn-default btn-xs"><i class="icon-earphones-alt"></i></a>
+							</td>
+						</tr>
+						@php
+						$idx++;
+						@endphp
+						@endforeach
+						@else
+						{{-- Kosong --}}
+						<tr>
+							<th colspan="11" rowspan="1" headers="" scope="row">No datas found.</th>
+						</tr>
+						@endif
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="panel-footer field-2">
+			{{ 
+				$datas['data_regional']->links() 
+			}}
+		</div>
 
 	</div>
 </div>
@@ -250,6 +319,7 @@
 </div>
 
 </div>
+<script src="{{ asset('plugins/select2/js/select2.min.js') }}" defer></script>
 <script type="text/javascript" defer>
 	function view_data(id) {
 		//$(this).button('loading');
@@ -292,7 +362,66 @@
 	}).done(function(data){
 	     	//
 	     });//
-}
+	}
+	// Onchange Events
+    $("#select_data_skill").change(function() {
+      var id = $(this).val();
+      if (id != "" && id != null)
+      {
+        if (id == 1) {
+          $('.field-1').show();
+          $('.field-2').hide();
+        }
+        else if (id == 2) {
+          $('.field-1').hide();
+          $('.field-2').show(); 
+        }
+      }
+    });
+    function chain2() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+         type:"post",
+         url:'/qco/skill_list',
+         //data: {},
+         success: function(data){
+
+          var ahtml = '<option></option>';
+          //var list_options = [];
+          for (var i = 0; i < data.length; i++) {
+            ahtml+="<option value='"+data[i]['id']+"'>"+data[i]['skill_desc']+"</option>"
+            //option = {id: data[i]['id'], text: data[i]['skill_desc']};
+            //list_options.push(option);
+          }
+          $('#select_data_skill').html(ahtml);
+          /*$("#select_data_skill").select2({
+            //dropdownParent: $("#modalForPaket"), 
+            data: list_options
+          });*/
+          @php
+	  		$current_params = Request::query();
+	  		if ( isset($current_params['regional']) ) { echo ("$('#select_data_skill').val(2).trigger('change');"); }
+	  		else{ echo ("$('#select_data_skill').val(1).trigger('change');");}
+	  	@endphp
+         },
+          error : function(data) {
+          }
+       }).done(function(){
+      /*$("#select_call_status_detail").select2({
+        dropdownParent: $("#modalForDetailReason")
+      });*/
+       });
+  }
+  $(document).ready(function() {
+  	$("select").select2({
+  		placeholder: "Please select option"
+  	});
+  	chain2();
+  });
 </script>
 
 @endsection

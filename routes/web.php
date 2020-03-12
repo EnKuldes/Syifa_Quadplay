@@ -58,7 +58,7 @@ Route::get('/qco/workspace', 'QCOController@index')->name('qco_workspace');
 Route::get('/qco/consume/{param}', 'QCOController@consume')->name('qco_consume');
 Route::get('/qco/unconsume', 'QCOController@unconsume')->name('qco_unconsume');
 # Retapping QCO
-Route::get('/qco/retapping/{id}', 'QCOController@retapping')->name('qco_retapping');
+Route::get('/qco/retapping/{data_skill}/{id}', 'QCOController@retapping')->name('qco_retapping');
 # JSON view data
 Route::post('/qco/view', 'QCOController@viewDataStatistics');
 # Chaining Select 1
