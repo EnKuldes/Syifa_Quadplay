@@ -10,6 +10,7 @@ use App\_dapros_regional;
 use App\_dapros_statistics_regional;
 use App\_tapping_status;
 use App\_tapping;
+use App\_tapping_regional;
 
 // Untuk menangkap error ketika FirstorFail error
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -113,16 +114,24 @@ class QCOController extends Controller
             }
             // Change Model to use
             if ($request->select_data_skill == 1) {
-                $dapros_statstics_model = _dapros_statistics::query();
+                $dapros_statstics_model = _dapros_statistics::where([
+                                    ['tapping_agent_username',NULL],
+                                    ['call_status_detail_reason_id',1]
+                                ]);
             }
             elseif ($request->select_data_skill == 2) {
-                $dapros_statstics_model = _dapros_statistics_regional::query();
+                $dapros_statstics_model = _dapros_statistics_regional::where([
+                                    ['tapping_agent_username',NULL],
+                                    ['call_status_detail_reason_id',17]
+                                ]);
             }
-            $data = $dapros_statstics_model->where([
+            /*$data = $dapros_statstics_model->where([
                                     ['tapping_agent_username',NULL],
                                     ['call_status_detail_reason_id',1]
                                 ])
                                 ->inRandomOrder()
+                                ->firstOrFail();*/
+            $data = $dapros_statstics_model->inRandomOrder()
                                 ->firstOrFail();
 
             $data->tapping_agent_username = auth()->user()->username;
@@ -211,7 +220,12 @@ class QCOController extends Controller
         ], $messages);
 
         # Post ke tabel Tapping
-        $tapp = new _tapping;
+        if ( $request->data_skill == 1 ) {
+            $tapp = new _tapping;
+        }
+        elseif ( $request->data_skill == 2 ) {
+            $tapp = new _tapping_regional;
+        }
         $tapp->dapros_id = $request->input('dapros_id');
         $tapp->tapping_status_id = $request->input('status_tapping');
         $tapp->tapping_information = $request->input('information');
@@ -237,20 +251,38 @@ class QCOController extends Controller
             $dc_value = '-'; #Kolom data condituin bernilai '-'
         }
         # Post ke Dapros_statistics dg status INSERT INTO ... ON DUPLICATE KEY UPDATE ...
-        $statistics_dapros = _dapros_statistics::updateOrCreate(
-            ['dapros_id' => $request->input('dapros_id')],
-            [
-                'tapping_status_id' => $tapp->tapping_status_id
-                , 'tapping_information' => $tapp->tapping_information
-                , 'tapping_agent_username' => $tapp->tapping_agent_username
-                , 'tapping_consume_datetime' => $tapp->created_at
-                , 'ever_be_returned' => $ebr_value
-                , 'data_condition' => $dc_value
-            ]
-        )->first();
-        
-        #memastikan bahwa save ke tabel Dapros Statistics berhasil
-        $data = _dapros_statistics::findOrFail($statistics_dapros->id);
+        if ( $request->data_skill == 1 ) {
+            $statistics_dapros = _dapros_statistics::updateOrCreate(
+                ['dapros_id' => $request->input('dapros_id')],
+                [
+                    'tapping_status_id' => $tapp->tapping_status_id
+                    , 'tapping_information' => $tapp->tapping_information
+                    , 'tapping_agent_username' => $tapp->tapping_agent_username
+                    , 'tapping_consume_datetime' => $tapp->created_at
+                    , 'ever_be_returned' => $ebr_value
+                    , 'data_condition' => $dc_value
+                ]
+            )->first();
+            
+            #memastikan bahwa save ke tabel Dapros Statistics berhasil
+            $data = _dapros_statistics::findOrFail($statistics_dapros->id);
+        }
+        elseif ( $request->data_skill == 2 ) {
+            $statistics_dapros = _dapros_statistics_regional::updateOrCreate(
+                ['dapros_id' => $request->input('dapros_id')],
+                [
+                    'tapping_status_id' => $tapp->tapping_status_id
+                    , 'tapping_information' => $tapp->tapping_information
+                    , 'tapping_agent_username' => $tapp->tapping_agent_username
+                    , 'tapping_consume_datetime' => $tapp->created_at
+                    , 'ever_be_returned' => $ebr_value
+                    , 'data_condition' => $dc_value
+                ]
+            )->first();
+            
+            #memastikan bahwa save ke tabel Dapros Statistics berhasil
+            $data = _dapros_statistics_regional::findOrFail($statistics_dapros->id);
+        }
         if (! $data) {
             abort(500, 'Error while saving statistics information');
         }
@@ -334,6 +366,43 @@ class QCOController extends Controller
             'alamat_pemasangan' => $data->call_alamat_pemasangan ,
             'email' => $data->call_email ,
             'via_by' => $data->call_via_by
+        ];
+        $datas = [
+            'details_dapros' => $details_dapros,
+            'details_call' => $details_call
+        ];
+        return response()->json($datas, 200);
+
+    }
+    public function viewDataStatistics1(Request $request) // Skill Regional
+    {
+        $data = _dapros_statistics_regional::where('id', $request->input('id'))->firstOrFail();
+        $details_dapros = _dapros_regional::where('id', $data->dapros_id)->firstOrFail();
+        $details_call = [
+            'status_call' => $data->call_status->value_call_status,
+            'reason_status_call' => $data->call_status_detail->value_call_status_detail,
+            'detail_reason_status_call' => $data->call_status_detail_reason->value_call_status_detail_reason,
+            'am_call' => $data->call_am_datetime,
+            'fu_call' => $data->call_fu_datetime,
+            'information_call' => $data->call_information,
+            'attempts_call' => $data->call_attempts,
+            'agent_call' => ($data->call_agent_username != null ? $data->call_agent->name : null),
+            'consume_call' => $data->call_consume_datetime,
+            'status_tapping' => $data->tapping_status_id,
+            'information_tapping' => $data->tapping_information,
+            'agent_tapping' => ($data->tapping_agent_username != null ? $data->tapping_agent->name : null),
+            'consume_tapping' => $data->tapping_consume_datetime,
+
+            'k_kontak' => $data->call_input_k_kontak ,
+            'regional' => ($data->call_regional != null ? $data->regional->regional_desc : null) ,
+            'witel' => ($data->call_witel != null ? $data->witel->witel_desc : null) ,
+            'paket' => ($data->call_paket != null ? $data->paket->paket_desc : null) ,
+            'alamat_pemasangan' => $data->call_alamat_pemasangan ,
+            'email' => $data->call_email ,
+            'via_by' => $data->call_via_by ,
+            'pstn' => $data->call_input_pstn ,
+            'dial_to' => $data->call_input_dial_to ,
+            'nama_pelanggan' => $data->call_input_nama_pelanggan
         ];
         $datas = [
             'details_dapros' => $details_dapros,

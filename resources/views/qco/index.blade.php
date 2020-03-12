@@ -92,7 +92,7 @@
                                         <label for="input_cp_marshanda" class="control-label">Contact Person</label>
                                         <input type="text" class="form-control @error('input_cp_marshanda') is-invalid @enderror"
                                           id="input_cp_marshanda" name="input_cp_marshanda" autocomplete="off" readonly
-                                          value="{{ isset($counting['details_call']) ? $counting['details_call']->input_cp_marshanda : '' }}">
+                                          value="{{ isset($counting['details_call']->input_cp_marshanda) ? $counting['details_call']->input_cp_marshanda : '' }}">
                                         @error('input_cp_marshanda')
                                         <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
                                             aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
@@ -102,7 +102,7 @@
                                         <label for="input_an_pemasangan" class="control-label">Atas Nama</label>
                                         <input type="text" class="form-control @error('input_an_pemasangan') is-invalid @enderror"
                                           id="input_an_pemasangan" name="input_an_pemasangan" autocomplete="off" readonly
-                                          value="{{ isset($counting['details_call']) ? $counting['details_call']->input_an_pemasangan : '' }}">
+                                          value="{{ isset($counting['details_call']->input_an_pemasangan) ? $counting['details_call']->input_an_pemasangan : '' }}">
                                         @error('input_an_pemasangan')
                                         <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
                                             aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
@@ -115,7 +115,7 @@
                                         <label for="input_pstn" class="control-label">PSTN</label>
                                         <input type="text" class="form-control @error('input_pstn') is-invalid @enderror"
                                           id="input_pstn" name="input_pstn" autocomplete="off" readonly
-                                          value="{{ isset($counting['details_call']) ? $counting['details_call']->input_pstn : '' }}">
+                                          value="{{ isset($counting['details_call']->input_pstn) ? $counting['details_call']->input_pstn : '' }}">
                                         @error('input_pstn')
                                         <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
                                             aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
@@ -125,7 +125,7 @@
                                         <label for="input_dial_to" class="control-label">Dial To</label>
                                         <input type="text" class="form-control @error('input_dial_to') is-invalid @enderror"
                                           id="input_dial_to" name="input_dial_to" autocomplete="off" readonly
-                                          value="{{ isset($counting['details_call']) ? $counting['details_call']->input_dial_to : '' }}">
+                                          value="{{ isset($counting['details_call']->input_dial_to) ? $counting['details_call']->input_dial_to : '' }}">
                                         @error('input_dial_to')
                                         <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
                                             aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
@@ -135,7 +135,7 @@
                                         <label for="input_nama_pelanggan" class="control-label">Nama Pelanggan</label>
                                         <input type="text" class="form-control @error('input_nama_pelanggan') is-invalid @enderror"
                                           id="input_nama_pelanggan" name="input_nama_pelanggan" autocomplete="off" readonly
-                                          value="{{ isset($counting['details_call']) ? $counting['details_call']->input_nama_pelanggan : '' }}">
+                                          value="{{ isset($counting['details_call']->input_nama_pelanggan) ? $counting['details_call']->input_nama_pelanggan : '' }}">
                                         @error('input_nama_pelanggan')
                                         <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
                                             aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
@@ -374,8 +374,8 @@
               else if( $('#get-data-form #select_data_skill').val() == 2 ){
                 valueTitles = ['pots','witel_information','nama_customer','klasifikasi_revenue','prioritas_1','prioritas_2','prioritas_3'];
                 labelTitles = ['pots','witel_information','nama_customer','klasifikasi_revenue','prioritas_1','prioritas_2','prioritas_3'];
-                valueTitles1 =['call_input_pstn', 'call_input_dial_to', 'call_input_nama_pelanggan', 'regional', 'witel', 'paket', 'input_email', 'via_by'];
-                labelTitles1 =['call_input_pstn', 'call_input_dial_to', 'call_input_nama_pelanggan', 'regional', 'witel', 'paket', 'input_email', 'via_by'];
+                valueTitles1 =['input_pstn', 'input_dial_to', 'input_nama_pelanggan', 'regional', 'witel', 'paket', 'input_email', 'via_by'];
+                labelTitles1 =['input_pstn', 'input_dial_to', 'input_nama_pelanggan', 'regional', 'witel', 'paket', 'input_email', 'via_by'];
               }
 			       	{{-- Fill Dapros Details --}}
 			        for (var i = 0; i < labelTitles.length; i++) {
@@ -541,7 +541,7 @@
             //dropdownParent: $("#modalForPaket"), 
             data: list_options
           });*/
-          $('#select_data_skill').val(1).trigger('change');
+          $('#select_data_skill').val({{ isset($counting['data_skill']) ? 'value='.$counting['data_skill']->id : 1 }}).trigger('change');
          },
           error : function(data) {
           }
@@ -568,7 +568,7 @@
 	        var spanTitles = ['unconsume_daily', 'consumed_daily', 'approved_daily', 'return_daily', 'returntoagree_daily', 'returntodecline_daily'];
 	        var valueTitles = ['unconsume_daily', 'consumed_daily', 'approved_daily', 'return_daily', 'returntoagree_daily', 'returntodecline_daily'];
 	        for (var i = 0; i < spanTitles.length; i++) {
-	          $("#" + spanTitles[i]).html(data[valueTitles[i]]);
+	          $("#" + spanTitles[i]).html( parseInt( data['data_quadplay'][valueTitles[i]] ) + parseInt( data['data_regional'][valueTitles[i]] ) );
 	        }
 	       },
 	        error: function(jqXhr, json, errorThrown){// this are default for ajax errors
