@@ -5,12 +5,12 @@
 <div class="row">
   <div class="col-md-12">
     <div class="row mailbox-header">
-      <div class="col-md-4">
+      <div class="col-md-1">
         <form class="form-inline" id="get-data-form">
           @csrf
-          <div class="form-group">
+          <div class="input-group-btn">
             <label class="sr-only" for="select_data_skill">Source Data</label>
-            <select class="form-control  @error('select_data_skill') is-invalid @enderror" name="select_data_skill"
+            <select class="form-control  @error('select_data_skill') is-invalid @enderror" name="select_data_skill" data-placeholder="Choose Role &nbsp;&nbsp;"
             id="select_data_skill" tabindex="-1" required="required" style="width:100%;">
           </select>
 
@@ -18,14 +18,14 @@
           <p class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert"
             aria-label="Close"><span aria-hidden="true">×</span></button>{{ $message }}</p>
             @enderror
-          </div>
 
-          <button type="submit" class="btn btn-success "
-          data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing Order"><i
-          class="fa fa-download"></i> Get Data</button>
+            <button type="submit" class="btn btn-success "
+            data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing Order"><i
+            class="fa fa-download"></i></button>
+          </div>
         </form>
       </div>
-      <div class="col-md-4 col-md-offset-4">
+      <div class="col-md-5 col-md-offset-6">
         <form action="#" method="POST">
           <div class="input-group text-right">
             <span class="input-group-btn">
@@ -486,7 +486,7 @@
         }
         else if (id == 2) {
           $('.field-1').hide();
-          $('.field-2').show(); 
+          $('.field-2').show();
         }
       }
     });
@@ -538,10 +538,10 @@
           }
           $('#select_data_skill').html(ahtml);
           /*$("#select_data_skill").select2({
-            //dropdownParent: $("#modalForPaket"), 
+            //dropdownParent: $("#modalForPaket"),
             data: list_options
           });*/
-          $('#select_data_skill').val(1).trigger('change');
+          //$('#select_data_skill').val(1).trigger('change');
          },
           error : function(data) {
           }
